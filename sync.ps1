@@ -6,8 +6,7 @@ function Sync-Portfolio {
     git add .
     
     # 2. Commit with automated timestamp
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $message = "Auto-update: $timestamp [Portfolio OS Sync]"
+    $message = "Initial Commit"
     Write-Host "[2/3] Committing: $message" -ForegroundColor Gray
     git commit -m $message
     
