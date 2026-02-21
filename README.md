@@ -28,18 +28,6 @@ Embedded **Neural Core** provides:
 - **System Narration**: Live feedback on system health and deployment status.
 - **Adaptive UI**: Interactions that react to user intent and scroll velocity.
 
-## 🛠 Installation
-```bash
-# Clone the repository
-git clone [repository-url]
-
-# Install dependencies
-npm install
-
-# Start the system
-npm start
-```
-
 ## 🔐 Security & DevOps
 - **Strict Firestore Rules**: Role-based access control.
 - **CI/CD Pipeline**: Automated testing, security scanning (Snyk), and multi-region deployment.
