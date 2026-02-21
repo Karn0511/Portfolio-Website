@@ -1,0 +1,5 @@
+connectorId: "default"
+generate:
+  javascriptSdk:
+    outputDir: "../../src/app/core/dataconnect"
+    package: "@portfolio/dataconnect"

@@ -1,0 +1,55 @@
+type User @table {
+  username: String!
+  email: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  displayName: String
+  bio: String
+  profilePictureUrl: String
+  websiteUrl: String
+  linkedinUrl: String
+  githubUrl: String
+  isPublic: Boolean
+}
+
+type Section @table {
+  user: User!
+  name: String!
+  type: String!
+  orderIndex: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  content: String
+  isPublic: Boolean
+}
+
+type Project @table {
+  user: User!
+  section: Section
+  title: String!
+  description: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  startDate: Date
+  endDate: Date
+  projectUrl: String
+  repositoryUrl: String
+}
+
+type ProjectMedia @table {
+  project: Project!
+  mediaUrl: String!
+  mediaType: String!
+  createdAt: Timestamp!
+  caption: String
+  orderIndex: Int
+}
+
+type Skill @table {
+  user: User!
+  section: Section
+  name: String!
+  createdAt: Timestamp!
+  proficiency: String
+  category: String
+}

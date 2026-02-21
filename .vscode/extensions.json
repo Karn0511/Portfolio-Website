@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "angular.ng-template",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "pkief.material-icon-theme",
+    "eamodio.gitlens",
+    "slevesque.vscode-heman-glsl",
+    "firebase.google-firebase-vscode",
+    "christian-kohler.path-intellisense",
+    "visualstudioexptteam.vscodeintellicode",
+    "lucide.lucide-icons",
+    "dsznajder.es7-react-js-snippets"
+  ]
+}

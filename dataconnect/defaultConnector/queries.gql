@@ -1,0 +1,20 @@
+# Get all projects for a user
+query ListProjects($username: String!) @auth(level: PUBLIC) {
+  projects(where: { user: { username: { eq: $username } } }) {
+    id
+    title
+    description
+    projectUrl
+    repositoryUrl
+  }
+}
+
+# Get specialized skills
+query ListSkills($username: String!) @auth(level: PUBLIC) {
+  skills(where: { user: { username: { eq: $username } } }) {
+    id
+    name
+    proficiency
+    category
+  }
+}

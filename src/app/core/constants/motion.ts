@@ -1,0 +1,15 @@
+export const MOTION = {
+  EASE_MAIN: "power3.out",
+  EASE_EXPO: "expo.out",
+  DURATION_DEFAULT: 0.8,
+  DURATION_FAST: 0.3,
+  DURATION_SLOW: 1.5,
+  HOVER_RADIUS: 80,
+  MAGNETIC_FORCE: 0.35,
+};
+
+export const BREAKPOINTS = {
+  MOBILE: 768,
+  TABLET: 1024,
+  DESKTOP: 1280,
+};

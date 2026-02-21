@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "studio-6750795046-5e9b4"
+  },
+  "targets": {
+    "studio-6750795046-5e9b4": {
+      "hosting": {
+        "karnashutosh": [
+          "karnashutosh"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
