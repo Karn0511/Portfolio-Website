@@ -1,101 +1,60 @@
-# PORTFOLIO_OS || INTELLECTUAL_ASSET_V1.4.0
+# Professional Engineering Portfolio || Ashutosh Karn
 
-![System Status](https://img.shields.io/badge/System_Status-OPERATIONAL-emerald?style=for-the-badge&logoColor=white)
-![Neural Core](https://img.shields.io/badge/Neural_Core-ACTIVE-sky?style=for-the-badge&logoColor=white)
-![Kernel Version](https://img.shields.io/badge/Kernel_Version-1.4.0-gold?style=for-the-badge&logoColor=white)
+![Build Status](https://img.shields.io/badge/Build-STABLE-emerald?style=for-the-badge)
+![Deployment](https://img.shields.io/badge/Deployment-FIREBASE-sky?style=for-the-badge)
+![Cloud](https://img.shields.io/badge/AWS-Academy_Certified-gold?style=for-the-badge)
 
-![Portfolio OS Banner](https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2032&auto=format&fit=crop)
-
-**A next-generation personal operating system designed as a high-fidelity intelligent terminal.**
-_Synthesizing Angular 19, GSAP, Three.js, and Neural-Link Architectures._
+**High-performance full-stack engineering focused on scalable cloud architectures and reactive user experiences.**
 
 ---
 
-## 🌐 SYSTEM_UPLINK [LIVE]
+## 🚀 Technical Profile
 
-> **[https://karnashutosh.web.app/](https://karnashutosh.web.app/)**
-
----
-
-## 🚀 VISION_CORE
-
-This is not a traditional website—it is a **Personal Operating System (Portfolio OS)**. It leverages cinematic UI/UX principles merged with system-level design thinking to deliver an immersive engineering experience.
-
-### 🧠 INTELLIGENCE_PROTOCOL
-
-The **Neural Core** (v1.4) orchestrates:
-
-- **AI_Interface**: Natural language processing via Gemini 1.5, allowing queries about specific technical vectors and skill nodes.
-- **Narrative_Logic**: Real-time system feedback and telemetry regarding deployment status and kernel health.
-- **Cinematic_Motion**: High-performance animations that react to scroll velocity and user intent.
+- **Identity**: Ashutosh Karn, B.Tech Computer Science Engineering (4th Year) @ SHUATS.
+- **Specialization**: Distributed Systems, Cloud-Native Development, and Reactive Frontends.
+- **Core Stack**: Angular 19, TypeScript, Node.js, AWS, and Docker.
 
 ---
 
-## 🛠 TECH_STACK_MATRIX
+## 📂 Featured Projects
 
-### Frontend_Circuitry
+### 1. Arogya Vault
 
-- **Core**: Angular 19 (Standalone Architecture, Signals, RxJS)
-- **3D_Synthesis**: Three.js (WebGL Custom Shaders + Particle Flux)
-- **Fluid_Motion**: GSAP (ScrollTrigger, Magnetic Interaction, Elastic Timelines)
-- **Visual_Shell**: Tailwind CSS + Custom GLSL-inspired Glassmorphism
+- **Objective**: Secure medical record management with high-availability architecture.
+- **Key Features**: Role-Based Access Control (RBAC) and NLP-driven document summarization.
+- **Technology**: Angular 18, Node.js, AWS S3, Docker, and MongoDB.
 
-### Backend_Infrastructure
+### 2. SkyCast
 
-- **Neural_Engine**: Firebase GenKit + Google Gemini AI
-- **Data_Storage**: Firestore (High-Availability NoSQL Cluster)
-- **Edge_Execution**: Firebase Cloud Functions v2 (Serverless Node.js v20)
-- **Deployment**: Firebase Hosting Managed Infrastructure
+- **Objective**: Real-time atmospheric forecasting engine.
+- **Key Features**: 5-day predictive intervals and reactive data visualization.
+- **Technology**: TypeScript, React, and OpenWeatherMap API.
 
 ---
 
-## 📂 SYSTEM_HIERARCHY
+## 🛠️ Skills & Expertise
 
-The project implements a **Feature-Based Macro-Architecture** for maximum modularity:
-
-- **`src/app/core/`**: Central Command — Singleton services, AI logic, and global animation constants.
-- **`src/app/shared/`**: UI_Nodes — Reusable components like the Hologram Background and Glass Panels.
-- **`src/app/features/`**: Subsystems — Decoupled feature modules:
-  - `home/`: Neural Dashboard & Kinetic Three.js Hero.
-  - `projects/`: Deployment Matrix — A visual archive of digital artifacts.
-  - `systems/`: Kernel Audit — Real-time telemetry and CI/CD visualization.
-  - `experience/`: The Vector — Professional timeline and Proficiency HUD.
+| Category         | technologies                                            |
+| :--------------- | :------------------------------------------------------ |
+| **Frontend**     | Angular 19, React, TypeScript, GSAP, Tailwind CSS       |
+| **Backend**      | Node.js, Express.js, PostgreSQL, MongoDB                |
+| **Cloud/DevOps** | AWS (90% Certified), Docker, Kubernetes, GitHub Actions |
+| **AI/ML**        | Python, TensorFlow, NLP Diagnostics                     |
 
 ---
 
-## 🔐 SECURITY\_&_DEVOPS
+## 📈 Infrastructure & CI/CD
 
-- **Access_Control**: Strict Firestore security protocols for data integrity.
-- **CI/CD_Pipeline**: Automated deployment via GitHub Actions (Uptime monitoring + Static Analysis).
-- **Vulnerability_Shield**: Snyk integrated scanning for node dependency health.
-- **Optimization**: GPU-accelerated rendering and lazy-loaded modules (Lighthouse Optimized).
+The portfolio is architected as a production-grade environment:
 
----
-
-## 🕹️ OPERATIONAL_CONTROLS
-
-### Local_Environment_Setup
-
-```powershell
-# Clone the system repository
-git clone https://github.com/Karn0511/Portfolio-Website.git
-
-# Initialize dependencies
-npm install
-
-# Boot high-fidelity dev server
-npm start
-```
-
-### Automated_Sync_Protocol
-
-The system includes a custom `sync.ps1` for rapid deployment and version control.
-
-```powershell
-./sync.ps1
-```
+- **Framework**: Angular 19 with Signals for state management.
+- **Deployment**: Firebase Hosting with global CDN.
+- **Automation**: Custom PowerShell CI/CD pipeline (`sync.ps1`) for simultaneous building, deploying, and version control.
 
 ---
 
-**Designed & Architected by [Ashutosh Karn](https://github.com/Karn0511)**
-_Mission Log: Phase 1.4 // B.Tech CSE // Node-SHUATS_
+## 📫 Contact & Links
+
+- **GitHub**: [Karn0511](https://github.com/Karn0511)
+- **LinkedIn**: [Karn1105](https://linkedin.com/in/Karn1105)
+- **Email**: [karnashutosh6@gmail.com](mailto:karnashutosh6@gmail.com)

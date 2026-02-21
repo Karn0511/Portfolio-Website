@@ -12,12 +12,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 
+import { RouterOutlet, RouterModule } from "@angular/router";
+
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="flex flex-col p-6 md:p-12 xl:p-20 relative bg-transparent">
       <!-- High-End Background Layer -->
@@ -28,120 +30,84 @@ gsap.registerPlugin(ScrollTrigger);
         ></div>
       </div>
 
-      <!-- Hero Narrative -->
+      <!-- Hero Section -->
       <section
-        class="min-h-[80vh] md:min-h-[90vh] flex flex-col justify-center relative z-20 reveal-stagger pt-10"
+        class="min-h-[80vh] md:min-h-[90vh] flex flex-col justify-center relative z-20 pt-10"
       >
         <div class="flex items-center gap-4 mb-8">
-          <div class="h-[1px] w-12 bg-white/20"></div>
+          <div class="h-[1px] w-12 bg-sky-500"></div>
           <span
-            class="font-mono text-[9px] text-white/40 tracking-[0.4em] uppercase"
-            >Architect // Ashutosh Karn</span
+            class="font-mono text-[10px] text-sky-400 tracking-[0.4em] uppercase font-bold"
+            >Software Engineer</span
           >
         </div>
 
         <h1
-          class="font-display font-black text-[clamp(4rem,15vw,10rem)] mb-6 md:mb-10 leading-[0.85] uppercase tracking-tighter"
+          class="font-display font-black text-[clamp(3.5rem,12vw,8rem)] mb-6 md:mb-10 leading-[0.9] tracking-tighter"
         >
-          Neural<br />
+          ASHUTOSH<br />
           <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/20"
-            >Works</span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400"
+            >KARN</span
           >
         </h1>
 
         <div class="max-w-4xl space-y-8">
           <h2
-            class="text-2xl md:text-5xl font-sans font-light text-slate-400 leading-tight tracking-tight"
+            class="text-2xl md:text-4xl font-sans font-light text-slate-300 leading-tight tracking-tight"
           >
-            B.Tech Computer Science <span class="text-white/20">&#64;</span>
+            B.Tech Computer Science Engineering
+            <span class="text-white/20">&#64;</span>
             <span class="text-white font-bold italic">SHUATS 2026</span>.
           </h2>
 
           <p
-            class="text-slate-500 text-lg md:text-2xl font-sans leading-relaxed max-w-3xl opacity-80 border-l-2 border-white/5 pl-8"
+            class="text-slate-400 text-lg md:text-xl font-sans leading-relaxed max-w-2xl opacity-90 border-l-2 border-sky-500/50 pl-8"
           >
-            Synthesizing high-performance web architectures with AI integration.
-            Specializing in
-            <span class="text-white">Cloud Orchestration</span> and
-            <span class="text-white">Neural Frontends</span>.
+            Passionate about building scalable cloud architectures and
+            high-performance full-stack applications. Specializing in
+            <span class="text-white">Distributed Systems</span> and
+            <span class="text-white">Cloud Native Development</span>.
           </p>
 
           <div
-            class="flex flex-col sm:flex-row items-stretch sm:items-center gap-6 pt-10"
+            class="flex flex-col sm:flex-row items-stretch sm:items-center gap-6 pt-6"
           >
             <button
-              class="sh-button-primary px-10 h-14 text-[10px] font-black tracking-[0.2em] uppercase interactive"
+              [routerLink]="['/projects']"
+              class="px-10 h-14 bg-white text-black text-[11px] font-bold tracking-[0.1em] uppercase hover:bg-sky-400 transition-colors"
             >
-              INITIALIZE_PROJECTS
+              VIEW_PROJECTS
             </button>
             <a
               href="mailto:karnashutosh6@gmail.com"
-              class="sh-button-outline px-10 h-14 text-[10px] font-black tracking-[0.2em] uppercase interactive"
+              class="px-10 h-14 border border-white/20 text-white text-[11px] font-bold tracking-[0.1em] uppercase hover:bg-white/5 transition-colors flex items-center justify-center"
             >
-              CONTACT_NODE
+              CONTACT_ME
             </a>
-          </div>
-        </div>
-
-        <!-- Tech Stack Marquee -->
-        <div
-          class="mt-24 md:mt-32 overflow-hidden py-10 border-y border-white/5 relative bg-white/[0.01]"
-        >
-          <div class="marquee-content flex items-center gap-16 md:gap-32 px-10">
-            <div
-              *ngFor="let tech of techStack"
-              class="flex items-center gap-4 group opacity-30 hover:opacity-100 transition-opacity"
-            >
-              <span
-                class="font-display text-2xl md:text-3xl font-black text-white hover:text-sky-400 cursor-default transition-colors"
-                >{{ tech }}</span
-              >
-              <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
-            </div>
-            <!-- Duplicate for seamless loop -->
-            <div
-              *ngFor="let tech of techStack"
-              class="flex items-center gap-4 group opacity-30 hover:opacity-100 transition-opacity"
-            >
-              <span
-                class="font-display text-2xl md:text-3xl font-black text-white hover:text-sky-400 cursor-default transition-colors"
-                >{{ tech }}</span
-              >
-              <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
-            </div>
           </div>
         </div>
       </section>
 
-      <!-- Advanced Capabilities -->
+      <!-- Core Expertise -->
       <section
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-20 md:mt-32 relative z-20 pb-32"
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-20 relative z-20 pb-20"
       >
         <div
           *ngFor="let card of cards"
-          class="glass-card p-10 md:p-12 group interactive flex flex-col items-start gap-10 hover:-translate-y-2 transition-transform duration-500"
+          class="bg-white/[0.03] border border-white/5 p-10 group hover:border-sky-500/30 transition-all duration-500"
         >
-          <div
-            class="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-white group-hover:text-black transition-all duration-700 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]"
+          <span class="material-symbols-outlined text-3xl text-sky-400 mb-6">{{
+            card.icon
+          }}</span>
+          <h3
+            class="font-display text-xl text-white mb-4 uppercase tracking-tight font-bold"
           >
-            <span
-              class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform"
-              >{{ card.icon }}</span
-            >
-          </div>
-          <div>
-            <h3
-              class="font-display text-2xl md:text-3xl text-white mb-6 uppercase tracking-tighter font-black leading-none"
-            >
-              {{ card.title }}
-            </h3>
-            <p
-              class="text-slate-400 text-base md:text-lg font-sans leading-relaxed group-hover:text-slate-200 transition-colors opacity-80"
-            >
-              {{ card.desc }}
-            </p>
-          </div>
+            {{ card.title }}
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            {{ card.desc }}
+          </p>
         </div>
       </section>
     </div>
@@ -163,36 +129,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("heroCanvas") canvasContainer!: ElementRef;
 
   techStack = [
-    "PYTHON",
-    "JAVA",
-    "JAVASCRIPT",
-    "TYPESCRIPT",
-    "REACT",
-    "ANGULAR 18",
-    "NODE.JS",
-    "EXPRESS.JS",
+    "AWS",
     "DOCKER",
     "KUBERNETES",
-    "AWS",
-    "FIGMA",
-    "AZURE",
+    "ANGULAR",
+    "PYTHON",
+    "JAVA",
+    "MONGODB",
+    "POSTGRESQL",
   ];
 
   cards = [
     {
-      title: "Neural Architect",
-      icon: "architecture",
-      desc: "Building scalable, distributed systems using Angular, React, and Node.js with high-concurrency throughput.",
+      title: "Cloud Engineering",
+      icon: "cloud",
+      desc: "Specializing in AWS cloud architectures, container orchestration with Docker/K8s, and serverless infrastructure scaling.",
     },
     {
-      title: "Cloud Integrity",
-      icon: "cloud_done",
-      desc: "Architecting secure, cloud-native deployments on AWS and Azure with Docker/Kubernetes orchestration.",
+      title: "Full Stack Systems",
+      icon: "developer_mode",
+      desc: "Architecting high-performance web systems using Angular 19, Node.js, and distributed database clusters.",
     },
     {
-      title: "AI Synthesis",
-      icon: "auto_awesome",
-      desc: "Merging NLP-driven summarization and generative intelligence into intuitive, high-fidelity user experiences.",
+      title: "AI Integration",
+      icon: "neurology",
+      desc: "Implementing NLP-driven insights and machine learning models to solve complex real-world automation challenges.",
     },
   ];
 
@@ -298,26 +259,39 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this.scene.add(particlesMesh);
 
-    // Kinetic Torus
-    const geometry = new THREE.TorusKnotGeometry(4, 0.5, 300, 32);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.05,
-      side: THREE.DoubleSide,
-    });
-    this.torus = new THREE.Mesh(geometry, material);
-    this.scene.add(this.torus);
+    // Tech Wall Geometry
+    const group = new THREE.Group();
+    const count = 6;
+    const spacing = 4;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    for (let x = 0; x < count; x++) {
+      for (let y = 0; y < count; y++) {
+        const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        const material = new THREE.MeshPhongMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.1 + Math.random() * 0.2,
+          wireframe: Math.random() > 0.5,
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.set(
+          (x - count / 2) * spacing,
+          (y - count / 2) * spacing,
+          (Math.random() - 0.5) * 5,
+        );
+        group.add(cube);
+      }
+    }
+    this.scene.add(group);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     this.scene.add(ambientLight);
 
     const pointLight = new THREE.PointLight(0x38bdf8, 2);
-    pointLight.position.set(2, 3, 4);
+    pointLight.position.set(5, 5, 10);
     this.scene.add(pointLight);
 
-    this.camera.position.z = 15;
+    this.camera.position.z = 18;
 
     // Mouse Tracking Logic
     const onMouseMove = (event: MouseEvent) => {
@@ -329,15 +303,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const animate = () => {
       this.frameId = requestAnimationFrame(animate);
 
-      const targetRotationX = this.mouse.y * 0.2;
-      const targetRotationY = this.mouse.x * 0.2;
+      const targetRotationX = this.mouse.y * 0.1;
+      const targetRotationY = this.mouse.x * 0.1;
 
-      this.torus.rotation.y += 0.002;
-      this.torus.rotation.x += (targetRotationX - this.torus.rotation.x) * 0.05;
+      group.rotation.x += (targetRotationX - group.rotation.x) * 0.05;
+      group.rotation.y += (targetRotationY - group.rotation.y) * 0.05;
 
-      particlesMesh.rotation.y += 0.0005;
-      particlesMesh.rotation.x +=
-        (targetRotationX * 0.5 - particlesMesh.rotation.x) * 0.02;
+      group.children.forEach((cube: any, i) => {
+        cube.rotation.x += 0.005;
+        cube.rotation.y += 0.005;
+        cube.position.z += Math.sin(Date.now() * 0.001 + i) * 0.01;
+      });
+
+      particlesMesh.rotation.y += 0.0003;
 
       this.renderer.render(this.scene, this.camera);
     };

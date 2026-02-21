@@ -31,20 +31,20 @@ interface LogEntry {
       class="flex flex-col p-6 md:p-12 xl:p-20 relative bg-transparent h-auto"
     >
       <header
-        class="mb-12 md:mb-24 flex flex-col lg:flex-row justify-between items-start lg:items-end relative z-20 reveal-stagger gap-8"
+        class="mb-12 md:mb-20 flex flex-col lg:flex-row justify-between items-start lg:items-end relative z-20 gap-8"
       >
         <div>
           <div class="flex items-center gap-4 mb-6">
-            <span class="w-12 h-[1px] bg-white/20"></span>
+            <span class="w-12 h-[1px] bg-sky-500"></span>
             <span
-              class="font-mono text-[9px] text-white/30 tracking-[0.4em] uppercase"
-              >Archive // Kernel_Audit</span
+              class="font-mono text-[10px] text-sky-400 tracking-[0.4em] uppercase font-bold"
+              >Stack & Infrastructure</span
             >
           </div>
           <h2
-            class="text-[clamp(3.5rem,10vw,8rem)] font-display font-black tracking-tighter text-white leading-[0.85] uppercase"
+            class="text-[clamp(3.5rem,10vw,7rem)] font-display font-black tracking-tighter text-white leading-[0.9] uppercase"
           >
-            System<br /><span class="text-white/20">Vitals</span>
+            Technical<br /><span class="text-white/20">Ecosystem</span>
           </h2>
         </div>
 
@@ -53,22 +53,22 @@ interface LogEntry {
         >
           <div class="flex flex-col items-center sm:items-end">
             <span
-              class="text-[9px] font-mono text-white/30 uppercase tracking-[0.3em] mb-3"
-              >Uptime</span
+              class="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3 font-bold"
+              >System Uptime</span
             >
             <span
               class="text-xl md:text-3xl font-mono text-white leading-none tracking-tighter font-black"
-              >14D : 22H : 01S</span
+              >99.9% SLI</span
             >
           </div>
           <div class="flex flex-col items-end">
             <span
-              class="text-[9px] font-mono text-white/30 uppercase tracking-[0.3em] mb-3"
-              >Kernel_Status</span
+              class="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3 font-bold"
+              >Global Status</span
             >
             <span
-              class="text-xl md:text-3xl font-mono text-emerald-400 leading-none tracking-tighter font-black drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]"
-              >OPERATIONAL</span
+              class="text-xl md:text-3xl font-mono text-emerald-400 leading-none tracking-tighter font-black"
+              >STABLE</span
             >
           </div>
         </div>
@@ -78,25 +78,21 @@ interface LogEntry {
         class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 relative z-20 pb-32"
       >
         <!-- CI/CD Stream -->
-        <div class="lg:col-span-8 space-y-12 md:space-y-16">
-          <div class="glass-card p-8 md:p-12">
+        <div class="lg:col-span-8 space-y-12">
+          <div class="bg-white/[0.02] border border-white/5 p-8 md:p-12">
             <div
-              class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-20 gap-6"
+              class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6"
             >
               <h3
-                class="font-display text-base md:text-lg text-white uppercase tracking-[0.4em] flex items-center gap-4 font-black"
+                class="font-display text-sm text-white uppercase tracking-[0.4em] flex items-center gap-4 font-black"
               >
-                <span class="w-1.5 h-8 bg-white animate-pulse"></span>
-                Neural_Pipeline
+                <span class="w-1.5 h-6 bg-sky-500 animate-pulse"></span>
+                Deployment Pipeline
               </h3>
-              <span
-                class="text-[9px] font-mono text-white/20 uppercase tracking-[0.3em] font-black"
-                >0x8F2A1E // STABLE</span
-              >
             </div>
 
             <div
-              class="flex flex-col sm:flex-row items-center justify-between relative px-6 md:px-12 py-10 md:py-16 gap-12 sm:gap-0"
+              class="flex flex-col sm:flex-row items-center justify-between relative px-6 py-10 gap-12 sm:gap-0"
             >
               <div
                 class="hidden sm:block absolute h-[1px] bg-white/10 left-12 right-12 top-1/2 -translate-y-1/2 z-0"
@@ -104,83 +100,56 @@ interface LogEntry {
 
               <div
                 *ngFor="let step of pipelineSteps"
-                class="relative z-10 flex sm:flex-col items-center gap-6 group interactive w-full sm:w-auto"
+                class="relative z-10 flex sm:flex-col items-center gap-6 group w-full sm:w-auto"
               >
                 <div
                   [class]="
-                    'w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-[2rem] border flex items-center justify-center transition-all duration-700 ' +
+                    'w-16 h-16 md:w-20 md:h-20 border flex items-center justify-center transition-all duration-700 ' +
                     (step.status === 'SUCCESS'
-                      ? 'bg-white text-black border-white shadow-2xl'
+                      ? 'bg-white text-black border-white'
                       : 'bg-black/40 border-white/5 text-white/20')
                   "
                 >
                   <span
-                    class="material-symbols-outlined text-2xl md:text-3xl group-hover:scale-110 transition-transform"
+                    class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform"
                     >{{ step.icon }}</span
                   >
                 </div>
                 <div class="flex flex-col items-start sm:items-center">
                   <div
-                    class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors"
+                    class="text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover:text-white transition-colors"
                   >
                     {{ step.name }}
-                  </div>
-                  <div
-                    class="text-[9px] font-mono text-white/20 mt-1 font-black"
-                  >
-                    {{ step.time }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Terminal CLI -->
+          <!-- Technical Logs -->
           <div
-            class="glass-panel rounded-[3rem] p-8 md:p-12 font-mono h-[400px] md:h-[500px] flex flex-col shadow-2xl relative overflow-hidden"
+            class="bg-black/40 border border-white/5 p-8 md:p-10 font-mono h-[350px] flex flex-col relative overflow-hidden"
           >
             <div
-              class="flex items-center justify-between mb-8 md:mb-12 pb-6 md:pb-8 border-b border-white/5"
+              class="flex items-center justify-between mb-8 pb-4 border-b border-white/5"
             >
-              <div class="flex gap-3">
-                <div
-                  class="w-3.5 h-3.5 rounded-full bg-white/5 border border-white/10"
-                ></div>
-                <div
-                  class="w-3.5 h-3.5 rounded-full bg-white/5 border border-white/10"
-                ></div>
-                <div
-                  class="w-3.5 h-3.5 rounded-full bg-white/5 border border-white/10"
-                ></div>
-              </div>
               <div
-                class="text-[10px] text-white/20 uppercase tracking-[0.4em] font-black"
+                class="text-[10px] text-white/40 uppercase tracking-[0.4em] font-bold"
               >
-                Kernel_Console
+                Environment_Logs
               </div>
             </div>
 
             <div
-              class="flex-1 overflow-y-auto space-y-4 md:space-y-6 scrollbar-hide text-[11px] md:text-sm"
+              class="flex-1 overflow-y-auto space-y-3 scrollbar-hide text-[11px]"
               #logContainer
             >
               <div
                 *ngFor="let log of logs()"
-                class="flex gap-6 md:gap-10 opacity-40 hover:opacity-100 transition-opacity"
+                class="flex gap-6 opacity-60 hover:opacity-100 transition-opacity"
               >
-                <span class="text-white/20 whitespace-nowrap font-black"
+                <span class="text-sky-500/50 whitespace-nowrap font-bold"
                   >[{{ log.timestamp }}]</span
-                >
-                <span
-                  [class]="
-                    'font-black tracking-tighter ' +
-                    (log.level === 'WARN'
-                      ? 'text-amber-500'
-                      : log.level === 'ERROR'
-                        ? 'text-red-500'
-                        : 'text-white')
-                  "
-                  >[{{ log.level }}]</span
                 >
                 <span class="text-white/60 font-light"
                   >:: {{ log.message }}</span
@@ -191,73 +160,62 @@ interface LogEntry {
         </div>
 
         <!-- Metrics Column -->
-        <div class="lg:col-span-4 space-y-12 md:space-y-16">
-          <div class="glass-card p-10 md:p-12 space-y-12 md:space-y-16">
+        <div class="lg:col-span-4 space-y-12">
+          <div class="bg-white/[0.02] border border-white/5 p-10 space-y-12">
             <h3
-              class="font-display text-sm md:text-base text-white uppercase tracking-[0.4em] mb-12 font-black"
+              class="font-display text-sm text-white uppercase tracking-[0.4em] mb-12 font-black"
             >
-              Telemetry
+              Cloud Performance
             </h3>
-            <div
-              *ngFor="let metric of metrics"
-              class="space-y-5 md:space-y-8 group"
-            >
+            <div *ngFor="let metric of metrics" class="space-y-6 group">
               <div class="flex justify-between items-end">
                 <span
-                  class="text-[10px] font-mono text-white/30 uppercase tracking-widest group-hover:text-white transition-colors font-black"
+                  class="text-[10px] font-mono text-white/30 uppercase tracking-widest font-bold"
                   >{{ metric.name }}</span
                 >
-                <span
-                  class="text-xl md:text-2xl font-mono text-white font-black"
+                <span class="text-xl font-mono text-white font-bold"
                   >{{ metric.value
                   }}<span class="text-xs text-white/40 ml-1">{{
                     metric.unit
                   }}</span></span
                 >
               </div>
-              <div class="h-[3px] bg-white/5 overflow-hidden flex rounded-full">
+              <div class="h-[2px] bg-white/5 overflow-hidden flex">
                 <div
-                  class="h-full bg-white group-hover:bg-sky-400 shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-1000"
+                  class="h-full bg-sky-500 transition-all duration-1000"
                   [style.width.%]="metric.percent"
                 ></div>
               </div>
             </div>
           </div>
 
-          <div
-            class="glass-panel p-10 md:p-12 bg-white text-black rounded-[3rem]"
-          >
+          <div class="p-10 bg-white text-black">
             <h3
-              class="font-display text-sm md:text-base text-black uppercase tracking-[0.4em] mb-16 font-black"
+              class="font-display text-sm text-black uppercase tracking-[0.4em] mb-12 font-black"
             >
-              Neural_Health
+              Infrastructure
             </h3>
-            <div class="space-y-5 md:space-y-6">
+            <div class="space-y-4">
               <div
-                *ngFor="let i of [1, 2, 3, 4, 5]"
-                class="p-5 md:p-6 bg-black/[0.03] border border-black/5 rounded-[1.5rem] md:rounded-[2rem] flex items-center gap-6 hover:bg-black/5 transition-all group interactive"
+                *ngFor="
+                  let node of [
+                    'AWS_US_EAST',
+                    'DOCKER_HUB',
+                    'KUBE_CLUSTER',
+                    'MONGODB_ATLAS',
+                  ]
+                "
+                class="p-4 bg-black/5 border border-black/5 flex items-center gap-4 hover:bg-black/10 transition-all"
               >
+                <div class="w-2 h-2 rounded-full bg-black animate-pulse"></div>
                 <div
-                  class="w-3 h-3 rounded-full bg-black shadow-[0_0_15px_rgba(0,0,0,0.3)] animate-pulse"
-                ></div>
-                <div class="flex-1">
-                  <div
-                    class="text-[11px] font-mono text-black uppercase font-black tracking-widest"
-                  >
-                    NODE_CORE_{{ i + 104 }}
-                  </div>
-                  <div
-                    class="h-[2px] bg-black/10 mt-4 overflow-hidden rounded-full"
-                  >
-                    <div
-                      class="h-full bg-black/40"
-                      [style.width.%]="i * 12 + 20"
-                    ></div>
-                  </div>
+                  class="text-[11px] font-mono text-black uppercase font-bold tracking-widest flex-1"
+                >
+                  {{ node }}
                 </div>
                 <span
-                  class="text-[10px] font-mono text-black/40 font-black uppercase tracking-widest"
-                  >READY</span
+                  class="text-[10px] font-mono text-black/50 font-bold uppercase"
+                  >ACTIVE</span
                 >
               </div>
             </div>
@@ -287,39 +245,21 @@ export class SystemsComponent
   private intervals: any[] = [];
 
   pipelineSteps = [
-    {
-      name: "Architecture",
-      icon: "settings",
-      status: "SUCCESS",
-      time: "14.2s",
-    },
-    { name: "Validation", icon: "fact_check", status: "SUCCESS", time: "8.4s" },
-    {
-      name: "Cluster_Build",
-      icon: "inventory_2",
-      status: "SUCCESS",
-      time: "5.1s",
-    },
-    { name: "Sec_Trace", icon: "security", status: "SUCCESS", time: "9.3s" },
-    {
-      name: "Propagation",
-      icon: "rocket_launch",
-      status: "SUCCESS",
-      time: "3.7s",
-    },
+    { name: "Source", icon: "source", status: "SUCCESS" },
+    { name: "Build", icon: "build", status: "SUCCESS" },
+    { name: "Test", icon: "biotech", status: "SUCCESS" },
+    { name: "Deploy", icon: "rocket_launch", status: "SUCCESS" },
   ];
 
   metrics = [
-    { name: "CPU Cluster Load", value: "42.8", unit: "%", percent: 42.8 },
-    { name: "Neural Memory", value: "4.2", unit: "GB", percent: 14 },
-    { name: "Spectral Bandwidth", value: "1.2", unit: "Gbps", percent: 35 },
-    { name: "I/O Protocols", value: "842", unit: " IOPs", percent: 62 },
+    { name: "AWS Instance Load", value: "24.5", unit: "%", percent: 24.5 },
+    { name: "Database Response", value: "12", unit: "ms", percent: 12 },
+    { name: "Memory Usage", value: "1.8", unit: "GB", percent: 30 },
   ];
 
   ngOnInit() {
     this.generateInitialLogs();
-    this.intervals.push(setInterval(() => this.addRandomLog(), 3000));
-    this.intervals.push(setInterval(() => this.updateMetrics(), 4000));
+    this.intervals.push(setInterval(() => this.addRandomLog(), 5000));
   }
 
   ngAfterViewInit() {
@@ -368,22 +308,16 @@ export class SystemsComponent
   private generateInitialLogs() {
     const initialLogs: LogEntry[] = [
       {
-        timestamp: "19:02:11",
-        source: "KERNEL",
+        timestamp: "20:10:01",
+        source: "AWS",
         level: "INFO",
-        message: "Core system initialization sequence started.",
+        message: "Cloud cluster connected. All nodes healthy.",
       },
       {
-        timestamp: "19:02:12",
-        source: "NETWORK",
+        timestamp: "20:10:05",
+        source: "DOCKER",
         level: "INFO",
-        message: "Node cluster handshake established at 1.2ms.",
-      },
-      {
-        timestamp: "19:02:13",
-        source: "NEURAL",
-        level: "INFO",
-        message: "Contextual synthesis layer active (Gemini 1.5).",
+        message: "Container orchestration service active.",
       },
     ];
     this.logs.set(initialLogs);
@@ -391,38 +325,21 @@ export class SystemsComponent
 
   private addRandomLog() {
     const messages = [
-      "Heartbeat signal verified.",
-      "Optimization loop cycle complete.",
-      "Metadata archive synchronized.",
-      "Inbound query processed by neural core.",
-      "Spectral link status: STABLE.",
+      "Auto-scaling group check complete.",
+      "Database connection pool verified.",
+      "SSL certificate validation transition successful.",
+      "Load balancer health check passed.",
     ];
 
     const newLog: LogEntry = {
       timestamp: new Date().toLocaleTimeString("en-US", { hour12: false }),
       source: "SYSTEM",
-      level: Math.random() > 0.9 ? "WARN" : "INFO",
+      level: "INFO",
       message: messages[Math.floor(Math.random() * messages.length)],
     };
 
     const currentLogs = this.logs();
-    if (currentLogs.length > 30) currentLogs.shift();
+    if (currentLogs.length > 20) currentLogs.shift();
     this.logs.set([...currentLogs, newLog]);
-  }
-
-  private updateMetrics() {
-    this.metrics = this.metrics.map((m) => {
-      const change = (Math.random() - 0.5) * 4;
-      let newValue = parseFloat(m.value) + change;
-      newValue = Math.max(0, Math.min(100, newValue));
-      return {
-        ...m,
-        value: newValue.toFixed(1),
-        percent:
-          m.unit === "%"
-            ? newValue
-            : Math.max(10, Math.min(95, m.percent + change / 2)),
-      };
-    });
   }
 }

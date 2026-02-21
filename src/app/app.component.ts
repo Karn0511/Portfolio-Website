@@ -19,44 +19,39 @@ import Lenis from "lenis";
   imports: [CommonModule, RouterOutlet, RouterModule, AiAssistantComponent],
   template: `
     <div
-      class="h-screen w-screen bg-[#030303] text-slate-100 flex flex-col md:flex-row overflow-hidden font-sans relative selection:bg-white selection:text-black"
+      class="h-screen w-screen bg-[#050505] text-slate-100 flex flex-col md:flex-row overflow-hidden font-sans relative"
     >
-      <!-- Global Cursor (Desktop Only) -->
-      <div class="hidden lg:block cursor-main" #cursorMain></div>
-      <div class="hidden lg:block cursor-ring" #cursorRing></div>
-      <div class="hidden lg:block cursor-glow" #cursorGlow></div>
-
       <!-- Static BG Grid -->
       <div
-        class="fixed inset-0 bg-grid opacity-20 md:opacity-40 pointer-events-none z-0"
+        class="fixed inset-0 bg-grid opacity-20 pointer-events-none z-0"
       ></div>
       <div
         class="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-0"
       ></div>
 
-      <!-- Desktop Sidebar Navigation -->
+      <!-- Desktop Navigation -->
       <nav
-        class="hidden md:flex w-24 h-[94vh] my-[3vh] ml-6 glass-panel rounded-[2rem] flex-col items-center py-10 z-[100] gap-12 shadow-2xl"
+        class="hidden md:flex w-24 h-full border-r border-white/5 bg-black/40 flex-col items-center py-10 z-[100] gap-12"
       >
         <div
-          class="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center font-display font-black text-lg hover:scale-110 active:scale-90 transition-all cursor-pointer shadow-lg interactive"
+          class="w-12 h-12 bg-white text-black flex items-center justify-center font-display font-black text-lg hover:bg-sky-400 transition-all cursor-pointer"
         >
           AK
         </div>
 
-        <div class="flex-1 flex flex-col gap-6">
+        <div class="flex-1 flex flex-col gap-8">
           <a
             *ngFor="let item of navItems"
             [routerLink]="item.path"
             routerLinkActive="active-nav"
-            class="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/5 transition-all group relative interactive magnetic-item"
+            class="w-12 h-12 flex items-center justify-center text-slate-500 hover:text-white transition-all group relative"
           >
             <span
-              class="material-symbols-outlined text-xl transition-all group-hover:scale-110 pointer-events-none"
+              class="material-symbols-outlined text-xl transition-all group-hover:scale-110"
               >{{ item.icon }}</span
             >
             <div
-              class="absolute left-full ml-6 px-3 py-1.5 bg-white text-black text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-50 translate-x-[-10px] group-hover:translate-x-0"
+              class="absolute left-full ml-6 px-3 py-1.5 bg-white text-black text-[9px] font-bold rounded-none opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-50"
             >
               {{ item.label }}
             </div>
@@ -65,26 +60,21 @@ import Lenis from "lenis";
 
         <button
           (click)="toggleAi()"
-          [class.active-ai]="isAiOpen"
-          class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white hover:border-white/20 hover:bg-white/10 transition-all shadow-lg interactive"
+          class="w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-sky-500 transition-all"
         >
-          <span
-            class="material-symbols-outlined text-xl"
-            [class.animate-pulse]="!isAiOpen"
-            >psychology</span
-          >
+          <span class="material-symbols-outlined text-xl">chat_bubble</span>
         </button>
       </nav>
 
-      <!-- Mobile Bottom Navigation -->
+      <!-- Mobile Navigation -->
       <nav
-        class="md:hidden fixed bottom-6 left-6 right-6 h-16 glass-panel rounded-2xl z-[100] flex items-center justify-around px-4 shadow-2xl"
+        class="md:hidden fixed bottom-6 left-6 right-6 h-16 bg-black/90 border border-white/10 rounded-none z-[100] flex items-center justify-around px-4"
       >
         <a
           *ngFor="let item of navItems"
           [routerLink]="item.path"
           routerLinkActive="mobile-active-nav"
-          class="flex flex-col items-center justify-center gap-1 text-slate-500 transition-all active:scale-95"
+          class="flex flex-col items-center justify-center gap-1 text-slate-500 transition-all"
         >
           <span class="material-symbols-outlined text-xl">{{ item.icon }}</span>
         </a>
@@ -97,7 +87,7 @@ import Lenis from "lenis";
         </button>
       </nav>
 
-      <!-- Main Mission Core -->
+      <!-- Main Content -->
       <main
         #scrollTarget
         class="flex-1 h-screen overflow-y-auto scrollbar-hide relative z-10 pb-28 md:pb-0"
@@ -107,29 +97,30 @@ import Lenis from "lenis";
         </div>
       </main>
 
-      <!-- High-Fidelity Assistant HUD (Responsive) -->
+      <!-- AI Assistant -->
       <div
         *ngIf="isAiOpen"
-        class="fixed inset-4 md:inset-auto md:right-6 md:bottom-6 md:w-[380px] md:h-[600px] z-[200] bg-[#080808]/95 border border-white/10 rounded-[1.5rem] md:rounded-[2rem] flex flex-col overflow-hidden shadow-2xl backdrop-blur-3xl animate-in fade-in zoom-in duration-300"
+        class="fixed inset-4 md:inset-auto md:right-8 md:bottom-8 md:w-[400px] md:h-[650px] z-[200] bg-black border border-white/10 flex flex-col overflow-hidden shadow-2xl"
       >
         <app-ai-assistant (close)="toggleAi()"></app-ai-assistant>
       </div>
 
-      <!-- System Telemetry (Desktop Only) -->
+      <!-- Infrastructure Status -->
       <div
-        class="hidden md:flex fixed bottom-6 right-8 z-50 items-center gap-4 px-4 py-1.5 rounded-full border border-white/5 bg-black/40 backdrop-blur-md shadow-xl"
+        class="hidden md:flex fixed bottom-8 right-10 z-50 items-center gap-4 px-5 py-2 border border-white/10 bg-black/80"
       >
-        <div class="flex items-center gap-2">
-          <div
-            class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-          ></div>
-          <span class="text-[8px] font-mono text-slate-400 tracking-wider"
-            >STABLE</span
+        <div class="flex items-center gap-3">
+          <div class="w-1.5 h-1.5 bg-sky-500 rounded-full animate-pulse"></div>
+          <span
+            class="text-[9px] font-mono text-white/50 tracking-widest uppercase font-bold"
+            >Node Healthy</span
           >
         </div>
         <div class="w-px h-3 bg-white/10"></div>
-        <div class="text-[8px] font-mono text-slate-500 uppercase">
-          Lat: 14ms
+        <div
+          class="text-[9px] font-mono text-white/30 uppercase font-bold tracking-tighter"
+        >
+          Ping: 12ms
         </div>
       </div>
     </div>
@@ -137,10 +128,10 @@ import Lenis from "lenis";
   styles: [
     `
       .active-nav {
-        @apply bg-white text-black shadow-lg scale-105;
+        @apply text-sky-400 border-r-2 border-sky-400 bg-white/5;
       }
       .mobile-active-nav {
-        @apply text-white scale-110;
+        @apply text-sky-400 scale-110;
       }
     `,
   ],
@@ -153,10 +144,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   isAiOpen = false;
   navItems = [
-    { path: "/home", icon: "grid_view", label: "DASHBOARD" },
-    { path: "/experience", icon: "account_tree", label: "THE_VECTOR" },
-    { path: "/projects", icon: "deployed_code", label: "ARCHIVE" },
-    { path: "/systems", icon: "terminal", label: "KERNEL" },
+    { path: "/home", icon: "home", label: "HOME" },
+    { path: "/experience", icon: "work", label: "EXPERIENCE" },
+    { path: "/projects", icon: "code", label: "PROJECTS" },
+    { path: "/systems", icon: "dns", label: "STACK" },
   ];
 
   private lenis: Lenis | null = null;
