@@ -1,4 +1,4 @@
-# PORTFOLIO_OS // INTELLECTUAL_ASSET_V1.4.0
+# PORTFOLIO_OS || INTELLECTUAL_ASSET_V1.4.0
 
 ![System Status](https://img.shields.io/badge/System_Status-OPERATIONAL-emerald?style=for-the-badge&logoColor=white)
 ![Neural Core](https://img.shields.io/badge/Neural_Core-ACTIVE-sky?style=for-the-badge&logoColor=white)
