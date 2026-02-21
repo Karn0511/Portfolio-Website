@@ -39,5 +39,19 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modifyClosureCodeActionConfirm": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "cSpell.words": [
+    "Ashutosh",
+    "Karn",
+    "SHUATS",
+    "GSAP",
+    "GLSL",
+    "Glassmorphism",
+    "Firestore",
+    "GenKit",
+    "lenis",
+    "Phong",
+    "libpeerconnection",
+    "Frontends"
+  ]
 }

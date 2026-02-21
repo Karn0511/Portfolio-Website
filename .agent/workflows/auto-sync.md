@@ -10,4 +10,4 @@
 ./sync.ps1
 ```
 
-3. Confirm that the changes are visible on GitHub at https://github.com/Karn0511/Portfolio-Website
+3. Confirm that the changes are visible on GitHub at <https://github.com/Karn0511/Portfolio-Website>
