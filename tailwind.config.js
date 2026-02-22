@@ -4,6 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Text hierarchy
+        text: {
+          primary: "#f1f5f9",
+          secondary: "#cbd5e1",
+          tertiary: "#94a3b8",
+          muted: "#64748b",
+        },
+
         // New design system colors
         navy: {
           50: "#f0f4f8",
@@ -68,6 +76,24 @@ module.exports = {
           "SFMono-Regular",
         ],
         orbitron: ["Orbitron", "sans-serif"],
+      },
+      spacing: {
+        xs: "4px",
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "24px",
+        "2xl": "32px",
+        "3xl": "48px",
+        "4xl": "64px",
+        "5xl": "80px",
+        "6xl": "96px",
+        "7xl": "112px",
+        "8xl": "128px",
+        // Section spacing
+        "section-mobile": "48px",
+        "section-tablet": "64px",
+        "section-desktop": "80px",
       },
       animation: {
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",

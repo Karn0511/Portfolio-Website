@@ -295,7 +295,7 @@ gsap.registerPlugin(ScrollTrigger);
           >
             <!-- Timeline dot -->
             <div
-              class="absolute left-0 md:left-1/2 top-4 w-4 h-4 bg-gold-primary rounded-full border-4 border-navy-900 md:transform md:-translate-x-1/2 md:-translate-x-2"
+              class="absolute left-0 md:left-1/2 top-4 w-4 h-4 bg-gold-primary rounded-full border-4 border-navy-900 md:transform md:-translate-x-1/2"
             ></div>
 
             <!-- Content -->
@@ -439,7 +439,7 @@ export class HomeAmazingComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private parallaxService: ParallaxService) {}
+  constructor(private readonly parallaxService: ParallaxService) {}
 
   ngOnInit() {
     this.parallaxService.getScrollProgress$().subscribe((progress) => {

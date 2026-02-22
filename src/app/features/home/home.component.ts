@@ -1,103 +1,220 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, OnAfterViewInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import * as THREE from "three";
+import { SectionComponent } from "../../shared/components/section/section.component";
+import { ContainerComponent } from "../../shared/components/container/container.component";
+import { ScrollRevealDirective } from "../../core/directives/scroll-reveal.directive";
+import { ANIMATION_TIMINGS, EASING } from "../../core/constants/animations";
+import { MOTION, LAYOUT } from "../../core/constants/motion";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * HOME COMPONENT - Hero Dashboard
+ * Professional, calm, command-center aesthetic
+ * 
+ * Design:
+ * - Full viewport height hero
+ * - Minimal text: Name | Role | Statement
+ * - Smooth parallax on scroll
+ * - No chaotic animations
+ * - Cinematic, deep, confident
+ */
 
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SectionComponent,
+    ContainerComponent,
+    ScrollRevealDirective,
+  ],
   template: `
-    <div class="flex flex-col p-6 md:p-12 xl:p-20 relative min-h-screen">
-      <!-- Hero Section -->
-      <section class="mb-20 pt-10">
-        <div class="flex items-center gap-4 mb-8">
-          <div class="h-[1px] w-12 bg-white/20"></div>
-          <span
-            class="font-mono text-[10px] text-[#00A3FF] tracking-[0.4em] uppercase font-bold"
-            style="font-family: 'JetBrains Mono', monospace;"
-            >ASHUTOSH_KARN // KERNEL_ENG</span
-          >
-        </div>
+    <!-- Hero Section: Calm Dashboard -->
+    <section
+      class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-navy-900"
+      #heroSection
+    >
+      <!-- Parallax Layer 1: Deep Background -->
+      <div
+        class="absolute inset-0 z-0"
+        #parallaxBg1
+        style="background: linear-gradient(135deg, rgba(15, 20, 25, 0.5) 0%, rgba(26, 42, 74, 0.3) 50%, rgba(15, 20, 25, 0.5) 100%)"
+      ></div>
 
-        <h1
-          class="font-display font-black text-[clamp(3.5rem,10vw,7rem)] mb-6 leading-[0.85] tracking-tighter"
-          style="font-family: 'Outfit', sans-serif;"
-        >
-          SYSTEM ARCHITECT<br />
-          <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-white to-[#00A3FF]"
-            >FULL STACK DEPLOY</span
-          >
-        </h1>
+      <!-- Parallax Layer 2: Accent Glow (subtle) -->
+      <div
+        class="absolute top-1/3 right-1/4 w-96 h-96 rounded-full opacity-10 z-0 blur-3xl"
+        style="background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%)"
+        #parallaxBg2
+      ></div>
 
-        <div class="max-w-3xl border-l-[1px] border-white/10 pl-8 mt-12">
-          <p
-            class="text-white/60 text-lg md:text-xl font-light leading-relaxed"
-          >
-            Scalable cloud architectures • High-frequency reactive frontends •
-            <span class="text-white font-bold">AWS Academy Certified</span>
-          </p>
-        </div>
-      </section>
-
-      <!-- Bento Dashboard -->
-      <section class="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-20">
-        <!-- Hero Metrics -->
-        <div
-          class="md:col-span-4 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[32px] p-10 flex flex-col justify-between min-h-[300px] group transition-all hover:bg-white/[0.05]"
-        >
-          <div
-            class="font-mono text-[10px] text-[#FFD700] tracking-widest uppercase"
-          >
-            SYST_KINETIC_INDEX
+      <!-- Main Content -->
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-lg md:px-xl lg:px-2xl">
+        <div class="flex flex-col gap-8 md:gap-12" appScrollReveal="slideUp">
+          <!-- Identifier Line -->
+          <div class="flex items-center gap-3 text-text-muted">
+            <div class="h-px w-8 bg-gold-primary/40"></div>
+            <span class="font-mono text-xs md:text-sm font-semibold tracking-widest uppercase">
+              Software Engineer
+            </span>
           </div>
-          <div>
-            <div class="text-6xl font-display font-black mb-2">98.4%</div>
-            <div class="text-xs text-white/40 font-mono">
-              CODE_EFFICIENCY_STABLE
-            </div>
-          </div>
-        </div>
 
-        <!-- Core Pillars -->
-        <div
-          class="md:col-span-8 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[32px] p-10 flex flex-col group transition-all hover:bg-white/[0.05]"
-        >
-          <div
-            class="font-mono text-[10px] text-[#00A3FF] tracking-widest uppercase mb-10"
-          >
-            CORE_ENGINEERING_PILLARS
+          <!-- Main Headline: Name & Role -->
+          <div class="space-y-4">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tighter text-text-primary">
+              Ashutosh Karn
+            </h1>
+            <p class="text-2xl md:text-3xl lg:text-4xl font-semibold text-text-secondary leading-tight">
+              AI, Cloud, & Full-Stack Engineering
+            </p>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            <div *ngFor="let pillar of pillars" class="space-y-4">
-              <div class="text-[#FFD700] font-black text-xs font-mono">
-                {{ pillar.id }}
-              </div>
-              <div class="text-white font-bold text-lg">{{ pillar.title }}</div>
-              <div class="text-white/40 text-xs leading-relaxed">
-                {{ pillar.desc }}
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Project Quick Access -->
-        <div
-          class="md:col-span-12 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[32px] p-10 group transition-all hover:bg-white/[0.05]"
-        >
-          <div class="flex justify-between items-center mb-10">
-            <div
-              class="font-mono text-[10px] text-[#00A3FF] tracking-widest uppercase"
-            >
-              ACTIVE_REGISTRY
-            </div>
+          <!-- Professional Statement -->
+          <div class="max-w-2xl">
+            <p class="text-base md:text-lg text-text-tertiary leading-relaxed border-l-2 border-gold-primary/40 pl-xl">
+              Building thoughtful systems for meaningful problems.
+              <span class="text-text-secondary font-medium">
+                Expertise in large-scale architecture, AI integration, and cloud deployment.
+              </span>
+            </p>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-8">
             <button
               [routerLink]="['/projects']"
+              class="px-8 py-3 bg-gold-primary text-navy-900 font-semibold rounded-lg hover:bg-gold-light transition-all duration-300 ease-out hover:shadow-glow-md"
+            >
+              View Work
+            </button>
+            <button
+              class="px-8 py-3 border border-text-tertiary text-text-primary font-semibold rounded-lg hover:border-gold-primary hover:text-gold-primary transition-all duration-300 ease-out"
+            >
+              Get in Touch
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator (visible on hero only) -->
+      <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+        #scrollIndicator
+      >
+        <span class="text-xs text-text-muted uppercase tracking-widest">Scroll to explore</span>
+        <div class="w-0.5 h-8 bg-gradient-to-b from-gold-primary to-transparent rounded-full animate-pulse"></div>
+      </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <app-section [spacingVariant]="'lg'" appScrollReveal [revealType]="'slideUp'">
+      <app-container [maxWidth]="'lg'">
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <span class="font-mono text-xs text-gold-primary uppercase tracking-widest">About</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-text-primary leading-tight">
+              Engineering with Purpose
+            </h2>
+          </div>
+
+          <p class="text-lg text-text-secondary leading-relaxed max-w-3xl">
+            I'm a software engineer specializing in cloud architecture, AI systems, and full-stack development.
+            I focus on building scalable, maintainable solutions that solve real problems for users and businesses.
+          </p>
+
+          <p class="text-base text-text-tertiary leading-relaxed max-w-3xl">
+            My experience spans from early-stage startups to enterprise systems, working with modern tooling
+            including AWS, Azure, Kubernetes, and AI/ML frameworks. I'm passionate about clean code, thoughtful design,
+            and continuous learning.
+          </p>
+        </div>
+      </app-container>
+    </app-section>
+  `,
+  styles: [
+    `
+      @keyframes subtle-float {
+        0%, 100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-8px);
+          opacity: 0.95;
+        }
+      }
+
+      :host ::ng-deep .animate-pulse {
+        animation: subtle-float 2s ease-in-out infinite;
+      }
+    `,
+  ],
+})
+export class HomeComponent implements OnInit, OnDestroy, OnAfterViewInit {
+  private scrollTrigger: any;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    // Initialize on component creation
+  }
+
+  ngAfterViewInit(): void {
+    this.setupParallaxAnimations();
+  }
+
+  /**
+   * Setup smooth parallax animations
+   * No ScrollTrigger for simplicity - manual scroll listener
+   */
+  private setupParallaxAnimations(): void {
+    const heroSection = document.querySelector("[#heroSection]") as HTMLElement;
+    if (!heroSection) return;
+
+    // Smooth parallax on scroll
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY;
+      const progress = Math.min(scrollY / window.innerHeight, 1);
+
+      // Parallax layers move at different speeds
+      const bg1 = document.querySelector("[#parallaxBg1]") as HTMLElement;
+      const bg2 = document.querySelector("[#parallaxBg2]") as HTMLElement;
+      const scrollIndicator = document.querySelector("[#scrollIndicator]") as HTMLElement;
+
+      if (bg1) {
+        gsap.to(bg1, {
+          y: scrollY * 0.3,
+          opacity: 1 - progress * 0.3,
+          duration: 0,
+        });
+      }
+
+      if (bg2) {
+        gsap.to(bg2, {
+          y: scrollY * 0.2,
+          opacity: Math.max(0, 1 - progress * 0.5),
+          duration: 0,
+        });
+      }
+
+      // Hide scroll indicator as user scrolls
+      if (scrollIndicator) {
+        scrollIndicator.style.opacity = String(Math.max(0, 1 - progress * 2));
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollTrigger) {
+      this.scrollTrigger.kill();
+    }
+  }
+}
               class="text-[10px] font-bold text-white/40 hover:text-white transition-colors underline underline-offset-8"
             >
               VIEW_ALL_NODES

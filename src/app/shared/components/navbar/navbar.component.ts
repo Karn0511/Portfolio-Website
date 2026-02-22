@@ -83,6 +83,4 @@ import { RouterModule } from "@angular/router";
   `,
   styles: [],
 })
-export class NavbarComponent {
-  ngOnInit() {}
-}
+export class NavbarComponent {}

@@ -1,129 +1,119 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
-import { CustomCursorComponent } from "../../shared/components/custom-cursor/custom-cursor.component";
+import { SectionComponent } from "../../shared/components/section/section.component";
+import { ContainerComponent } from "../../shared/components/container/container.component";
+import { GridComponent } from "../../shared/components/grid/grid.component";
+import { TechBadge3dComponent } from "../../shared/components/tech-badge-3d-premium/tech-badge-3d-premium.component";
+import {
+  TechStackData,
+  type TechStackItem,
+} from "../../core/data/tech-stack.data";
 
-interface Technology {
-  name: string;
-  category: string;
-  proficiency: number;
-}
+/**
+ * TECH STACK COMPONENT
+ * Displays professional 3D technology logo showcase
+ *
+ * Design:
+ * - Premium 3D badge presentation
+ * - Organized by category
+ * - Smooth hover interactions
+ * - Fully responsive grid
+ */
 
 @Component({
   selector: "app-systems",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, CustomCursorComponent],
+  imports: [
+    CommonModule,
+    SectionComponent,
+    ContainerComponent,
+    GridComponent,
+    TechBadge3dComponent,
+  ],
   template: `
-    <!-- Custom Cursor -->
-    <app-custom-cursor></app-custom-cursor>
-
-    <!-- Navigation -->
-    <app-navbar></app-navbar>
-
-    <!-- Background -->
-    <div
-      id="background-container"
-      class="fixed inset-0 -z-30 bg-navy-900"
-    ></div>
-
-    <!-- Main Content -->
-    <main class="relative pt-20 min-h-screen pb-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header -->
-        <div class="py-20">
-          <div
-            class="inline-block mb-6 px-4 py-2 rounded-full border border-gold-primary/30 bg-gold-primary/5"
-          >
-            <span
-              class="text-sm font-bold text-gold-primary uppercase tracking-widest"
-              >Infrastructure</span
-            >
-          </div>
-          <h1 class="text-6xl md:text-7xl font-black text-white mb-6">
-            Technical Stack
-          </h1>
-          <p class="text-xl text-slate-300 max-w-2xl">
-            Modern technologies for building scalable, performant systems
-          </p>
-
-          <!-- Stats -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
-            <div class="p-6 rounded-xl border border-white/10 bg-white/[0.02]">
-              <div class="text-3xl font-black text-gold-primary mb-2">
-                99.9%
-              </div>
-              <div class="text-sm text-slate-400">Uptime SLA</div>
-            </div>
-            <div class="p-6 rounded-xl border border-white/10 bg-white/[0.02]">
-              <div class="text-3xl font-black text-emerald-400 mb-2">
-                STABLE
-              </div>
-              <div class="text-sm text-slate-400">System Status</div>
-            </div>
-            <div class="p-6 rounded-xl border border-white/10 bg-white/[0.02]">
-              <div class="text-3xl font-black text-blue-400 mb-2">20+</div>
-              <div class="text-sm text-slate-400">Technologies</div>
-            </div>
-            <div class="p-6 rounded-xl border border-white/10 bg-white/[0.02]">
-              <div class="text-3xl font-black text-gold-primary mb-2">
-                &lt;100ms
-              </div>
-              <div class="text-sm text-slate-400">Response Time</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tech Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let tech of technologies"
-            class="group p-6 rounded-xl border border-white/10 bg-white/[0.02] hover:border-gold-primary/50 transition-all duration-300"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <h3
-                class="text-lg font-bold text-white group-hover:text-gold-primary transition-colors"
-              >
-                {{ tech.name }}
-              </h3>
+    <!-- Tech Stack Section -->
+    <app-section [spacingVariant]="'lg'">
+      <app-container [maxWidth]="'xl'">
+        <div class="space-y-16">
+          <!-- Section Header -->
+          <div class="space-y-6">
+            <div class="space-y-2">
               <span
-                class="text-xs font-bold px-2 py-1 rounded text-gold-primary bg-gold-primary/10"
-                >{{ tech.category }}</span
+                class="font-mono text-xs text-gold-primary uppercase tracking-widest"
               >
+                Technical Arsenal
+              </span>
+              <h2
+                class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
+              >
+                Technology Stack
+              </h2>
             </div>
-            <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+            <p class="text-lg text-text-secondary max-w-3xl leading-relaxed">
+              A carefully curated set of modern tools and frameworks, selected
+              for scalability, reliability, and performance. Each technology is
+              chosen for a specific purpose in building enterprise-grade
+              systems.
+            </p>
+          </div>
+
+          <!-- Technologies by Category -->
+          <div class="space-y-20">
+            <div *ngFor="let category of categories" class="space-y-8">
+              <!-- Category Title -->
+              <div>
+                <h3
+                  class="text-xl font-semibold text-text-primary uppercase tracking-widest"
+                >
+                  {{ category }}
+                </h3>
+                <div class="h-px w-12 bg-gold-primary/40 mt-3"></div>
+              </div>
+
+              <!-- Tech Grid for Category -->
               <div
-                class="h-full bg-gradient-to-r from-gold-primary to-gold-light"
-                [style.width.%]="tech.proficiency"
-              ></div>
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6"
+              >
+                <app-tech-badge-3d
+                  *ngFor="let tech of getTechByCategory(category)"
+                  [tech]="tech"
+                ></app-tech-badge-3d>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary Stats -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/10"
+          >
+            <div class="space-y-2">
+              <div class="text-3xl font-bold text-gold-primary">
+                {{ technologies.length }}+
+              </div>
+              <p class="text-sm text-text-tertiary">Technologies Mastered</p>
+            </div>
+            <div class="space-y-2">
+              <div class="text-3xl font-bold text-gold-primary">
+                {{ categories.length }}
+              </div>
+              <p class="text-sm text-text-tertiary">Categories of Expertise</p>
+            </div>
+            <div class="space-y-2">
+              <div class="text-3xl font-bold text-gold-primary">10+ yrs</div>
+              <p class="text-sm text-text-tertiary">Combined Experience</p>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </app-container>
+    </app-section>
   `,
   styles: [],
 })
 export class SystemsComponent {
-  technologies: Technology[] = [
-    { name: "TypeScript", category: "Language", proficiency: 95 },
-    { name: "Angular", category: "Frontend", proficiency: 92 },
-    { name: "React", category: "Frontend", proficiency: 85 },
-    { name: "Node.js", category: "Backend", proficiency: 90 },
-    { name: "Python", category: "Backend", proficiency: 88 },
-    { name: "FastAPI", category: "Framework", proficiency: 85 },
-    { name: "PostgreSQL", category: "Database", proficiency: 87 },
-    { name: "MongoDB", category: "Database", proficiency: 85 },
-    { name: "Redis", category: "Cache", proficiency: 80 },
-    { name: "Docker", category: "DevOps", proficiency: 90 },
-    { name: "Kubernetes", category: "DevOps", proficiency: 85 },
-    { name: "AWS", category: "Cloud", proficiency: 88 },
-    { name: "Azure", category: "Cloud", proficiency: 82 },
-    { name: "Firebase", category: "Backend", proficiency: 85 },
-    { name: "GraphQL", category: "API", proficiency: 80 },
-    { name: "REST", category: "API", proficiency: 95 },
-    { name: "GSAP", category: "Animation", proficiency: 88 },
-    { name: "Three.js", category: "3D", proficiency: 87 },
-    { name: "TensorFlow", category: "AI/ML", proficiency: 82 },
-    { name: "Git", category: "VCS", proficiency: 95 },
-  ];
+  technologies: TechStackItem[] = TechStackData.TECHNOLOGIES;
+  categories: string[] = TechStackData.getCategories();
+
+  getTechByCategory(category: string): TechStackItem[] {
+    return TechStackData.getByCategory(category);
+  }
 }

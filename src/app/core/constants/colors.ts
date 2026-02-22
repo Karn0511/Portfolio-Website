@@ -1,49 +1,61 @@
 /**
  * DESIGN SYSTEM: Color Palette & Tokens
  * Deep, calm, professional aesthetic
+ *
+ * Rules:
+ * - Navy/Midnight backgrounds set calm foundation
+ * - Gold used ONLY as accent (2-3% of design)
+ * - Text hierarchy through opacity
+ * - No neon, no random gradients
  */
 
 export const COLOR_PALETTE = {
-  // Primary Base
+  // PRIMARY BASE - Deep Foundation
   navy: {
-    50: "#f0f4f8",
-    100: "#d9e2ec",
-    900: "#0f1419",
-    950: "#0a0d12",
+    900: "#0f1419", // Main background
+    950: "#0a0d12", // Darkest backgrounds
   },
 
-  // Deep Base Colors
-  midnight: "#1a1f2e",
-  softBlack: "#121620",
-  charcoal: "#1c2333",
+  // SECONDARY BASE - Depth Layers
+  midnight: "#1a1f2e", // Accent background, section dividers
+  softBlack: "#121620", // Card backgrounds, componentry
+  charcoal: "#1c2333", // Hover states, interactive layers
 
-  // Accent: Subtle Gold (use sparingly)
+  // ACCENT - Gold (Use Sparingly: 2-3% max)
   gold: {
-    primary: "#d4af37",
-    dark: "#a89968",
-    muted: "#8b7d2d",
-    light: "#e8d5b5",
+    primary: "#d4af37", // Main accent, buttons, highlights
+    dark: "#a89968", // Hover states, secondary
+    muted: "#8b7d2d", // Tertiary, very subtle
+    light: "#e8d5b5", // Glow effects only
   },
 
-  // Text
+  // TEXT HIERARCHY
   text: {
-    primary: "#f1f5f9", // Premium white
-    secondary: "#cbd5e1", // Muted white
-    tertiary: "#94a3b8", // Further muted
-    muted: "#64748b", // Very muted
+    primary: "#f1f5f9", // Main headlines, primary content
+    secondary: "#cbd5e1", // Body text, descriptions
+    tertiary: "#94a3b8", // Secondary descriptions
+    muted: "#64748b", // Hints, timestamps, metadata
   },
 
-  // Semantic
+  // SEMANTIC COLORS (Use Minimally)
   success: "#10b981",
   warning: "#f59e0b",
   danger: "#ef4444",
   info: "#3b82f6",
 
-  // Glass/Transparency
+  // GLASS LAYERS (For glassmorphism components)
   glass: {
-    light: "rgba(255, 255, 255, 0.05)",
-    medium: "rgba(255, 255, 255, 0.08)",
-    dark: "rgba(255, 255, 255, 0.02)",
+    light: "rgba(255, 255, 255, 0.05)", // Subtle layer
+    medium: "rgba(255, 255, 255, 0.08)", // Medium emphasis
+    dark: "rgba(255, 255, 255, 0.02)", // Very subtle
+  },
+
+  // GOLD OVERLAYS (For ambient effects)
+  goldOverlay: {
+    veryLight: "rgba(212, 175, 55, 0.05)",
+    light: "rgba(212, 175, 55, 0.1)",
+    medium: "rgba(212, 175, 55, 0.15)",
+    strong: "rgba(212, 175, 55, 0.2)",
   },
 } as const;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -128,7 +128,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
     `,
   ],
 })
-export class HeroComponent implements OnInit, AfterViewInit {
+export class HeroComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.setupAnimations();
   }

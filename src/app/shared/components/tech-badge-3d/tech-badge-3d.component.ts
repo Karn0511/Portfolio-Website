@@ -4,7 +4,6 @@ import {
   ViewChild,
   ElementRef,
   HostListener,
-  OnInit,
   OnDestroy,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -91,7 +90,7 @@ interface TechBadge {
     `,
   ],
 })
-export class TechBadge3dComponent implements OnInit, OnDestroy {
+export class TechBadge3dComponent implements OnDestroy {
   @Input() badge!: TechBadge;
   @ViewChild("badgeContainer") badgeContainer!: ElementRef;
 
@@ -99,13 +98,9 @@ export class TechBadge3dComponent implements OnInit, OnDestroy {
   glowGradient =
     "radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.1), transparent)";
 
-  private mouseX = 0;
-  private mouseY = 0;
-  private animationId: number | null = null;
-
-  ngOnInit(): void {
-    // Setup 3D tilt effect smoothly
-  }
+  private readonly mouseX = 0;
+  private readonly mouseY = 0;
+  private readonly animationId: number | null = null;
 
   @HostListener("mousemove", ["$event"])
   onMouseMove(event: MouseEvent): void {

@@ -70,7 +70,7 @@ interface TimelineItem {
                 >
                   <!-- Timeline dot -->
                   <div
-                    class="absolute -left-12 top-8 md:left-1/2 md:translate-x-1/2 md:-translate-x-1/2 w-8 h-8 rounded-full border-4 border-navy-900 bg-gold-primary flex items-center justify-center text-navy-900 font-bold text-sm"
+                    class="absolute -left-12 top-8 md:left-1/2 md:-translate-x-1/2 w-8 h-8 rounded-full border-4 border-navy-900 bg-gold-primary flex items-center justify-center text-navy-900 font-bold text-sm"
                   >
                     {{ item.icon }}
                   </div>
