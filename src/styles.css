@@ -8,42 +8,53 @@
 
 @layer base {
   :root {
-    /* Deep Design System Colors */
-    --color-navy-900: #0f1419;
-    --color-navy-950: #0a0d12;
-    --color-midnight: #1a1f2e;
-    --color-soft-black: #121620;
-    --color-charcoal: #1c2333;
+    /* Deep Design System Colors - Cinematic Navy */
+    --color-navy-900: #0a0e1a;
+    --color-navy-950: #060913;
+    --color-midnight: #0f1420;
+    --color-soft-black: #080b14;
+    --color-charcoal: #141824;
 
-    /* Gold Accents (use sparingly) */
-    --color-gold-primary: #d4af37;
-    --color-gold-dark: #a89968;
-    --color-gold-muted: #8b7d2d;
-    --color-gold-light: #e8d5b5;
+    /* Liquid Gold System */
+    --color-gold-primary: #f4d03f;
+    --color-gold-secondary: #e6b422;
+    --color-gold-muted: #c49a1a;
+    --color-gold-light: #ffeaa7;
+    --color-gold-glow: rgba(244, 208, 63, 0.3);
+
+    /* Teal/Cyan Accents */
+    --color-teal-primary: #00d4ff;
+    --color-teal-glow: rgba(0, 212, 255, 0.2);
 
     /* Text Colors */
-    --color-text-primary: #f1f5f9;
-    --color-text-secondary: #cbd5e1;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e2e8f0;
     --color-text-tertiary: #94a3b8;
     --color-text-muted: #64748b;
 
-    /* Gradients */
+    /* Cinematic Gradients */
     --gradient-liquid: linear-gradient(
       135deg,
-      #0f1419 0%,
-      #1a2a4a 50%,
-      #0f1419 100%
+      #0a0e1a 0%,
+      #1a2540 50%,
+      #0a0e1a 100%
     );
-    --gradient-gold-accent: linear-gradient(
+    --gradient-gold-flow: linear-gradient(
       135deg,
-      rgba(212, 175, 55, 0.2) 0%,
+      rgba(244, 208, 63, 0.15) 0%,
+      rgba(230, 180, 34, 0.08) 50%,
       transparent 100%
     );
-    --gradient-depth: linear-gradient(180deg, #1a2a4a 0%, #0f1419 100%);
+    --gradient-depth: linear-gradient(180deg, #0f1420 0%, #060913 100%);
     --gradient-glow-gold: radial-gradient(
       circle at center,
-      rgba(212, 175, 55, 0.15) 0%,
+      rgba(244, 208, 63, 0.2) 0%,
       transparent 70%
+    );
+    --gradient-terminal: linear-gradient(
+      135deg,
+      rgba(15, 20, 32, 0.95) 0%,
+      rgba(26, 37, 64, 0.85) 100%
     );
 
     /* Legacy HSL (for compatibility) */

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
@@ -8,79 +8,106 @@ import { RouterModule } from "@angular/router";
   imports: [CommonModule, RouterModule],
   template: `
     <nav
-      class="fixed top-0 left-0 right-0 z-40 border-b border-white/10 bg-navy-900/80 backdrop-blur-lg"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      [class.nav-scrolled]="isScrolled"
+      [class.backdrop-blur-xl]="isScrolled"
+      [style.background]="
+        isScrolled
+          ? 'linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(15, 20, 32, 0.9) 100%)'
+          : 'transparent'
+      "
+      [style.border-bottom]="
+        isScrolled ? '1px solid rgba(244, 208, 63, 0.1)' : 'none'
+      "
     >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16 md:h-20">
-          <!-- Logo -->
-          <a
-            routerLink="/"
-            class="flex items-center gap-3 hover:opacity-80 transition-opacity"
-          >
+      <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="flex items-center justify-between h-20">
+          <!-- Logo / Brand -->
+          <a routerLink="/" class="flex items-center gap-3 group">
             <div
-              class="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-primary to-gold-light flex items-center justify-center"
+              class="text-gold-primary font-mono text-sm font-bold tracking-widest uppercase hover:text-gold-secondary transition-colors"
             >
-              <span class="text-black font-black text-lg">AK</span>
+              CINEMATIC ARCHITECT (VARIANT 2)
             </div>
-            <span class="hidden sm:block text-lg font-bold text-white"
-              >Ashutosh</span
-            >
           </a>
 
-          <!-- Nav Links -->
-          <div class="hidden md:flex items-center gap-1">
+          <!-- Center Nav Links -->
+          <div class="hidden md:flex items-center gap-8">
             <a
-              routerLink="/"
-              routerLinkActive="bg-white/10"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-gold-primary hover:bg-white/5 transition-all duration-300"
+              href="#about"
+              class="relative text-sm font-mono text-text-secondary hover:text-gold-primary transition-colors uppercase tracking-wider group"
             >
-              Home
+              <span>ABOUT</span>
+              <div
+                class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-primary transition-all duration-300 group-hover:w-full"
+              ></div>
             </a>
             <a
-              routerLink="/projects"
-              routerLinkActive="bg-white/10"
-              class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-gold-primary hover:bg-white/5 transition-all duration-300"
+              href="#projects"
+              class="relative text-sm font-mono text-text-secondary hover:text-gold-primary transition-colors uppercase tracking-wider group"
             >
-              Projects
+              <span>PROJECTS</span>
+              <div
+                class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-primary transition-all duration-300 group-hover:w-full"
+              ></div>
             </a>
             <a
-              routerLink="/systems"
-              routerLinkActive="bg-white/10"
-              class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-gold-primary hover:bg-white/5 transition-all duration-300"
+              href="#blog"
+              class="relative text-sm font-mono text-text-secondary hover:text-gold-primary transition-colors uppercase tracking-wider group"
             >
-              Systems
+              <span>BLOG</span>
+              <div
+                class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-primary transition-all duration-300 group-hover:w-full"
+              ></div>
             </a>
             <a
-              routerLink="/experience"
-              routerLinkActive="bg-white/10"
-              class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-gold-primary hover:bg-white/5 transition-all duration-300"
+              href="#contact"
+              class="relative text-sm font-mono text-text-secondary hover:text-gold-primary transition-colors uppercase tracking-wider group"
             >
-              Career
+              <span>CONTACT</span>
+              <div
+                class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-primary transition-all duration-300 group-hover:w-full"
+              ></div>
             </a>
           </div>
 
-          <!-- CTA Button -->
+          <!-- Right: CTA -->
           <div class="flex items-center gap-4">
-            <a
-              href="https://github.com/Karn0511"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hidden sm:flex w-10 h-10 rounded-lg border border-white/20 items-center justify-center text-white/60 hover:text-gold-primary hover:border-gold-primary/50 transition-all duration-300"
+            <button
+              class="px-6 py-2.5 border border-gold-primary text-gold-primary font-mono text-xs uppercase tracking-wider hover:bg-gold-primary/10 transition-all duration-300"
             >
-              <span class="text-lg">⚡</span>
-            </a>
-            <a
-              href="mailto:karnashutosh6@gmail.com"
-              class="px-4 md:px-6 py-2 rounded-lg bg-gradient-to-r from-gold-primary to-gold-light text-black font-semibold text-sm hover:shadow-lg hover:shadow-gold-primary/30 transition-all duration-300"
-            >
-              Contact
-            </a>
+              RESUME
+            </button>
           </div>
         </div>
       </div>
     </nav>
   `,
-  styles: [],
+  styles: [
+    `
+      .nav-scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+    `,
+  ],
 })
-export class NavbarComponent {}
+export class NavbarComponent implements OnInit {
+  isScrolled = false;
+
+  ngOnInit(): void {
+    if (typeof window !== "undefined") {
+      this.checkScroll();
+    }
+  }
+
+  @HostListener("window:scroll", [])
+  onWindowScroll(): void {
+    this.checkScroll();
+  }
+
+  private checkScroll(): void {
+    if (typeof window !== "undefined") {
+      this.isScrolled = window.pageYOffset > 50;
+    }
+  }
+}

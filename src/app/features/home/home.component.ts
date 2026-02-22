@@ -3,13 +3,16 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TerminalComponent } from "../../shared/components/terminal/terminal.component";
+import { AnimatedStatsComponent } from "../../shared/components/animated-stats/animated-stats.component";
+import { MatrixRainComponent } from "../../shared/components/matrix-rain/matrix-rain.component";
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TerminalComponent, AnimatedStatsComponent, MatrixRainComponent],
   template: `
     <!-- Navigation Bar -->
     <nav
@@ -250,10 +253,35 @@ gsap.registerPlugin(ScrollTrigger);
       </div>
     </section>
 
+    <!-- STATS SECTION -->
+    <section class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-950 overflow-hidden">
+      <!-- Matrix Rain Background -->
+      <app-matrix-rain></app-matrix-rain>
+      
+      <div class="relative z-10 container mx-auto max-w-6xl">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight">
+          <span class="text-gold-primary">BY THE NUMBERS</span>
+        </h2>
+        <app-animated-stats></app-animated-stats>
+      </div>
+    </section>
+
+    <!-- TERMINAL SECTION -->
+    <section class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-900 border-y border-gold-primary/10">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-12 tracking-tight">
+          <span class="text-gold-primary">TECHNICAL PROFILE</span>
+        </h2>
+        <app-terminal></app-terminal>
+      </div>
+    </section>
+
     <!-- Divider -->
     <div
       class="h-px bg-gradient-to-r from-transparent via-gold-primary/40 to-transparent"
     ></div>
+
+    <!-- DIVIDER -->
   `,
   styles: [
     `

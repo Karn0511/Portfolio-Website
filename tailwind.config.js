@@ -4,35 +4,40 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Text hierarchy
-        text: {
-          primary: "#f1f5f9",
-          secondary: "#cbd5e1",
-          tertiary: "#94a3b8",
-          muted: "#64748b",
-          code: "#06d6d0",
-        },
-
-        // New design system colors
+        // Cinematic Navy Base
         navy: {
           50: "#f0f4f8",
-          900: "#0f1419",
-          950: "#0a0d12",
+          800: "#141824",
+          900: "#0a0e1a",
+          950: "#060913",
         },
-        midnight: "#1a1f2e",
-        "soft-black": "#121620",
-        charcoal: "#1c2333",
+        midnight: "#0f1420",
+        "soft-black": "#080b14",
+        charcoal: "#141824",
+
+        // Liquid Gold System
         gold: {
-          primary: "#d4af37",
-          dark: "#a89968",
-          muted: "#8b7d2d",
-          light: "#e8d5b5",
+          primary: "#f4d03f",
+          secondary: "#e6b422",
+          muted: "#c49a1a",
+          light: "#ffeaa7",
         },
+
+        // Teal/Cyan Accents
         teal: {
-          primary: "#06d6d0",
-          dark: "#04b5b0",
-          muted: "#03a89f",
-          glow: "#06d6d0",
+          primary: "#00d4ff",
+          dark: "#0099cc",
+          muted: "#006688",
+          glow: "#00d4ff",
+        },
+
+        // Text hierarchy
+        text: {
+          primary: "#ffffff",
+          secondary: "#e2e8f0",
+          tertiary: "#94a3b8",
+          muted: "#64748b",
+          code: "#00d4ff",
         },
 
         // Legacy HSL colors (kept for compatibility)
