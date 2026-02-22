@@ -53,7 +53,7 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
               class="group relative w-12 h-12 flex items-center justify-center text-slate-400 hover:text-gold-primary transition-colors duration-300 rounded-lg border border-transparent hover:border-white/10"
               [title]="item.label"
             >
-              <span class="text-xl">{{ item.icon }}</span>
+              <svg class="w-6 h-6" [innerHTML]="item.icon"></svg>
 
               <!-- Tooltip -->
               <div
@@ -72,7 +72,19 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
             [class.border-gold-primary]="isAiOpen"
             title="AI Assistant"
           >
-            <span class="text-xl">✨</span>
+            <svg
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+              />
+            </svg>
           </button>
         </nav>
 
@@ -93,7 +105,7 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
           class="flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-gold-primary transition-colors"
           [title]="item.label"
         >
-          <span class="text-2xl">{{ item.icon }}</span>
+          <svg class="w-6 h-6" [innerHTML]="item.icon"></svg>
           <span class="text-[10px] font-semibold">{{ item.label }}</span>
         </a>
         <button
@@ -102,7 +114,19 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
           [class.text-gold-primary]="isAiOpen"
           title="AI Assistant"
         >
-          <span class="text-2xl">✨</span>
+          <svg
+            class="w-6 h-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+            />
+          </svg>
           <span class="text-[10px] font-semibold">Chat</span>
         </button>
       </nav>

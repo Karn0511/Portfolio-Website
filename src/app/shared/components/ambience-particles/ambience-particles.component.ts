@@ -306,8 +306,12 @@ export class AmbienceParticlesComponent
 
     // Blend colors based on particle variant
     const blend = p.colorVariant;
-    const centerR = Math.round(goldR * (1 - blend * 0.3) + tealR * (blend * 0.2));
-    const centerG = Math.round(goldG * (1 - blend * 0.3) + tealG * (blend * 0.2));
+    const centerR = Math.round(
+      goldR * (1 - blend * 0.3) + tealR * (blend * 0.2),
+    );
+    const centerG = Math.round(
+      goldG * (1 - blend * 0.3) + tealG * (blend * 0.2),
+    );
     const centerB = Math.round(
       goldB * (1 - blend * 0.3) + tealB * (blend * 0.2),
     );

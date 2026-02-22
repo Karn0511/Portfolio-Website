@@ -117,7 +117,7 @@ requestAnimationFrame(60 times/second) {
 
 ## 🎨 Customization Options
 
-### In `AmbienceParticlesComponent`, edit the `config` object:
+### In `AmbienceParticlesComponent`, edit the `config` object
 
 **For stronger cursor effect:**
 

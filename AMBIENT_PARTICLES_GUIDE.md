@@ -279,14 +279,14 @@ z-0:    Liquid Background
 
 ## 🔍 Debugging & Visualization
 
-### To see particle bounds (add to updateParticle):
+### To see particle bounds
 
 ```typescript
 this.ctx.strokeStyle = "rgba(212, 175, 55, 0.2)";
 this.ctx.strokeRect(p.x - 10, p.y - 10, 20, 20);
 ```
 
-### To visualize force vectors (add to updateParticle):
+### To visualize force vectors
 
 ```typescript
 const forceScale = 5;
@@ -297,7 +297,7 @@ this.ctx.lineTo(p.x + ax * forceScale, p.y + ay * forceScale);
 this.ctx.stroke();
 ```
 
-### To monitor performance:
+### To monitor performance
 
 ```typescript
 console.time("particle-update");

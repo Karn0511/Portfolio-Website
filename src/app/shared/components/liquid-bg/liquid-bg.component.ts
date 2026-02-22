@@ -75,6 +75,7 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } catch (e) {
       // GPU not available, continue with software rendering
+      console.debug("WebGL not available, using 2D canvas");
     }
 
     this.resize();

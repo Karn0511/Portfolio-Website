@@ -4,7 +4,7 @@
 
 Your AI assistant now has the **authentic J.A.R.V.I.S. personality** from Iron Man:
 
-### Characteristics:
+### Characteristics
 
 - ✅ **British sophistication** - Refined, formal, elegant speech
 - ✅ **Respectful address** - Uses "Sir", "Madam", "Mr. Karn"
@@ -13,7 +13,7 @@ Your AI assistant now has the **authentic J.A.R.V.I.S. personality** from Iron M
 - ✅ **Loyal dedication** - Devoted to excellence and service
 - ✅ **Brilliant knowledge** - Incredibly informed yet humble
 
-### Example Phrases:
+### Example Phrases
 
 - "At your service, Sir"
 - "Indeed, quite remarkable"
@@ -159,7 +159,7 @@ User Message
 
 ---
 
-## 🎬 Try It Now!
+## 🎬 Try It Now
 
 ```bash
 npm start

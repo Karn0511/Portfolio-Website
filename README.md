@@ -15,20 +15,19 @@ Portfolio OS is a sophisticated personal portfolio designed to showcase a full-s
 - **Intelligence** in execution
 - **Professionalism** in presentation
 
-<details>
-<summary><b>Design Philosophy</b></summary>
-
-The portfolio follows a strict non-negotiable design principle:
-
-- ✅ **No neon colors** (gold #d4af37 used at <3% as accent only)
-- ✅ **No cyberpunk clutter** (clean, minimalist layout)
-- ✅ **No fake stats** (all real user data)
-- ✅ **No chaotic animations** (every transition is purposeful, 300-800ms)
-- ✅ **No gimmicks** (no cursor tricks or unnecessary effects)
-
-**Result:** When shown to a CTO or founder, the reaction is: _"Clean. Confident. Thoughtful. High quality."_
-
-</details>
+> **A premium, thoughtful portfolio website built with modern web technologies.** Clean design. Intelligent interactions. Zero gimmicks.
+>
+> **Design Philosophy**
+>
+> The portfolio follows a strict non-negotiable design principle:
+>
+> - ✅ **No neon colors** (gold #d4af37 used at <3% as accent only)
+> - ✅ **No cyberpunk clutter** (clean, minimalist layout)
+> - ✅ **No fake stats** (all real user data)
+> - ✅ **No chaotic animations** (every transition is purposeful, 300-800ms)
+> - ✅ **No gimmicks** (no cursor tricks or unnecessary effects)
+>
+> **Result:** When shown to a CTO or founder, the reaction is: _"Clean. Confident. Thoughtful. High quality."_
 
 ---
 
@@ -632,6 +631,8 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ## 👤 Author
 
+## Credits
+
 **Ashutosh Karn**
 
 - **GitHub:** [@Karn0511](https://github.com/Karn0511)
@@ -672,10 +673,8 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ---
 
-<div align="center">
-
 **[🌐 Live Demo](https://karnashutosh.web.app) • [📂 Source Code](https://github.com/Karn0511/Portfolio-Website) • [📧 Contact](mailto:karnashutosh6@gmail.com)**
 
-_Made with ❤️ & Angular_
+> Made with ❤️ & Angular
 
 </div>

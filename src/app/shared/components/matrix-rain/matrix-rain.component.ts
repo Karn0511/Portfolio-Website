@@ -42,8 +42,7 @@ export class MatrixRainComponent implements OnInit, AfterViewInit, OnDestroy {
   hueRotate = 0; // For gold effect: 50, for green: 0, for blue: 200
 
   // Matrix characters (mix of code symbols and Japanese katakana)
-  private readonly chars =
-    "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789<>{}[]()+-*/=|\\~$#@&";
+  private readonly chars = String.raw`ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789<>{}[]()+-*/=|\~$#@&`;
 
   ngOnInit() {
     // Gold/amber matrix effect

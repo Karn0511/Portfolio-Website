@@ -6,7 +6,7 @@ Your API keys were leaked and disabled by Google. Follow these steps to fix and 
 
 ### 1. Get a New Gemini API Key
 
-1. Visit: https://aistudio.google.com/app/apikey
+1. Visit: [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Sign in with your Google account
 3. Click **"Create API Key"**
 4. Copy the generated key
@@ -84,5 +84,5 @@ git filter-branch --force --index-filter \
 
 **Need Help?** Check the example files or visit the documentation:
 
-- Gemini API: https://ai.google.dev/gemini-api/docs/api-key
-- Firebase: https://console.firebase.google.com/
+- Gemini API: [API Key Documentation](https://ai.google.dev/gemini-api/docs/api-key)
+- Firebase: [Firebase Console](https://console.firebase.google.com/)
