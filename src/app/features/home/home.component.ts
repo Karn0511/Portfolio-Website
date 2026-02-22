@@ -12,15 +12,15 @@ import { MOTION, LAYOUT } from "../../core/constants/motion";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * HOME COMPONENT - Hero Dashboard
- * Professional, calm, command-center aesthetic
+ * HOME COMPONENT - Hacker Control Dashboard
+ * Cinematic, energetic, hacker-inspired
  * 
  * Design:
  * - Full viewport height hero
- * - Minimal text: Name | Role | Statement
- * - Smooth parallax on scroll
- * - No chaotic animations
- * - Cinematic, deep, confident
+ * - Terminal-inspired control panel UI
+ * - Liquid background with teal energy
+ * - Professional, not chaotic
+ * - Calm motion with visual energy
  */
 
 @Component({
@@ -34,80 +34,176 @@ gsap.registerPlugin(ScrollTrigger);
     ScrollRevealDirective,
   ],
   template: `
-    <!-- Hero Section: Calm Dashboard -->
+    <!-- Hero Section: Control Dashboard -->
     <section
       class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-navy-900"
       #heroSection
     >
-      <!-- Parallax Layer 1: Deep Background -->
+      <!-- Animated Background Layers -->
       <div
         class="absolute inset-0 z-0"
         #parallaxBg1
-        style="background: linear-gradient(135deg, rgba(15, 20, 25, 0.5) 0%, rgba(26, 42, 74, 0.3) 50%, rgba(15, 20, 25, 0.5) 100%)"
+        style="background: linear-gradient(135deg, rgba(15, 20, 25, 0.6) 0%, rgba(26, 42, 74, 0.4) 50%, rgba(15, 20, 25, 0.6) 100%)"
       ></div>
 
-      <!-- Parallax Layer 2: Accent Glow (subtle) -->
+      <!-- Teal Energy Glow (right side) -->
       <div
-        class="absolute top-1/3 right-1/4 w-96 h-96 rounded-full opacity-10 z-0 blur-3xl"
-        style="background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%)"
+        class="absolute top-1/4 right-1/6 w-96 h-96 rounded-full opacity-20 z-0 blur-3xl"
+        style="background: radial-gradient(circle, rgba(6, 214, 208, 0.4) 0%, transparent 70%)"
         #parallaxBg2
       ></div>
 
-      <!-- Main Content -->
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-lg md:px-xl lg:px-2xl">
-        <div class="flex flex-col gap-8 md:gap-12" appScrollReveal="slideUp">
-          <!-- Identifier Line -->
-          <div class="flex items-center gap-3 text-text-muted">
-            <div class="h-px w-8 bg-gold-primary/40"></div>
-            <span class="font-mono text-xs md:text-sm font-semibold tracking-widest uppercase">
-              Software Engineer
-            </span>
-          </div>
+      <!-- Gold Glow (left side) -->
+      <div
+        class="absolute bottom-1/3 left-1/5 w-80 h-80 rounded-full opacity-15 z-0 blur-3xl"
+        style="background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%)"
+        #parallaxBg3
+      ></div>
 
-          <!-- Main Headline: Name & Role -->
-          <div class="space-y-4">
-            <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tighter text-text-primary">
-              Ashutosh Karn
-            </h1>
-            <p class="text-2xl md:text-3xl lg:text-4xl font-semibold text-text-secondary leading-tight">
-              AI, Cloud, & Full-Stack Engineering
-            </p>
-          </div>
-
-          <!-- Professional Statement -->
-          <div class="max-w-2xl">
-            <p class="text-base md:text-lg text-text-tertiary leading-relaxed border-l-2 border-gold-primary/40 pl-xl">
-              Building thoughtful systems for meaningful problems.
-              <span class="text-text-secondary font-medium">
-                Expertise in large-scale architecture, AI integration, and cloud deployment.
-              </span>
-            </p>
-          </div>
-
-          <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 pt-8">
-            <button
-              [routerLink]="['/projects']"
-              class="px-8 py-3 bg-gold-primary text-navy-900 font-semibold rounded-lg hover:bg-gold-light transition-all duration-300 ease-out hover:shadow-glow-md"
+      <!-- Main Content Grid -->
+      <div class="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
+          
+          <!-- Left Column: Terminal Panel -->
+          <div 
+            class="lg:col-span-1 order-2 lg:order-1"
+            appScrollReveal="slideUp"
+            [scrollRevealDelay]="100"
+          >
+            <div 
+              class="border border-teal-primary/40 bg-navy-900/80 backdrop-blur-sm rounded-lg p-6 font-mono text-sm leading-relaxed"
+              style="background: linear-gradient(180deg, rgba(6, 214, 208, 0.05) 0%, rgba(212, 175, 55, 0.03) 100%)"
             >
-              View Work
-            </button>
-            <button
-              class="px-8 py-3 border border-text-tertiary text-text-primary font-semibold rounded-lg hover:border-gold-primary hover:text-gold-primary transition-all duration-300 ease-out"
+              <!-- Terminal Lines -->
+              <div class="space-y-3 text-text-muted">
+                <div><span class="text-teal-primary">[BOOT_SEQ]</span> > Initializing system...</div>
+                <div><span class="text-teal-primary">[KERNEL]</span> > Loading core modules...</div>
+                <div><span class="text-teal-primary">[USER]</span> > Ashutosh Karn detected.</div>
+                <div><span class="text-gold-primary">[STATUS]</span> > Access granted.</div>
+                <div><span class="text-text-muted">[INFO]</span> > Engineering expertise loaded...</div>
+                <div>
+                  <span class="text-text-muted">[INFO]</span> > Architectural patterns initialized...
+                </div>
+                <div class="flex items-center gap-2 pt-2">
+                  <span class="text-teal-primary">>_</span>
+                  <span class="w-1 h-4 bg-teal-primary/60 animate-pulse"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Column: Hero Headline & CTA -->
+          <div 
+            class="lg:col-span-1 order-1 lg:order-2"
+            appScrollReveal="fadeIn"
+          >
+            <div class="space-y-8">
+              <!-- Identifier Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-teal-primary/30 bg-teal-primary/5">
+                <span class="w-2 h-2 rounded-full bg-teal-primary animate-pulse"></span>
+                <span class="text-xs font-mono text-teal-primary uppercase tracking-widest">Senior Engineer</span>
+              </div>
+
+              <!-- Main Headline -->
+              <div class="space-y-6">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-text-primary">
+                  Ashutosh<br />
+                  <span class="bg-gradient-to-r from-gold-primary via-teal-primary to-gold-primary bg-clip-text text-transparent">
+                    Karn
+                  </span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl font-medium text-teal-primary">
+                  Frontend Engineer | Cloud & AI Enthusiast
+                </p>
+
+                <!-- Professional Statement -->
+                <p class="text-base md:text-lg text-text-secondary leading-relaxed max-w-xl border-l-2 border-gold-primary/50 pl-6">
+                  Building intelligent systems with precision.
+                  <span class="text-text-primary font-medium">
+                    Expertise in architecturing scalable web systems, cloud infrastructure, and AI integration.
+                  </span>
+                </p>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                <button
+                  [routerLink]="['/projects']"
+                  class="relative px-8 py-3 bg-gradient-to-r from-gold-primary to-teal-primary text-navy-900 font-semibold rounded-lg hover:shadow-glowEnergyMd transition-all duration-300 ease-out group overflow-hidden"
+                >
+                  <span class="relative z-10">View Projects</span>
+                  <div class="absolute inset-0 bg-gradient-to-r from-teal-primary to-gold-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                </button>
+                <button
+                  class="px-8 py-3 border-2 border-teal-primary/50 text-text-primary font-semibold rounded-lg hover:border-teal-primary hover:shadow-glowTealMd hover:bg-teal-primary/5 transition-all duration-300 ease-out"
+                >
+                  Contact Me
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Tech Stats Panel -->
+          <div 
+            class="lg:col-span-1 order-3"
+            appScrollReveal="slideUp"
+            [scrollRevealDelay]="200"
+          >
+            <div 
+              class="border border-gold-primary/40 bg-navy-900/80 backdrop-blur-sm rounded-lg p-8 space-y-6"
+              style="background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, rgba(6, 214, 208, 0.03) 100%)"
             >
-              Get in Touch
-            </button>
+              <!-- Stat Item 1 -->
+              <div class="space-y-2">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-sm font-mono text-text-muted uppercase tracking-widest">Experience</span>
+                  <span class="text-2xl font-bold text-gold-primary">10+</span>
+                </div>
+                <div class="h-1 bg-navy-900/50 rounded-full overflow-hidden">
+                  <div class="h-full w-5/6 bg-gradient-to-r from-gold-primary to-teal-primary rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Stat Item 2 -->
+              <div class="space-y-2">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-sm font-mono text-text-muted uppercase tracking-widest">Projects</span>
+                  <span class="text-2xl font-bold text-teal-primary">20+</span>
+                </div>
+                <div class="h-1 bg-navy-900/50 rounded-full overflow-hidden">
+                  <div class="h-full w-4/5 bg-gradient-to-r from-teal-primary to-gold-primary rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Stat Item 3 -->
+              <div class="space-y-2">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-sm font-mono text-text-muted uppercase tracking-widest">Stack</span>
+                  <span class="text-2xl font-bold text-gold-primary">17+</span>
+                </div>
+                <div class="h-1 bg-navy-900/50 rounded-full overflow-hidden">
+                  <div class="h-full w-11/12 bg-gradient-to-r from-gold-primary to-teal-primary rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Status Badge -->
+              <div class="pt-4 border-t border-gold-primary/20 flex items-center gap-2 text-teal-primary font-mono text-xs">
+                <span class="w-2 h-2 rounded-full bg-teal-primary"></span>
+                Available for opportunities
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator (visible on hero only) -->
+      <!-- Scroll Indicator -->
       <div
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-300"
         #scrollIndicator
       >
-        <span class="text-xs text-text-muted uppercase tracking-widest">Scroll to explore</span>
-        <div class="w-0.5 h-8 bg-gradient-to-b from-gold-primary to-transparent rounded-full animate-pulse"></div>
+        <span class="text-xs text-text-muted uppercase tracking-widest font-mono">Scroll</span>
+        <div class="w-0.5 h-8 bg-gradient-to-b from-teal-primary via-gold-primary to-transparent rounded-full animate-pulse"></div>
       </div>
     </section>
 
@@ -116,7 +212,7 @@ gsap.registerPlugin(ScrollTrigger);
       <app-container [maxWidth]="'lg'">
         <div class="space-y-8">
           <div class="space-y-4">
-            <span class="font-mono text-xs text-gold-primary uppercase tracking-widest">About</span>
+            <span class="font-mono text-xs text-teal-primary uppercase tracking-widest">About</span>
             <h2 class="text-4xl md:text-5xl font-bold text-text-primary leading-tight">
               Engineering with Purpose
             </h2>
@@ -124,12 +220,12 @@ gsap.registerPlugin(ScrollTrigger);
 
           <p class="text-lg text-text-secondary leading-relaxed max-w-3xl">
             I'm a software engineer specializing in cloud architecture, AI systems, and full-stack development.
-            I focus on building scalable, maintainable solutions that solve real problems for users and businesses.
+            Focused on building scalable, maintainable solutions that solve real problems for users and businesses.
           </p>
 
           <p class="text-base text-text-tertiary leading-relaxed max-w-3xl">
             My experience spans from early-stage startups to enterprise systems, working with modern tooling
-            including AWS, Azure, Kubernetes, and AI/ML frameworks. I'm passionate about clean code, thoughtful design,
+            including AWS, Azure, Kubernetes, and AI/ML frameworks. Passionate about clean code, thoughtful design,
             and continuous learning.
           </p>
         </div>
@@ -148,6 +244,103 @@ gsap.registerPlugin(ScrollTrigger);
           opacity: 0.95;
         }
       }
+
+      @keyframes glow-pulse {
+        0%, 100% {
+          filter: drop-shadow(0 0 15px rgba(6, 214, 208, 0.3));
+        }
+        50% {
+          filter: drop-shadow(0 0 25px rgba(6, 214, 208, 0.5));
+        }
+      }
+
+      :host ::ng-deep {
+        .glow-pulse {
+          animation: glow-pulse 3s ease-in-out infinite;
+        }
+      }
+    `,
+  ],
+})
+export class HomeComponent implements OnInit, OnAfterViewInit, OnDestroy {
+  private gsapContext: any;
+
+  ngOnInit() {
+    // Smooth scroll setup (non-blocking)
+    if (typeof window !== "undefined") {
+      const html = document.documentElement;
+      html.style.scrollBehavior = "smooth";
+    }
+  }
+
+  ngAfterViewInit() {
+    // Setup parallax animations
+    this.setupParallax();
+  }
+
+  private setupParallax() {
+    const heroSection = document.querySelector('[#heroSection]');
+    if (!heroSection) return;
+
+    this.gsapContext = gsap.context(() => {
+      // Parallax background layers on scroll
+      gsap.to('[#parallaxBg1]', {
+        scrollTrigger: {
+          trigger: '[#heroSection]',
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+          markers: false,
+        },
+        y: -50,
+        opacity: 0.8,
+        duration: 1,
+      });
+
+      gsap.to('[#parallaxBg2]', {
+        scrollTrigger: {
+          trigger: '[#heroSection]',
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.6,
+        },
+        y: -80,
+        opacity: 0.15,
+        duration: 1,
+      });
+
+      gsap.to('[#parallaxBg3]', {
+        scrollTrigger: {
+          trigger: '[#heroSection]',
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.7,
+        },
+        y: -60,
+        opacity: 0.12,
+        duration: 1,
+      });
+
+      // Fade out scroll indicator
+      gsap.to('[#scrollIndicator]', {
+        scrollTrigger: {
+          trigger: '[#heroSection]',
+          start: "top top",
+          end: "center top",
+          scrub: 0.2,
+        },
+        opacity: 0,
+        duration: 0.5,
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.gsapContext) {
+      this.gsapContext.revert();
+    }
+  }
+}
 
       :host ::ng-deep .animate-pulse {
         animation: subtle-float 2s ease-in-out infinite;

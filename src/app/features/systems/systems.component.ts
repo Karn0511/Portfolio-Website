@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SectionComponent } from "../../shared/components/section/section.component";
 import { ContainerComponent } from "../../shared/components/container/container.component";
-import { GridComponent } from "../../shared/components/grid/grid.component";
 import { TechBadge3dComponent } from "../../shared/components/tech-badge-3d-premium/tech-badge-3d-premium.component";
 import {
   TechStackData,
@@ -27,7 +26,6 @@ import {
     CommonModule,
     SectionComponent,
     ContainerComponent,
-    GridComponent,
     TechBadge3dComponent,
   ],
   template: `
