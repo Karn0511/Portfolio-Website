@@ -378,7 +378,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
 export class HomeRedesignedComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // Smooth scroll behavior
-    if (typeof globalThis.window !== "undefined") {
+    if (globalThis.window !== undefined) {
       globalThis.document.documentElement.style.scrollBehavior = "smooth";
     }
   }
