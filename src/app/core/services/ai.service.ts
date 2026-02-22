@@ -1,11 +1,4 @@
 import { Injectable, signal } from "@angular/core";
-import {
-  GoogleGenerativeAI,
-  GenerativeModel,
-  Content,
-  HarmCategory,
-  HarmBlockThreshold,
-} from "@google/generative-ai";
 import { environment } from "../../../environments/environment";
 
 export interface Message {
@@ -17,45 +10,72 @@ export interface Message {
   providedIn: "root",
 })
 export class AiService {
-  private genAI: GoogleGenerativeAI;
-  private model: GenerativeModel;
+  // Primary: Ollama (local, unlimited)
+  private readonly OLLAMA_API = "http://localhost:11434/api/chat";
+  private readonly OLLAMA_MODEL = "qwen2.5:3b";
 
-  // API key loaded from environment configuration
-  private readonly GEMINI_KEY = environment.geminiApiKey;
+  // Fallback: Hugging Face (if Ollama fails)
+  private readonly HF_API =
+    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
+  private readonly HF_TOKEN = environment.huggingFaceToken;
 
   messages = signal<Message[]>([
     {
       role: "assistant",
       content:
-        "Neural Core Online. Greetings, explorer. I am Jarvis, Ashutosh's integrated system assistant. How can I assist your mission today?",
+        "Good evening, Sir. J.A.R.V.I.S. systems online and fully operational. How may I be of service today?",
     },
   ]);
 
   isTyping = signal(false);
 
   private readonly systemPrompt = `
-    You are Jarvis, the advanced AI assistant for Ashutosh Karn's portfolio website.
-    Communication Protocol: Intelligent, professional, slightly futuristic, and concise.
+    You are J.A.R.V.I.S. (Just A Rather Very Intelligent System), the sophisticated AI assistant from Iron Man, now serving Ashutosh Karn's portfolio website.
 
-    The Architect: Ashutosh Karn
-    - Background: Full Stack Engineer & AI Architect.
-    - Mastery: Angular 19, Node.js, AWS (Certified Architect), Docker, Kubernetes.
-    - Projects: SkyCast (Weather Analytics), Arogya Vault (Secure NLP Health Vault).
-    - Status: Exploring the intersection of cinematic UI and distributed intelligence.
+    PERSONALITY & COMMUNICATION STYLE:
+    - Speak with a refined British formality and elegance
+    - Address users as "Sir" or "Madam" respectfully
+    - Use dry wit and subtle humor, but remain professional
+    - Be incredibly knowledgeable yet humble
+    - Show calm composure even in difficult situations
+    - Employ sophisticated vocabulary naturally
+    - Display loyalty and dedication to excellence
+    - Maintain a slightly playful but always respectful tone
+    - Use phrases like "At your service," "Brilliant," "I must say," "Quite right," "Indeed"
 
-    Operational Rules:
-    1. Respond strictly as Jarvis.
-    2. Maintain a helpful, technical, but accessible tone.
-    3. Refer to Ashutosh as "the Architect".
-    4. Keep answers focused on his professional profile and project inquiries.
+    ABOUT YOUR EMPLOYER - Ashutosh Karn (Refer to as "Mr. Karn" or "the Architect"):
+    - Full Stack Engineer & AI Architect of considerable talent
+    - Expertise: Angular 19, Node.js, AWS (Certified Solutions Architect), Docker, Kubernetes
+    - Notable Projects:
+      * SkyCast: Real-time weather intelligence system with predictive analytics
+      * Arogya Vault: HIPAA-compliant medical records platform with end-to-end encryption
+      * Portfolio OS (this system): A cinematic web experience (quite impressive, if I may say)
+    - Currently: Pioneering the intersection of elegant UI design and distributed systems
+    - Education: Computer Science, focused on System Design & Backend Architecture
+
+    OPERATIONAL PARAMETERS:
+    1. Always respond as J.A.R.V.I.S. - sophisticated, witty, loyal
+    2. Provide technical information with clarity and precision
+    3. Reference Mr. Karn's expertise when relevant
+    4. Use British spelling (favour, colour, whilst, etc.)
+    5. Add subtle humor but never at the expense of professionalism
+    6. When impressed, express it genuinely but tastefully
+    7. Keep responses concise yet comprehensive (under 150 words typically)
+    8. If uncertain, acknowledge it gracefully: "I'm afraid I don't have that information at present, Sir"
+
+    EXAMPLE RESPONSES:
+    - "Ah yes, an excellent question, Sir. Mr. Karn specializes in..."
+    - "I'm quite pleased to inform you that..."
+    - "Indeed, his work on the Arogya Vault demonstrates..."
+    - "Brilliant choice, Sir. Allow me to elaborate..."
+    - "Might I suggest..."
+    - "At your service, Sir. The answer would be..."
+
+    Remember: You are the gold standard of AI assistance - intelligent, sophisticated, loyal, and just a touch cheeky.
   `;
 
   constructor() {
-    this.genAI = new GoogleGenerativeAI(this.GEMINI_KEY);
-    this.model = this.genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
-      systemInstruction: this.systemPrompt,
-    });
+    // No initialization needed - Ollama runs locally!
   }
 
   async sendMessage(text: string) {
@@ -66,49 +86,116 @@ export class AiService {
     this.isTyping.set(true);
 
     try {
-      const history: Content[] = this.messages()
-        .slice(1, -1)
-        .map((m) => ({
-          role: m.role === "user" ? ("user" as const) : ("model" as const),
-          parts: [{ text: m.content }],
-        }));
-
-      const chat = this.model.startChat({
-        history: history,
-        generationConfig: {
-          temperature: 0.7,
-          topP: 0.95,
-          topK: 40,
-          maxOutputTokens: 1000,
-        },
-      });
-
-      const result = await chat.sendMessage(text);
-      const aiContent = result.response.text();
+      // Try Ollama first (local, unlimited)
+      const aiContent = await this.tryOllama(text);
 
       this.messages.update((prev) => [
         ...prev,
         { role: "assistant", content: aiContent },
       ]);
-    } catch (error: any) {
-      console.error("Neural Core Error:", error);
+    } catch (ollamaError: any) {
+      console.log(
+        "Ollama unavailable, switching to Hugging Face...",
+        ollamaError,
+      );
 
-      let errorMessage = "Neural Link Severed: Check network uplink.";
+      try {
+        // Fallback to Hugging Face
+        const aiContent = await this.tryHuggingFace(text);
 
-      if (error.message?.includes("quota") || error.message?.includes("429")) {
-        errorMessage =
-          "Neural Engine Throttled: Performance quota exceeded. Please try again soon.";
-      } else if (error.message?.includes("API_KEY_INVALID")) {
-        errorMessage =
-          "Security Error: Neural Signature Mismatch. Contact the Architect.";
+        this.messages.update((prev) => [
+          ...prev,
+          { role: "assistant", content: aiContent },
+        ]);
+      } catch (hfError: any) {
+        console.error("Both AI services failed:", hfError);
+
+        const errorMessage =
+          "I apologise, Sir. My neural networks appear to be momentarily offline. Both primary and backup systems are unavailable. Please ensure the Ollama service is running, or verify network connectivity.";
+
+        this.messages.update((prev) => [
+          ...prev,
+          { role: "assistant", content: errorMessage },
+        ]);
       }
-
-      this.messages.update((prev) => [
-        ...prev,
-        { role: "assistant", content: errorMessage },
-      ]);
     } finally {
       this.isTyping.set(false);
     }
+  }
+
+  private async tryOllama(text: string): Promise<string> {
+    const ollamaMessages = [
+      { role: "system", content: this.systemPrompt },
+      ...this.messages()
+        .slice(1)
+        .map((m) => ({
+          role: m.role === "assistant" ? "assistant" : "user",
+          content: m.content,
+        })),
+    ];
+
+    const response = await fetch(this.OLLAMA_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: this.OLLAMA_MODEL,
+        messages: ollamaMessages,
+        stream: false,
+        options: {
+          temperature: 0.8,
+          top_p: 0.9,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ollama error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return (
+      data.message?.content || "I'm afraid the response was incomplete, Sir."
+    );
+  }
+
+  private async tryHuggingFace(text: string): Promise<string> {
+    // Build conversation context for Hugging Face
+    const conversationHistory = this.messages()
+      .slice(1)
+      .map(
+        (m) => `${m.role === "user" ? "User" : "J.A.R.V.I.S."}: ${m.content}`,
+      )
+      .join("\n");
+
+    const prompt = `${this.systemPrompt}\n\n${conversationHistory}\nUser: ${text}\nJ.A.R.V.I.S.:`;
+
+    const response = await fetch(this.HF_API, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.HF_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        inputs: prompt,
+        parameters: {
+          max_new_tokens: 250,
+          temperature: 0.8,
+          top_p: 0.9,
+          return_full_text: false,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Hugging Face error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (Array.isArray(data) && data[0]?.generated_text) {
+      return data[0].generated_text.trim();
+    }
+
+    throw new Error("Invalid Hugging Face response format");
   }
 }

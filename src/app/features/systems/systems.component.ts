@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SectionComponent } from "../../shared/components/section/section.component";
 import { ContainerComponent } from "../../shared/components/container/container.component";
@@ -8,16 +8,12 @@ import {
   type TechStackItem,
 } from "../../core/data/tech-stack.data";
 
-/**
- * TECH STACK COMPONENT
- * Displays professional 3D technology logo showcase
- *
- * Design:
- * - Premium 3D badge presentation
- * - Organized by category
- * - Smooth hover interactions
- * - Fully responsive grid
- */
+interface StackDetail {
+  name: string;
+  version: string;
+  features: string[];
+  status: string;
+}
 
 @Component({
   selector: "app-systems",
@@ -32,106 +28,237 @@ import {
     <!-- Tech Stack Section -->
     <app-section [spacingVariant]="'lg'">
       <app-container [maxWidth]="'xl'">
-        <div class="space-y-16">
-          <!-- Section Header -->
-          <div class="space-y-6">
-            <div class="space-y-2">
-              <span
-                class="font-mono text-xs text-teal-primary uppercase tracking-widest"
-              >
-                Technical Arsenal
-              </span>
-              <h2
-                class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
-              >
-                <span
-                  class="bg-gradient-to-r from-teal-primary to-gold-primary bg-clip-text text-transparent"
-                >
-                  Technology
-                </span>
-                <br />Stack
-              </h2>
-            </div>
-            <p
-              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-gold-primary/40 pl-6"
-            >
-              A carefully curated set of modern tools and frameworks, selected
-              for scalability, reliability, and performance. Each technology is
-              chosen for a specific purpose in building enterprise-grade
-              systems.
-            </p>
-          </div>
-
-          <!-- Technologies by Category -->
-          <div class="space-y-20">
-            <div *ngFor="let category of categories" class="space-y-8">
-              <!-- Category Title with Energy -->
-              <div>
-                <h3
-                  class="text-xl font-semibold text-text-primary uppercase tracking-widest flex items-center gap-3"
-                >
-                  <span class="w-2 h-2 rounded-full bg-teal-primary"></span>
-                  {{ category }}
-                </h3>
-                <div
-                  class="h-px w-12 bg-gradient-to-r from-gold-primary via-teal-primary to-transparent mt-3"
-                ></div>
-              </div>
-
-              <!-- Tech Grid for Category -->
-              <div
-                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6"
-              >
-                <app-tech-badge-3d
-                  *ngFor="let tech of getTechByCategory(category)"
-                  [tech]="tech"
-                ></app-tech-badge-3d>
-              </div>
-            </div>
-          </div>
-
-          <!-- Summary Stats with Dual Colors -->
-          <div
-            class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/10"
+        <!-- Section Header -->
+        <div class="mb-20">
+          <span
+            class="font-mono text-xs text-gold-primary uppercase tracking-widest"
           >
+            Professional Arsenal
+          </span>
+          <h2 class="text-5xl md:text-6xl font-bold text-white mt-4 mb-6">
+            <span
+              class="bg-gradient-to-r from-gold-primary to-gold-primary/60 bg-clip-text text-transparent"
+            >
+              Refined Professional </span
+            ><br />
+            <span class="text-white">Tech Stack</span>
+          </h2>
+          <p class="text-gray-300 max-w-2xl text-base leading-relaxed">
+            A curated selection of enterprise-grade technologies and frameworks,
+            optimized for scalability, performance, and maintainability.
+          </p>
+        </div>
+
+        <!-- Tech Grid with Sidebar -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Tech Badges Grid (Left / Full) -->
+          <div class="lg:col-span-3">
             <div
-              class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
+              class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6"
             >
               <div
-                class="text-3xl font-bold bg-gradient-to-r from-gold-primary to-gold-dark bg-clip-text text-transparent"
+                *ngFor="let tech of technologies; let i = index"
+                class="group cursor-pointer transition-all duration-300 hover:scale-110"
+                (click)="selectStack(i)"
               >
-                {{ technologies.length }}+
+                <app-tech-badge-3d [tech]="tech"></app-tech-badge-3d>
               </div>
-              <p class="text-sm text-text-tertiary">Technologies Mastered</p>
-            </div>
-            <div
-              class="space-y-2 p-4 bg-teal-primary/5 rounded-lg border border-teal-primary/20"
-            >
-              <div
-                class="text-3xl font-bold bg-gradient-to-r from-teal-primary to-teal-dark bg-clip-text text-transparent"
-              >
-                {{ categories.length }}
-              </div>
-              <p class="text-sm text-text-tertiary">Categories of Expertise</p>
-            </div>
-            <div
-              class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
-            >
-              <div class="text-3xl font-bold text-gold-primary">10+ yrs</div>
-              <p class="text-sm text-text-tertiary">Combined Experience</p>
             </div>
           </div>
+
+          <!-- Sidebar: Selected Stack Details -->
+          <div class="lg:col-span-1">
+            <div
+              class="border-2 border-gold-primary/70 bg-gradient-to-b from-navy-900/70 to-navy-950/70 rounded-lg p-8 backdrop-blur-sm sticky top-32"
+            >
+              <div class="space-y-6">
+                <!-- Header -->
+                <div>
+                  <span
+                    class="text-gold-primary text-xs font-mono uppercase tracking-widest block mb-3"
+                  >
+                    > SELECTED STACK:
+                  </span>
+                  <h3 class="text-2xl font-bold text-white">
+                    {{ selectedStack().name }}
+                  </h3>
+                </div>
+
+                <!-- Version -->
+                <div class="border-t border-gold-primary/40 pt-6">
+                  <span
+                    class="text-gold-primary text-xs font-mono uppercase tracking-widest block mb-2"
+                  >
+                    > VERSION:
+                  </span>
+                  <p class="text-gray-300 font-mono text-lg">
+                    {{ selectedStack().version }}
+                  </p>
+                </div>
+
+                <!-- Key Features -->
+                <div class="border-t border-gold-primary/40 pt-6">
+                  <span
+                    class="text-gold-primary text-xs font-mono uppercase tracking-widest block mb-3"
+                  >
+                    > KEY FEATURES:
+                  </span>
+                  <ul class="space-y-2">
+                    <li
+                      *ngFor="let feature of selectedStack().features"
+                      class="text-gray-300 text-sm flex items-start gap-2"
+                    >
+                      <span class="text-gold-primary">- </span>
+                      {{ feature }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Status -->
+                <div class="border-t border-gold-primary/40 pt-6">
+                  <span
+                    class="text-gold-primary text-xs font-mono uppercase tracking-widest block"
+                  >
+                    > STATUS:
+                    <span class="text-green-400">{{
+                      selectedStack().status
+                    }}</span>
+                  </span>
+                </div>
+
+                <!-- Scroll Hint -->
+                <div class="border-t border-gold-primary/40 pt-6 text-center">
+                  <span class="text-gold-primary/60 text-xs font-mono"
+                    >[ SCROLL FOR MORE DATA ]</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div
+          class="mt-16 pt-12 border-t border-gold-primary/20 flex justify-between items-center text-gray-500 font-mono text-xs"
+        >
+          <span>[ HOME ] [ ABOUT ] [ PROJECTS ] [ CONTACT ]</span>
+          <span class="hidden md:inline">GH | LI | TW | EM</span>
         </div>
       </app-container>
     </app-section>
   `,
-  styles: [],
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
-export class SystemsComponent {
+export class SystemsComponent implements OnInit {
   technologies: TechStackItem[] = TechStackData.TECHNOLOGIES;
-  categories: string[] = TechStackData.getCategories();
+  selectedIndex = signal(0);
 
-  getTechByCategory(category: string): TechStackItem[] {
-    return TechStackData.getByCategory(category);
+  stackDetails: StackDetail[] = [
+    {
+      name: "React.js",
+      version: "18.2.0",
+      features: [
+        "Component-Based Architecture",
+        "Virtual DOM",
+        "Hooks & Context API",
+        "Server-Side Rendering (SSR)",
+      ],
+      status: "Active & Optimized",
+    },
+    {
+      name: "Angular",
+      version: "19.0.0",
+      features: [
+        "Full-Featured Framework",
+        "Dependency Injection",
+        "RxJS & Signals",
+        "Built-in Routing & Forms",
+      ],
+      status: "Active & Optimized",
+    },
+    {
+      name: "TypeScript",
+      version: "5.3.3",
+      features: [
+        "Static Type Checking",
+        "Advanced Type System",
+        "Interface-Based Development",
+        "Compile-Time Error Detection",
+      ],
+      status: "Active & Optimized",
+    },
+    {
+      name: "Node.js",
+      version: "20.0.0",
+      features: [
+        "Scalable Microservices",
+        "Non-Blocking I/O",
+        "Package Ecosystem (npm)",
+        "Server-Side Rendering",
+      ],
+      status: "Production Ready",
+    },
+    {
+      name: "AWS",
+      version: "Latest",
+      features: [
+        "Cloud Infrastructure",
+        "Auto-Scaling Solutions",
+        "CDN & Caching",
+        "Database Management",
+      ],
+      status: "Active & Optimized",
+    },
+    {
+      name: "Docker",
+      version: "24.0.0",
+      features: [
+        "Containerization",
+        "Environment Consistency",
+        "Microservices Architecture",
+        "CI/CD Integration",
+      ],
+      status: "Production Ready",
+    },
+    {
+      name: "Kubernetes",
+      version: "1.28.0",
+      features: [
+        "Container Orchestration",
+        "Auto-Scaling",
+        "Self-Healing",
+        "Service Discovery",
+      ],
+      status: "Active & Optimized",
+    },
+    {
+      name: "Python",
+      version: "3.11.0",
+      features: [
+        "Data Science & ML",
+        "Clean Syntax",
+        "Extensive Libraries",
+        "AI/ML Frameworks",
+      ],
+      status: "Active & Optimized",
+    },
+  ];
+
+  ngOnInit(): void {
+    this.selectStack(0);
+  }
+
+  selectStack(index: number): void {
+    this.selectedIndex.set(index);
+  }
+
+  selectedStack(): StackDetail {
+    return this.stackDetails[this.selectedIndex()] || this.stackDetails[0];
   }
 }

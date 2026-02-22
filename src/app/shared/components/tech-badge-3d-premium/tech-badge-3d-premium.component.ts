@@ -106,7 +106,7 @@ interface TechBadgeData {
 export class TechBadge3dComponent {
   @Input() tech!: TechBadgeData;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private readonly elementRef: ElementRef) {}
 
   getGlassClass(): string {
     const baseClasses =
@@ -159,9 +159,7 @@ export class TechBadge3dComponent {
 
     // Apply dual-color glow effect based on cursor position
     if (glowBorder) {
-      const distance = Math.sqrt(
-        Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2),
-      );
+      const distance = Math.hypot(x - centerX, y - centerY);
       const intensity = Math.max(
         0,
         1 - distance / (Math.sqrt(centerX * centerX + centerY * centerY) * 1.5),

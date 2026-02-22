@@ -26,7 +26,7 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
 
   private scrollTrigger: any;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private readonly elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.setupReveal();
@@ -49,10 +49,11 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
       case "slideUp":
         gsap.set(element, { opacity: 0, y: 30 });
         break;
-      case "slideUpStagger":
+      case "slideUpStagger": {
         const children = element.querySelectorAll("> *");
         gsap.set(children, { opacity: 0, y: 30 });
         break;
+      }
     }
 
     // Define animation
