@@ -39,6 +39,7 @@ gsap.registerPlugin(ScrollTrigger);
     <!-- Navigation -->
     <nav
       class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-amber-600/10"
+      aria-label="Main navigation"
     >
       <div
         class="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between"
@@ -47,16 +48,16 @@ gsap.registerPlugin(ScrollTrigger);
           ASHUTOSH.SYS
         </div>
         <div class="hidden md:flex gap-12 text-sm text-gray-400">
-          <a href="#about" class="hover:text-amber-600 transition-colors"
+          <a href="#about" class="hover:text-amber-600 transition-colors" aria-label="Navigate to About section"
             >About</a
           >
-          <a href="#stack" class="hover:text-amber-600 transition-colors"
+          <a href="#stack" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Tech Stack section"
             >Stack</a
           >
-          <a href="#projects" class="hover:text-amber-600 transition-colors"
+          <a href="#projects" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Projects section"
             >Projects</a
           >
-          <a href="#contact" class="hover:text-amber-600 transition-colors"
+          <a href="#contact" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Contact section"
             >Contact</a
           >
         </div>
@@ -115,12 +116,14 @@ gsap.registerPlugin(ScrollTrigger);
             <a
               href="#projects"
               class="cta-btn px-8 py-3 rounded-lg bg-amber-600 text-black font-semibold hover:bg-amber-500 transition-colors"
+              aria-label="View my work and projects"
             >
               View Work
             </a>
             <a
               href="#contact"
               class="cta-btn px-8 py-3 rounded-lg border border-amber-600/50 text-amber-600 font-semibold hover:bg-amber-600/10 transition-colors"
+              aria-label="Get in touch with me"
             >
               Get in Touch
             </a>
@@ -411,16 +414,19 @@ gsap.registerPlugin(ScrollTrigger);
               <a
                 href="https://github.com/Karn0511"
                 class="text-gray-400 hover:text-amber-600 transition-colors text-sm"
+                aria-label="Visit my GitHub profile"
                 >GitHub</a
               >
               <a
                 href="https://linkedin.com/in/Karn1105"
                 class="text-gray-400 hover:text-amber-600 transition-colors text-sm"
+                aria-label="Visit my LinkedIn profile"
                 >LinkedIn</a
               >
               <a
                 href="mailto:karnashutosh6@gmail.com"
                 class="text-gray-400 hover:text-amber-600 transition-colors text-sm"
+                aria-label="Send me an email"
                 >Email</a
               >
             </div>

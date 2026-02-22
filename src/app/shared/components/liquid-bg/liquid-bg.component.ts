@@ -44,19 +44,40 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
   private time: number = 0;
   private particles: LiquidParticle[] = [];
   private scrollY: number = 0;
+  private scrollListener?: () => void;
+  private resizeListener?: () => void;
 
   ngOnInit() {
-    window.addEventListener("scroll", () => {
+    this.scrollListener = () => {
       this.scrollY = window.scrollY;
-    });
+    };
+    window.addEventListener("scroll", this.scrollListener, { passive: true });
   }
 
   ngAfterViewInit() {
     const canvas = this.canvasRef.nativeElement;
-    this.ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext("2d", { willReadFrequently: false });
+    
+    if (!ctx) {
+      console.warn("Canvas 2D context not available");
+      return;
+    }
+    
+    this.ctx = ctx;
+
+    // Enable GPU acceleration
+    try {
+      const gl = canvas.getContext("webgl", { powerPreference: "high-performance" });
+      if (gl) {
+        this.ctx.canvas.style.imageRendering = "crisp-edges";
+      }
+    } catch (e) {
+      // GPU not available, continue with software rendering
+    }
 
     this.resize();
-    window.addEventListener("resize", () => this.resize());
+    this.resizeListener = () => this.resize();
+    window.addEventListener("resize", this.resizeListener);
 
     this.initializeParticles();
     this.animate();
@@ -185,10 +206,12 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
     }
-    window.removeEventListener("scroll", () => {
-      this.scrollY = window.scrollY;
-    });
-    window.removeEventListener("resize", () => this.resize());
+    if (this.scrollListener) {
+      window.removeEventListener("scroll", this.scrollListener);
+    }
+    if (this.resizeListener) {
+      window.removeEventListener("resize", this.resizeListener);
+    }
   }
 }
 
