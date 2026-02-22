@@ -114,13 +114,13 @@ gsap.registerPlugin(ScrollTrigger);
           <div class="flex flex-col sm:flex-row gap-4 pt-6">
             <a
               href="#projects"
-              class="px-8 py-3 rounded-lg bg-amber-600 text-black font-semibold hover:bg-amber-500 transition-colors"
+              class="cta-btn px-8 py-3 rounded-lg bg-amber-600 text-black font-semibold hover:bg-amber-500 transition-colors"
             >
               View Work
             </a>
             <a
               href="#contact"
-              class="px-8 py-3 rounded-lg border border-amber-600/50 text-amber-600 font-semibold hover:bg-amber-600/10 transition-colors"
+              class="cta-btn px-8 py-3 rounded-lg border border-amber-600/50 text-amber-600 font-semibold hover:bg-amber-600/10 transition-colors"
             >
               Get in Touch
             </a>
@@ -156,39 +156,43 @@ gsap.registerPlugin(ScrollTrigger);
         ></app-section-header>
 
         <div class="grid md:grid-cols-2 gap-8">
-          <app-glass-card variant="medium" padding="32px">
-            <div class="space-y-4">
-              <h3 class="text-lg font-semibold text-amber-600">
-                Technical Expertise
-              </h3>
-              <ul class="space-y-2 text-gray-300 text-sm leading-relaxed">
-                <li>• Angular 19 with standalone components & signals</li>
-                <li>• React & Next.js for modern frontend systems</li>
-                <li>• Node.js & Express backend development</li>
-                <li>• AWS & Kubernetes cloud architecture</li>
-                <li>• System design & performance optimization</li>
-                <li>• Real-time systems & WebSockets</li>
-              </ul>
-            </div>
-          </app-glass-card>
-
-          <app-glass-card variant="medium" padding="32px">
-            <div class="space-y-4">
-              <h3 class="text-lg font-semibold text-amber-600">
-                Professional Background
-              </h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Computer Science student at Sam Higginbottom University.
-                Experience building production systems at Internshala and
-                AmarEi. AWS Certified Solutions Architect with expertise in
-                microservices, containerization, and CI/CD pipelines.
-              </p>
-              <div class="pt-4 text-xs text-gray-400 font-mono space-y-1">
-                <p>📧 karnashutosh6@gmail.com</p>
-                <p>📱 +91 6261251641</p>
+          <div class="glass-card-wrapper">
+            <app-glass-card variant="medium" padding="32px">
+              <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-amber-600">
+                  Technical Expertise
+                </h3>
+                <ul class="space-y-2 text-gray-300 text-sm leading-relaxed">
+                  <li>• Angular 19 with standalone components & signals</li>
+                  <li>• React & Next.js for modern frontend systems</li>
+                  <li>• Node.js & Express backend development</li>
+                  <li>• AWS & Kubernetes cloud architecture</li>
+                  <li>• System design & performance optimization</li>
+                  <li>• Real-time systems & WebSockets</li>
+                </ul>
               </div>
-            </div>
-          </app-glass-card>
+            </app-glass-card>
+          </div>
+
+          <div class="glass-card-wrapper">
+            <app-glass-card variant="medium" padding="32px">
+              <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-amber-600">
+                  Professional Background
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  Computer Science student at Sam Higginbottom University.
+                  Experience building production systems at Internshala and
+                  AmarEi. AWS Certified Solutions Architect with expertise in
+                  microservices, containerization, and CI/CD pipelines.
+                </p>
+                <div class="pt-4 text-xs text-gray-400 font-mono space-y-1">
+                  <p>📧 karnashutosh6@gmail.com</p>
+                  <p>📱 +91 6261251641</p>
+                </div>
+              </div>
+            </app-glass-card>
+          </div>
         </div>
       </div>
     </section>
@@ -295,59 +299,63 @@ gsap.registerPlugin(ScrollTrigger);
         ></app-section-header>
 
         <div class="grid md:grid-cols-2 gap-8">
-          <app-glass-card variant="medium" padding="32px">
-            <div class="space-y-4">
-              <h3 class="text-xl font-semibold text-white">
-                SkyCast Weather Intelligence
-              </h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Real-time weather forecasting platform with ML-powered
-                predictions. Integration with OpenWeatherMap API and advanced
-                analytics dashboard.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >React</span
-                >
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >API</span
-                >
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >ML</span
-                >
+          <div class="glass-card-wrapper">
+            <app-glass-card variant="medium" padding="32px">
+              <div class="space-y-4">
+                <h3 class="text-xl font-semibold text-white">
+                  SkyCast Weather Intelligence
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  Real-time weather forecasting platform with ML-powered
+                  predictions. Integration with OpenWeatherMap API and advanced
+                  analytics dashboard.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >React</span
+                  >
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >API</span
+                  >
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >ML</span
+                  >
+                </div>
               </div>
-            </div>
-          </app-glass-card>
+            </app-glass-card>
+          </div>
 
-          <app-glass-card variant="medium" padding="32px">
-            <div class="space-y-4">
-              <h3 class="text-xl font-semibold text-white">
-                Arogya Vault Platform
-              </h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                HIPAA-compliant medical records system with end-to-end
-                encryption. Role-based access control and secure health data
-                management.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >Node.js</span
-                >
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >Security</span
-                >
-                <span
-                  class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
-                  >RBAC</span
-                >
+          <div class="glass-card-wrapper">
+            <app-glass-card variant="medium" padding="32px">
+              <div class="space-y-4">
+                <h3 class="text-xl font-semibold text-white">
+                  Arogya Vault Platform
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  HIPAA-compliant medical records system with end-to-end
+                  encryption. Role-based access control and secure health data
+                  management.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >Node.js</span
+                  >
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >Security</span
+                  >
+                  <span
+                    class="text-xs px-3 py-1 rounded bg-amber-600/20 text-amber-600 font-mono"
+                    >RBAC</span
+                  >
+                </div>
               </div>
-            </div>
-          </app-glass-card>
+            </app-glass-card>
+          </div>
         </div>
       </div>
     </section>
@@ -443,6 +451,70 @@ gsap.registerPlugin(ScrollTrigger);
           transition: none !important;
         }
       }
+
+      /* CTA Button Interactions */
+      .cta-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .cta-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(212, 175, 55, 0.1);
+        transition: left 0.4s ease;
+        z-index: -1;
+      }
+
+      .cta-btn:hover::before {
+        left: 0;
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(212, 175, 55, 0.15);
+      }
+
+      /* Glass Card Hover Effect */
+      app-glass-card {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .glass-card-wrapper:hover app-glass-card {
+        transform: translateY(-4px);
+      }
+
+      /* Section dividers with subtle animation */
+      .section-divider {
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+      }
+
+      /* Nav link highlight on hover */
+      nav a {
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #d4af37;
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
     `,
   ],
 })
@@ -467,6 +539,62 @@ export class HomeRedesignedComponent
         y: 20,
         duration: 0.8,
         stagger: 0.12,
+        ease: "power3.out",
+      });
+
+      // About section scroll reveal
+      gsap.from('section:nth-child(3) [class*="glass"]', {
+        scrollTrigger: {
+          trigger: "section:nth-child(3)",
+          start: "top 70%",
+          once: true,
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Tech stack grid staggered reveal
+      gsap.from('section:nth-child(4) [class*="h-28"]', {
+        scrollTrigger: {
+          trigger: "section:nth-child(4)",
+          start: "top 65%",
+          once: true,
+        },
+        opacity: 0,
+        scale: 0.92,
+        y: 20,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
+
+      // Projects section reveal
+      gsap.from('section:nth-child(5) [class*="glass"]', {
+        scrollTrigger: {
+          trigger: "section:nth-child(5)",
+          start: "top 70%",
+          once: true,
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Footer scroll up on reveal
+      gsap.from('footer [class*="max-w"]', {
+        scrollTrigger: {
+          trigger: "footer",
+          start: "top 80%",
+          once: true,
+        },
+        opacity: 0,
+        y: 40,
+        duration: 0.7,
         ease: "power3.out",
       });
     });
