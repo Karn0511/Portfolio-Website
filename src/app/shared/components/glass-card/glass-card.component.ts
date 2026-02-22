@@ -15,7 +15,10 @@ type GlassVariant = "light" | "medium" | "strong";
   template: `
     <div
       class="glass-card"
-      [ngClass]="'glass-' + variant"
+      [ngClass]="[
+        'glass-' + variant,
+        interactive ? 'interactive' : ''
+      ]"
       [style.padding]="padding"
     >
       <ng-content></ng-content>
@@ -31,7 +34,7 @@ type GlassVariant = "light" | "medium" | "strong";
         transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
-      .glass-card:hover {
+      .glass-card.interactive:hover {
         background: rgba(15, 20, 31, 0.6);
         border-color: rgba(212, 175, 55, 0.25);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -61,4 +64,5 @@ type GlassVariant = "light" | "medium" | "strong";
 export class GlassCardComponent {
   @Input() variant: GlassVariant = "medium";
   @Input() padding: string = "24px";
+  @Input() interactive: boolean = false;
 }
