@@ -188,13 +188,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private mouse = { x: 0, y: 0 };
 
   ngOnInit() {
-    gsap.from(".reveal-stagger > *", {
-      y: 30,
-      opacity: 0,
-      duration: MOTION.DURATION_DEFAULT,
-      stagger: 0.1,
-      ease: MOTION.EASE_MAIN,
-    });
+    // Staggered fade-in animation
+    gsap.fromTo(
+      ".feature-item",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power2.out" }
+    );
   }
 
   ngAfterViewInit() {}
