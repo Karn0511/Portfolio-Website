@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { CommonModule, NgFor, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -24,8 +24,6 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [
     CommonModule,
-    NgFor,
-    NgIf,
     RouterModule,
     LiquidBgComponent,
     GlassCardComponent,
@@ -48,16 +46,28 @@ gsap.registerPlugin(ScrollTrigger);
           ASHUTOSH.SYS
         </div>
         <div class="hidden md:flex gap-12 text-sm text-gray-400">
-          <a href="#about" class="hover:text-amber-600 transition-colors" aria-label="Navigate to About section"
+          <a
+            href="#about"
+            class="hover:text-amber-600 transition-colors"
+            aria-label="Navigate to About section"
             >About</a
           >
-          <a href="#stack" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Tech Stack section"
+          <a
+            href="#stack"
+            class="hover:text-amber-600 transition-colors"
+            aria-label="Navigate to Tech Stack section"
             >Stack</a
           >
-          <a href="#projects" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Projects section"
+          <a
+            href="#projects"
+            class="hover:text-amber-600 transition-colors"
+            aria-label="Navigate to Projects section"
             >Projects</a
           >
-          <a href="#contact" class="hover:text-amber-600 transition-colors" aria-label="Navigate to Contact section"
+          <a
+            href="#contact"
+            class="hover:text-amber-600 transition-colors"
+            aria-label="Navigate to Contact section"
             >Contact</a
           >
         </div>
@@ -243,7 +253,7 @@ gsap.registerPlugin(ScrollTrigger);
               [badge]="{
                 name: 'Node.js',
                 icon: '/assets/tech/nodejs.svg',
-                category: 'runtime',
+                category: 'platform',
               }"
             ></app-tech-badge-3d>
           </div>
@@ -530,7 +540,8 @@ export class HomeRedesignedComponent
   private gsapContext: any;
 
   ngOnInit() {
-    document.documentElement.style.scrollBehavior = "smooth";
+    (globalThis.document ?? document).documentElement.style.scrollBehavior =
+      "smooth";
   }
 
   ngAfterViewInit() {

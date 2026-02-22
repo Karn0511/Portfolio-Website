@@ -38,11 +38,11 @@ export class MatrixRainComponent implements OnInit, AfterViewInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private animationId?: number;
   private drops: number[] = [];
-  private fontSize = 14;
+  private readonly fontSize = 14;
   hueRotate = 0; // For gold effect: 50, for green: 0, for blue: 200
 
   // Matrix characters (mix of code symbols and Japanese katakana)
-  private chars =
+  private readonly chars =
     "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789<>{}[]()+-*/=|\\~$#@&";
 
   ngOnInit() {
@@ -73,7 +73,7 @@ export class MatrixRainComponent implements OnInit, AfterViewInit, OnDestroy {
     canvas.height = canvas.offsetHeight;
 
     const columns = Math.floor(canvas.width / this.fontSize);
-    this.drops = Array(columns).fill(1);
+    this.drops = new Array(columns).fill(1);
   }
 
   private animate() {

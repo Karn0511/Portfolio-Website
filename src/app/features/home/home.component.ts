@@ -344,7 +344,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private gsapContext: any;
 
   ngOnInit(): void {
-    if (typeof window !== "undefined") {
+    if (typeof globalThis.window !== "undefined") {
       document.documentElement.style.scrollBehavior = "smooth";
     }
   }

@@ -6,7 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from "@angular/core";
-import { COLORS, MOTION } from "../../core/constants/design-tokens";
+import { COLORS } from "../../../core/constants/design-tokens";
 
 /**
  * GLOBAL LIQUID BACKGROUND
@@ -42,7 +42,7 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private animationId?: number;
   private time: number = 0;
-  private particles: LiquidParticle[] = [];
+  private readonly particles: LiquidParticle[] = [];
   private scrollY: number = 0;
   private scrollListener?: () => void;
   private resizeListener?: () => void;
@@ -57,17 +57,19 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext("2d", { willReadFrequently: false });
-    
+
     if (!ctx) {
       console.warn("Canvas 2D context not available");
       return;
     }
-    
+
     this.ctx = ctx;
 
     // Enable GPU acceleration
     try {
-      const gl = canvas.getContext("webgl", { powerPreference: "high-performance" });
+      const gl = canvas.getContext("webgl", {
+        powerPreference: "high-performance",
+      });
       if (gl) {
         this.ctx.canvas.style.imageRendering = "crisp-edges";
       }
@@ -120,7 +122,7 @@ export class LiquidBgComponent implements OnInit, AfterViewInit, OnDestroy {
     return gradient;
   }
 
-  private animate = () => {
+  private readonly animate = () => {
     const canvas = this.canvasRef.nativeElement;
 
     // Clear with dark background (allows layering)

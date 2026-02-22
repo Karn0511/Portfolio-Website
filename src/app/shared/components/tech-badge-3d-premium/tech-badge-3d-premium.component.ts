@@ -162,7 +162,7 @@ export class TechBadge3dComponent {
       const distance = Math.hypot(x - centerX, y - centerY);
       const intensity = Math.max(
         0,
-        1 - distance / (Math.sqrt(centerX * centerX + centerY * centerY) * 1.5),
+        1 - distance / (Math.hypot(centerX, centerY) * 1.5),
       );
 
       // Create dual glow: gold + teal

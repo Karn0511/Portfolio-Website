@@ -191,6 +191,6 @@ export class TechBadge3dComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    // Cleanup
+    // Lifecycle cleanup (no resources to release)
   }
 }
