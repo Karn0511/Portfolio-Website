@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     gsap.fromTo(
       ".feature-item",
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power2.out" }
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power2.out" },
     );
   }
 

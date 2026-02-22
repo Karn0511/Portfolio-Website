@@ -1,104 +1,132 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SectionHeaderComponent } from "../../shared/components/section-header/section-header.component";
-import { GlassCardComponent } from "../../shared/components/glass-card/glass-card.component";
 
 interface TimelineItem {
+  year: string;
   title: string;
   organization: string;
-  period: string;
   description: string;
-  skills: string[];
-  type: "education" | "experience";
+  details: string[];
+  type: "education" | "experience" | "achievement";
+  icon: string;
 }
 
 /**
  * Experience Timeline Component
- * Professional and educational background displayed in timeline format
+ * Education, Work, and Achievements displayed chronologically
  */
 
 @Component({
   selector: "app-experience-timeline",
   standalone: true,
-  imports: [CommonModule, SectionHeaderComponent, GlassCardComponent],
+  imports: [CommonModule],
   template: `
-    <section class="section-container">
-      <div class="content-wrapper">
-        <!-- Section header -->
-        <app-section-header
-          title="Experience & Education"
-          subtitle="Background"
-          description="Professional journey spanning web development, AI/ML, and cloud infrastructure"
-        ></app-section-header>
+    <section data-section="experience" class="relative min-h-screen py-32">
+      <!-- Background -->
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-t from-gold-primary/5 to-transparent"
+      ></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-24">
+          <div class="inline-block mb-8">
+            <span
+              class="text-gold-primary text-sm font-bold uppercase tracking-widest"
+            >
+              TIMELINE
+            </span>
+          </div>
+          <h2 class="text-5xl md:text-7xl font-black text-white mb-6">
+            Career Progression
+          </h2>
+          <p class="text-lg text-slate-300 max-w-2xl mx-auto">
+            From education to autonomous full-stack engineering
+          </p>
+        </div>
 
         <!-- Timeline -->
-        <div class="relative space-y-8">
-          <!-- Timeline line (desktop only) -->
+        <div class="relative">
+          <!-- Timeline line -->
           <div
-            class="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold-primary via-gold-primary/50 to-transparent"
+            class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-gold-primary/50 via-gold-primary/30 to-transparent"
           ></div>
 
           <!-- Timeline items -->
-          <div
-            *ngFor="let item of timeline; let i = index"
-            [style.animation-delay]="i * 100 + 'ms'"
-            class="fade-in"
-          >
-            <!-- Alternate layout for desktop -->
+          <div class="space-y-12 md:space-y-16">
             <div
-              [class.md:ml-auto]="i % 2 === 0"
-              [class.md:mr-auto]="i % 2 === 1"
-              class="md:w-1/2"
+              *ngFor="let item of timeline; let i = index"
+              [class.text-right]="i % 2 === 0"
+              class="relative"
             >
-              <div class="relative">
-                <!-- Timeline dot (desktop only) -->
+              <div
+                [class.md:ml-auto]="i % 2 === 0"
+                [class.md:mr-auto]="i % 2 !== 0"
+                class="md:w-5/12 w-full"
+              >
+                <!-- Card -->
                 <div
-                  class="hidden md:block absolute right-[-41px] top-6 w-4 h-4 bg-gold-primary rounded-full border-4 border-navy-900 shadow-glow-md"
-                  [class.left-[-41px]]="i % 2 === 0"
-                  [class.right-auto]="i % 2 === 0"
-                ></div>
+                  class="group relative p-6 md:p-8 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-gold-primary/50 transition-all duration-300"
+                >
+                  <!-- Timeline dot -->
+                  <div
+                    class="absolute -left-12 top-8 md:left-1/2 md:translate-x-1/2 md:-translate-x-1/2 w-8 h-8 rounded-full border-4 border-navy-900 bg-gold-primary flex items-center justify-center text-navy-900 font-bold text-sm"
+                  >
+                    {{ item.icon }}
+                  </div>
 
-                <!-- Content card -->
-                <app-glass-card [interactive]="false" class="md:px-8">
-                  <div class="space-y-4">
-                    <!-- Header -->
-                    <div class="space-y-2">
-                      <div class="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 class="text-lg md:text-xl font-bold text-white">
-                            {{ item.title }}
-                          </h3>
-                          <p class="text-gold-primary/80 font-semibold text-sm">
-                            {{ item.organization }}
-                          </p>
-                        </div>
-                        <span
-                          class="text-xs font-semibold text-slate-500 uppercase tracking-widest whitespace-nowrap"
-                          [class.text-blue-500]="item.type === 'education'"
-                          [class.text-gold-primary]="item.type === 'experience'"
-                        >
-                          {{ item.type }}
-                        </span>
-                      </div>
-                      <p class="text-sm text-slate-400">{{ item.period }}</p>
+                  <!-- Content -->
+                  <div [class.text-right]="i % 2 === 0">
+                    <!-- Time and type -->
+                    <div class="flex items-center gap-2 mb-3 justify-end">
+                      <span
+                        class="text-xs font-bold text-gold-primary uppercase tracking-widest"
+                        >{{ item.year }}</span
+                      >
+                      <span
+                        class="px-3 py-1 text-xs font-semibold rounded-full"
+                        [ngClass]="{
+                          'bg-blue-primary/20 text-blue-400':
+                            item.type === 'education',
+                          'bg-gold-primary/20 text-gold-light':
+                            item.type === 'experience',
+                          'bg-purple-500/20 text-purple-300':
+                            item.type === 'achievement',
+                        }"
+                        >{{ item.type }}</span
+                      >
                     </div>
 
+                    <!-- Title -->
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-1">
+                      {{ item.title }}
+                    </h3>
+
+                    <!-- Organization -->
+                    <p class="text-sm text-gold-primary font-semibold mb-3">
+                      {{ item.organization }}
+                    </p>
+
                     <!-- Description -->
-                    <p class="text-base text-slate-300 leading-relaxed">
+                    <p class="text-base text-slate-300 mb-4 leading-relaxed">
                       {{ item.description }}
                     </p>
 
-                    <!-- Skills -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                      <span
-                        *ngFor="let skill of item.skills"
-                        class="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-medium text-slate-400 hover:border-gold-primary/30 transition-colors"
+                    <!-- Details -->
+                    <ul class="space-y-2">
+                      <li
+                        *ngFor="let detail of item.details"
+                        class="flex items-start gap-2 text-sm text-slate-400"
+                        [class.flex-row-reverse]="i % 2 === 0"
                       >
-                        {{ skill }}
-                      </span>
-                    </div>
+                        <span class="text-gold-primary/60 font-bold mt-0.5"
+                          >✓</span
+                        >
+                        <span>{{ detail }}</span>
+                      </li>
+                    </ul>
                   </div>
-                </app-glass-card>
+                </div>
               </div>
             </div>
           </div>
@@ -108,100 +136,80 @@ interface TimelineItem {
   `,
 })
 export class ExperienceTimelineComponent implements OnInit {
-  timeline: TimelineItem[] = [];
+  timeline: TimelineItem[] = [
+    {
+      year: "2022-2026",
+      title: "B.Tech CSE",
+      organization: "Shuats University of Agriculture, Technology & Sciences",
+      description:
+        "Computer Science Engineering - Rigorous curriculum in systems design, algorithms, and distributed computing.",
+      details: [
+        "CGPA: 7.5/10",
+        "Major Subjects: Mathematics, Physics, Chemistry",
+        "Focus: System Design & Backend Architecture",
+      ],
+      type: "education",
+      icon: "🎓",
+    },
+    {
+      year: "2023-2024",
+      title: "Web Development Specialist",
+      organization: "Internshala",
+      description:
+        "Comprehensive training in modern web technologies and full-stack development.",
+      details: [
+        "Advanced HTML, CSS, Bootstrap, PHP, JavaScript",
+        "Hands-on projects in React and Angular",
+        "Database design with MySQL and MongoDB",
+      ],
+      type: "education",
+      icon: "💻",
+    },
+    {
+      year: "2023-2024",
+      title: "AI/ML Internship",
+      organization: "SmartED",
+      description:
+        "Real-world experience with machine learning pipelines and AI model deployment.",
+      details: [
+        "Strengthened AI problem solving and model building skills",
+        "Experience with AI frameworks and model deployment",
+        "End-to-end ML pipeline implementation",
+      ],
+      type: "experience",
+      icon: "🤖",
+    },
+    {
+      year: "2024 (May-Aug)",
+      title: "AWS Cloud Computing Certification",
+      organization: "Internshala",
+      description:
+        "Intensive AWS training covering core cloud services and best practices.",
+      details: [
+        "AWS Academy Certified - Top Performer (90%+ score)",
+        "Cloud computing architecture and deployment",
+        "Hands-on lab sessions with real AWS services",
+      ],
+      type: "achievement",
+      icon: "🏆",
+    },
+    {
+      year: "2024-Present",
+      title: "Full Stack Engineer",
+      organization: "Independent Projects",
+      description:
+        "Building production-grade applications using modern technology stack.",
+      details: [
+        "Arogya Vault: Secure health records with Node.js & MongoDB",
+        "SkyCast: Real-time weather app with React & WebGL",
+        "Portfolio OS: Full-stack dashboard with Angular & Three.js",
+      ],
+      type: "experience",
+      icon: "⚙️",
+    },
+  ];
 
-  ngOnInit(): void {
-    this.initializeTimeline();
-  }
-
-  private initializeTimeline(): void {
-    this.timeline = [
-      {
-        title: "Bachelor of Technology (In-Progress)",
-        organization:
-          "Sam Higginbottom University of Agriculture, Science and Technology (SHUATS)",
-        period: "2022 - 2026",
-        description:
-          "Computer Science Engineering with focus on full-stack development and emerging technologies. Currently in 4th year with CGPA 7.5. Active involvement in technical projects and continuous learning.",
-        skills: [
-          "Computer Science",
-          "Data Structures",
-          "Database Design",
-          "Software Engineering",
-          "Web Technologies",
-        ],
-        type: "education",
-      },
-      {
-        title: "Web Development Training",
-        organization: "Internshala",
-        period: "2023 - 2024",
-        description:
-          "Comprehensive training in modern web development including frontend (HTML, CSS, JavaScript, React) and backend (Node.js, PHP). Built production-ready applications with focus on best practices and performance.",
-        skills: [
-          "React",
-          "JavaScript",
-          "CSS3",
-          "HTML5",
-          "Node.js",
-          "PHP",
-          "REST APIs",
-        ],
-        type: "experience",
-      },
-      {
-        title: "AI/ML Internship",
-        organization: "SmartED",
-        period: "2023 - 2024",
-        description:
-          "Worked on machine learning model development, data analysis, and model deployment. Implemented data preprocessing pipelines, trained classification models, and deployed solutions in production environments.",
-        skills: [
-          "Python",
-          "TensorFlow",
-          "Data Analysis",
-          "Model Deployment",
-          "scikit-learn",
-          "Pandas",
-        ],
-        type: "experience",
-      },
-      {
-        title: "AWS Cloud Computing Certification",
-        organization: "Internshala (Top Performer - 90%)",
-        period: "2024",
-        description:
-          "Advanced AWS training covering EC2, S3, Lambda, RDS, and deployment best practices. Achieved top performer status with 90% score. Built and deployed scalable cloud applications.",
-        skills: [
-          "AWS EC2",
-          "AWS S3",
-          "Lambda",
-          "RDS",
-          "CloudFormation",
-          "Cloud Architecture",
-          "DevOps",
-        ],
-        type: "experience",
-      },
-      {
-        title: "Full Stack Software Engineer",
-        organization: "Independent Projects",
-        period: "2024 - Present",
-        description:
-          "Building production-grade applications with Angular, React, Node.js, and cloud technologies. Focus on architecture, performance optimization, and best practices. Leading multiple projects from concept to deployment.",
-        skills: [
-          "Angular",
-          "React",
-          "TypeScript",
-          "Node.js",
-          "Docker",
-          "Kubernetes",
-          "AWS",
-          "Azure",
-          "MongoDB",
-          "PostgreSQL",
-        ],
-        type: "experience",
-      },
-    ];
+  ngOnInit() {
+    // Animation initialization
   }
 }

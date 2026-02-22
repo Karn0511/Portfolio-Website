@@ -1,266 +1,209 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { MOTION } from "../../core/constants/motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
+import { CustomCursorComponent } from "../../shared/components/custom-cursor/custom-cursor.component";
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface TimelineItem {
-  period: string;
-  role: string;
-  company: string;
+interface CareerItem {
+  year: string;
+  title: string;
+  organization: string;
   description: string;
-  tech: string[];
-}
-
-interface Skill {
-  name: string;
-  level: number;
-  category: string;
+  highlights: string[];
+  type: "education" | "experience" | "achievement";
+  icon: string;
 }
 
 @Component({
   selector: "app-experience",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent, CustomCursorComponent],
   template: `
-    <div class="flex flex-col p-6 md:p-12 xl:p-20 relative bg-transparent">
-      <header
-        class="mb-12 md:mb-20 flex flex-col lg:flex-row justify-between items-start lg:items-end relative z-20 gap-8"
-      >
-        <div>
-          <div class="flex items-center gap-4 mb-6">
-            <span class="w-12 h-[1px] bg-sky-500"></span>
-            <span
-              class="font-mono text-[10px] text-sky-400 tracking-[0.4em] uppercase font-bold"
-              >Career Vector</span
-            >
-          </div>
-          <h2
-            class="text-[clamp(3.5rem,10vw,7rem)] font-display font-black tracking-tighter text-white leading-[0.9] uppercase"
-          >
-            Experience<br /><span class="text-white/20">& Education</span>
-          </h2>
-        </div>
+    <!-- Custom Cursor -->
+    <app-custom-cursor></app-custom-cursor>
 
-        <div class="flex gap-6 pb-4 lg:pb-8 border-b border-white/5">
-          <a
-            href="mailto:karnashutosh6@gmail.com"
-            class="w-14 h-14 border border-white/10 flex items-center justify-center hover:border-sky-500 hover:text-sky-500 transition-all"
-          >
-            <span class="material-symbols-outlined text-xl">mail</span>
-          </a>
-          <button
-            class="px-8 md:px-12 h-14 bg-white text-black text-[11px] font-bold tracking-[0.1em] uppercase hover:bg-sky-400 transition-colors"
-          >
-            DOWNLOAD_RESUME
-          </button>
-        </div>
-      </header>
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
 
-      <div
-        class="grid grid-cols-1 xl:grid-cols-12 gap-12 lg:gap-20 relative z-20 pb-32"
-      >
-        <!-- Main Timeline -->
-        <div class="xl:col-span-8 space-y-16 md:space-y-24">
+    <!-- Background -->
+    <div
+      id="background-container"
+      class="fixed inset-0 -z-30 bg-navy-900"
+    ></div>
+
+    <!-- Main Content -->
+    <main class="relative pt-20 min-h-screen pb-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="py-20">
           <div
-            *ngFor="let item of timeline"
-            class="group relative pl-10 md:pl-16 border-l border-white/10"
+            class="inline-block mb-6 px-4 py-2 rounded-full border border-gold-primary/30 bg-gold-primary/5"
           >
-            <div
-              class="absolute -left-[1px] top-0 w-[1px] h-full bg-sky-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"
-            ></div>
-
-            <div class="mb-8">
-              <span
-                class="font-mono text-[11px] text-sky-400 tracking-[0.2em] uppercase mb-4 block font-bold"
-                >{{ item.period }}</span
-              >
-              <h3
-                class="text-3xl md:text-5xl font-display font-black text-white mb-2 tracking-tighter leading-none uppercase"
-              >
-                {{ item.role }}
-              </h3>
-              <div
-                class="text-white/40 font-mono text-[12px] tracking-widest uppercase"
-              >
-                {{ item.company }}
-              </div>
-            </div>
-
-            <p
-              class="text-slate-400 text-lg md:text-xl font-sans font-light leading-relaxed mb-10 max-w-3xl"
+            <span
+              class="text-sm font-bold text-gold-primary uppercase tracking-widest"
+              >Career Path</span
             >
-              {{ item.description }}
-            </p>
-
-            <div class="flex flex-wrap gap-2">
-              <span
-                *ngFor="let t of item.tech"
-                class="px-4 py-1.5 bg-white/5 border border-white/5 text-[10px] font-bold text-white/30 uppercase tracking-widest"
-              >
-                {{ t }}
-              </span>
-            </div>
           </div>
+          <h1 class="text-6xl md:text-7xl font-black text-white mb-6">
+            Experience
+          </h1>
+          <p class="text-xl text-slate-300 max-w-2xl">
+            My professional journey from education through autonomous
+            engineering
+          </p>
         </div>
 
-        <!-- Sidebar (Stats & Info) -->
-        <div class="xl:col-span-4 space-y-12">
-          <div class="bg-white/[0.02] border border-white/5 p-10 space-y-12">
-            <h3
-              class="font-display text-sm text-white uppercase tracking-[0.4em] flex items-center gap-4 font-black"
-            >
-              <span class="w-1 h-6 bg-sky-500"></span>
-              Tech Stack
-            </h3>
+        <!-- Timeline -->
+        <div class="relative">
+          <!-- Timeline line -->
+          <div
+            class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-gold-primary/50 via-gold-primary/30 to-transparent"
+          ></div>
 
-            <div class="space-y-12">
-              <div *ngFor="let group of skillGroups" class="space-y-6">
-                <div
-                  class="text-[10px] font-bold text-sky-400 uppercase tracking-widest"
-                >
-                  {{ group.category }}
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    *ngFor="let skill of group.skills"
-                    class="px-3 py-1.5 bg-white/5 border border-white/5 text-[9px] font-bold text-white/40 uppercase tracking-tighter"
-                  >
-                    {{ skill }}
-                  </span>
-                </div>
+          <!-- Timeline items -->
+          <div class="space-y-12 md:space-y-16">
+            <div
+              *ngFor="let item of careerItems; let i = index"
+              class="relative md:w-1/2"
+              [class.md:ml-auto]="i % 2 === 0"
+            >
+              <!-- Timeline dot -->
+              <div
+                class="absolute -left-10 md:left-1/2 md:-translate-x-1/2 top-0 w-8 h-8 rounded-full border-4 border-navy-900 bg-gold-primary flex items-center justify-center text-navy-900 font-bold text-sm z-10"
+              >
+                {{ item.icon }}
               </div>
-            </div>
-          </div>
 
-          <div class="bg-white/[0.02] border border-white/5 p-10 space-y-12">
-            <h3
-              class="font-display text-sm text-white uppercase tracking-[0.4em] flex items-center gap-4 font-black"
-            >
-              <span class="w-1 h-6 bg-white/20"></span>
-              Education
-            </h3>
-            <div class="space-y-10">
-              <div *ngFor="let edu of education" class="space-y-4">
-                <div
-                  class="text-white font-sans font-black text-xl tracking-tight uppercase"
-                >
-                  {{ edu.title }}
-                </div>
-                <div class="text-white/40 text-sm font-sans font-light">
-                  {{ edu.school }}
-                </div>
-                <div
-                  class="flex justify-between items-center pt-4 border-t border-white/5"
-                >
+              <!-- Content Card -->
+              <div
+                class="ml-12 md:ml-0 p-6 md:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-gold-primary/50 transition-all duration-300"
+              >
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-4">
                   <span
-                    class="text-sky-400/50 text-[10px] font-mono font-bold tracking-widest"
-                    >{{ edu.date }}</span
+                    class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest"
+                    [ngClass]="
+                      item.type === 'education'
+                        ? 'bg-blue-primary/20 text-blue-400'
+                        : item.type === 'achievement'
+                          ? 'bg-purple-500/20 text-purple-300'
+                          : 'bg-gold-primary/20 text-gold-light'
+                    "
                   >
-                  <span
-                    class="text-white text-[9px] font-mono font-bold uppercase tracking-widest bg-white/5 px-3 py-1"
-                    >{{ edu.grade }}</span
-                  >
+                    {{ item.type }}
+                  </span>
+                  <span class="text-sm font-bold text-gold-primary">{{
+                    item.year
+                  }}</span>
                 </div>
+
+                <!-- Title -->
+                <h3 class="text-2xl md:text-3xl font-black text-white mb-2">
+                  {{ item.title }}
+                </h3>
+
+                <!-- Organization -->
+                <p class="text-sm text-slate-400 font-semibold mb-4">
+                  {{ item.organization }}
+                </p>
+
+                <!-- Description -->
+                <p class="text-slate-300 leading-relaxed mb-6">
+                  {{ item.description }}
+                </p>
+
+                <!-- Highlights -->
+                <ul class="space-y-2">
+                  <li
+                    *ngFor="let highlight of item.highlights"
+                    class="flex items-center gap-2 text-slate-400"
+                  >
+                    <span class="w-1 h-1 rounded-full bg-gold-primary"></span>
+                    {{ highlight }}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-      }
-    `,
-  ],
+  styles: [],
 })
-export class ExperienceComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExperienceComponent implements OnInit, OnDestroy {
+  careerItems: CareerItem[] = [
+    {
+      year: "2022-2026",
+      title: "B.Tech Computer Science",
+      organization: "SHUATS University",
+      description:
+        "Rigorous curriculum in systems design, algorithms, and distributed computing with focus on backend architecture.",
+      highlights: [
+        "Strong academic foundation in core CS principles",
+        "Hands-on projects in system design",
+        "Database design and optimization",
+      ],
+      type: "education",
+      icon: "🎓",
+    },
+    {
+      year: "2023-2024",
+      title: "Web Development Specialist",
+      organization: "Internshala Certificate Program",
+      description:
+        "Comprehensive training in modern web technologies covering front-end and full-stack development.",
+      highlights: [
+        "Advanced HTML, CSS, JavaScript mastery",
+        "React and Angular frameworks",
+        "Database design with MySQL and MongoDB",
+      ],
+      type: "education",
+      icon: "💻",
+    },
+    {
+      year: "2023-2024",
+      title: "AI/ML Internship",
+      organization: "SmartED Technologies",
+      description:
+        "Real-world experience building and deploying machine learning pipelines in production environments.",
+      highlights: [
+        "ML model training and optimization",
+        "End-to-end pipeline development",
+        "Production deployment experience",
+      ],
+      type: "experience",
+      icon: "🤖",
+    },
+    {
+      year: "May-August 2024",
+      title: "AWS Cloud Certification",
+      organization: "Internshala Academy",
+      description:
+        "Intensive AWS training covering cloud architecture, deployment strategies, and best practices.",
+      highlights: [
+        "90% exam score - Top Performer",
+        "Cloud infrastructure mastery",
+        "Real AWS services hands-on lab experience",
+      ],
+      type: "achievement",
+      icon: "🏆",
+    },
+    {
+      year: "2024-Present",
+      title: "Full Stack Engineer",
+      organization: "Independent Projects",
+      description:
+        "Building production-grade applications using modern tech stacks with focus on scalability and performance.",
+      highlights: [
+        "Arogya Vault - Secure health records platform",
+        "SkyCast Radar - Real-time weather visualization",
+        "This portfolio - Interactive full-stack dashboard",
+      ],
+      type: "experience",
+      icon: "⚙️",
+    },
+  ];
+
   ngOnInit() {}
-
-  ngAfterViewInit() {}
-
-  ngOnDestroy() {
-    ScrollTrigger.getAll().forEach((t) => t.kill());
-  }
-
-  timeline: TimelineItem[] = [
-    {
-      period: "MAY 2024 - JULY 2024",
-      role: "AI Developer Intern",
-      company: "SmartED",
-      description:
-        "Engineered machine learning models for large-scale data analysis. Developed and deployed predictive modules, specializing in neural network optimization and data ingestion pipelines.",
-      tech: [
-        "Python",
-        "TensorFlow",
-        "Scikit-Learn",
-        "Data Analysis",
-        "AI Deployment",
-      ],
-    },
-    {
-      period: "JAN 2024 - APRIL 2024",
-      role: "Cloud Engineering Training",
-      company: "AWS Academy",
-      description:
-        "Recognized as a top performer (90% score). Architected secure, scalable, and fault-tolerant cloud environments. Implemented advanced infrastructure-as-code and serverless protocols.",
-      tech: ["AWS", "Cloud Architecture", "EC2", "S3", "IAM", "VPC"],
-    },
-    {
-      period: "DEC 2024 - FEB 2025",
-      role: "Full Stack Development",
-      company: "Internshala Trainings",
-      description:
-        "Developed comprehensive web applications with a focus on reactive frontend architectures and efficient backend synchronization using modern framework standards.",
-      tech: ["React", "Node.js", "PostgreSQL", "Redux", "Bootstrap"],
-    },
-  ];
-
-  skillGroups = [
-    {
-      category: "Frontend",
-      skills: [
-        "Angular 19",
-        "React",
-        "TypeScript",
-        "JavaScript",
-        "Tailwind CSS",
-        "GSAP",
-      ],
-    },
-    {
-      category: "Backend & DB",
-      skills: [
-        "Node.js",
-        "Express.js",
-        "PostgreSQL",
-        "MongoDB",
-        "REST API",
-        "Firebase",
-      ],
-    },
-    {
-      category: "Cloud & DevOps",
-      skills: ["AWS", "Docker", "Kubernetes", "Linux", "Git", "GitHub Actions"],
-    },
-    {
-      category: "Languages",
-      skills: ["Python", "Java", "C++", "SQL"],
-    },
-  ];
-
-  education = [
-    {
-      title: "B.Tech Computer Science Engineering",
-      school: "SHUATS, Prayagraj",
-      date: "2022 - 2026",
-      grade: "7.5 CGPA",
-    },
-  ];
+  ngOnDestroy() {}
 }

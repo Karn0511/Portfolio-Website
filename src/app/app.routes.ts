@@ -4,7 +4,9 @@ export const routes: Routes = [
   {
     path: "",
     loadComponent: () =>
-      import("./features/home/home.component").then((m) => m.HomeComponent),
+      import("./features/home/home-amazing.component").then(
+        (m) => m.HomeAmazingComponent,
+      ),
   },
   {
     path: "projects",
