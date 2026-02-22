@@ -13,20 +13,37 @@ import { MOTION, BREAKPOINTS } from "./core/constants/motion";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 
+declare var THREE: any;
+
 @Component({
   selector: "app-root",
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterModule, AiAssistantComponent],
   template: `
     <div
-      class="h-screen w-screen bg-[#050505] text-slate-100 flex flex-col md:flex-row overflow-hidden font-sans relative"
+      class="h-screen w-screen bg-[#020408] text-white flex flex-col md:flex-row overflow-hidden font-sans relative"
+      style="font-family: 'Plus Jakarta Sans', sans-serif;"
     >
-      <!-- Static BG Grid -->
+      <!-- Liquid Marble Background -->
+      <canvas
+        #marbleCanvas
+        class="fixed inset-0 z-0 pointer-events-none"
+      ></canvas>
+
+      <!-- Scanline Overlay -->
       <div
-        class="fixed inset-0 bg-grid opacity-20 pointer-events-none z-0"
+        class="fixed inset-0 z-1 pointer-events-none opacity-20"
+        style="background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03)); background-size: 100% 3px, 3px 100%;"
+      ></div>
+
+      <!-- Custom Cursor -->
+      <div
+        #cursorMain
+        class="fixed w-2 h-2 bg-white rounded-full pointer-events-none z-[1000] hidden md:block"
       ></div>
       <div
-        class="fixed inset-0 bg-noise opacity-[0.03] pointer-events-none z-0"
+        #cursorRing
+        class="fixed w-10 h-10 border border-white/20 rounded-full pointer-events-none z-[999] hidden md:block transition-transform duration-300"
       ></div>
 
       <!-- Desktop Navigation -->
@@ -137,6 +154,7 @@ import Lenis from "lenis";
   ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild("marbleCanvas") marbleCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild("cursorMain") cursorMain!: ElementRef;
   @ViewChild("cursorRing") cursorRing!: ElementRef;
   @ViewChild("cursorGlow") cursorGlow!: ElementRef;
@@ -158,7 +176,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    // Small delay to ensure browser layout is stable
+    this.initMarbleBackground();
     setTimeout(() => {
       this.initSmoothScroll();
       this.initGlobalCursor();
@@ -177,6 +195,93 @@ export class AppComponent implements OnInit, AfterViewInit {
       document.removeEventListener(type, handler, options);
     });
     this.listeners = [];
+  }
+
+  private initMarbleBackground() {
+    const canvas = this.marbleCanvas.nativeElement;
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      varying vec2 vUv;
+      uniform float uTime;
+      
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+      float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+          vec2 i  = floor(v + dot(v, C.yy) );
+          vec2 x0 = v -   i + dot(i, C.xx);
+          vec2 i1;
+          i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod289(i);
+          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+          m = m*m; m = m*m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+          vec3 g;
+          g.x  = a0.x  * x0.x  + h.x  * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
+      }
+
+      void main() {
+          vec2 p = vUv * 2.0 - 1.0;
+          float n = snoise(p * 1.5 + uTime * 0.1);
+          n += snoise(p * 3.0 - uTime * 0.05) * 0.5;
+          
+          vec3 dark = vec3(0.01, 0.02, 0.04);
+          vec3 blue = vec3(0.0, 0.4, 0.8);
+          vec3 gold = vec3(0.83, 0.68, 0.21);
+          
+          vec3 color = mix(dark, blue, clamp(n * 2.0, 0.0, 1.0));
+          color = mix(color, gold, clamp((n - 0.5) * 4.0, 0.0, 1.0));
+          
+          float glint = pow(clamp(n, 0.0, 1.0), 10.0) * 0.2;
+          color += vec3(1.0) * glint;
+          
+          gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: { uTime: { value: 0 } },
+    });
+
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(mesh);
+
+    const animate = (t: number) => {
+      material.uniforms["uTime"].value = t * 0.001;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    };
+    animate(0);
+
+    const onResize = () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", onResize);
+    this.addManagedListener("resize", onResize);
   }
 
   private addManagedListener(type: string, handler: any, options?: any) {
