@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ParallaxService } from "../../../core/services/parallax.service";
 import gsap from "gsap";
@@ -284,7 +284,7 @@ import gsap from "gsap";
     `,
   ],
 })
-export class HeroParallaxComponent implements OnInit, OnDestroy {
+export class HeroParallaxComponent implements OnInit {
   scrollProgress = 0;
 
   floatingElements = [
@@ -302,7 +302,7 @@ export class HeroParallaxComponent implements OnInit, OnDestroy {
     { size: 90, x: 75, y: 15, color: "#dd0031", duration: 11, delay: -5 },
   ];
 
-  constructor(private parallaxService: ParallaxService) {}
+  constructor(private readonly parallaxService: ParallaxService) {}
 
   ngOnInit() {
     this.parallaxService.getScrollProgress$().subscribe((progress) => {
@@ -340,9 +340,5 @@ export class HeroParallaxComponent implements OnInit, OnDestroy {
 
   getParallaxY(speed: number): number {
     return Math.min(this.scrollProgress * 400 * speed, 200);
-  }
-
-  ngOnDestroy() {
-    // Cleanup
   }
 }

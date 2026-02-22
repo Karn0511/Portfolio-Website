@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 interface TimelineItem {
@@ -135,7 +135,7 @@ interface TimelineItem {
     </section>
   `,
 })
-export class ExperienceTimelineComponent implements OnInit {
+export class ExperienceTimelineComponent {
   timeline: TimelineItem[] = [
     {
       year: "2022-2026",
@@ -208,8 +208,4 @@ export class ExperienceTimelineComponent implements OnInit {
       icon: "⚙️",
     },
   ];
-
-  ngOnInit() {
-    // Animation initialization
-  }
 }

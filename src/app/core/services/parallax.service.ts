@@ -48,7 +48,8 @@ export class ParallaxService {
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
       if (rect.top < globalThis.innerHeight / 2 && rect.bottom > 0) {
-        this.sectionInView$.next(section.getAttribute("data-section") || "");
+        const sectionName = (section as HTMLElement).dataset["section"] || "";
+        this.sectionInView$.next(sectionName);
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ParallaxService } from "../../../core/services/parallax.service";
 import gsap from "gsap";
@@ -250,7 +250,7 @@ interface Technology {
     `,
   ],
 })
-export class TechStackRealComponent implements OnInit, OnDestroy {
+export class TechStackRealComponent implements OnInit {
   scrollProgress = 0;
   parallaxOffset = 0;
 
@@ -377,7 +377,7 @@ export class TechStackRealComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private parallaxService: ParallaxService) {}
+  constructor(private readonly parallaxService: ParallaxService) {}
 
   ngOnInit() {
     this.parallaxService.getScrollProgress$().subscribe((progress) => {
@@ -422,9 +422,5 @@ export class TechStackRealComponent implements OnInit, OnDestroy {
     allCards.forEach((c) => {
       gsap.to(c, { duration: 0.3, opacity: 1 });
     });
-  }
-
-  ngOnDestroy() {
-    // Cleanup if needed
   }
 }

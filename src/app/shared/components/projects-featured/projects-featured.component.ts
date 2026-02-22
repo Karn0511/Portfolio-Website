@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { GlassCardComponent } from "../glass-card/glass-card.component";
 
@@ -145,7 +145,7 @@ interface Project {
     </section>
   `,
 })
-export class ProjectsFeaturedComponent implements OnInit {
+export class ProjectsFeaturedComponent {
   projects: Project[] = [
     {
       id: 1,
@@ -243,8 +243,4 @@ export class ProjectsFeaturedComponent implements OnInit {
       link: "https://github.com/Karn0511",
     },
   ];
-
-  ngOnInit() {
-    // Animation on scroll - handled by parallax service
-  }
 }

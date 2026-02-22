@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { CustomCursorComponent } from "../../shared/components/custom-cursor/custom-cursor.component";
@@ -146,7 +146,7 @@ interface Project {
   `,
   styles: [],
 })
-export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProjectsComponent {
   projects: Project[] = [
     {
       id: 1,
@@ -245,10 +245,4 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
     },
   ];
-
-  ngOnInit() {}
-
-  ngAfterViewInit() {}
-
-  ngOnDestroy() {}
 }

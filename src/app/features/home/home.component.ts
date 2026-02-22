@@ -1,18 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { MOTION } from "../../core/constants/motion";
+import { RouterModule } from "@angular/router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
-
-import { RouterOutlet, RouterModule } from "@angular/router";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -161,7 +152,7 @@ gsap.registerPlugin(ScrollTrigger);
     `,
   ],
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   pillars = [
     {
       id: "0x01",
@@ -180,12 +171,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  private scene!: THREE.Scene;
-  private camera!: THREE.PerspectiveCamera;
-  private renderer!: THREE.WebGLRenderer;
-  private torus!: THREE.Mesh;
-  private frameId!: number;
-  private mouse = { x: 0, y: 0 };
+  private readonly scene!: THREE.Scene;
+  private readonly camera!: THREE.PerspectiveCamera;
+  private readonly renderer!: THREE.WebGLRenderer;
+  private readonly torus!: THREE.Mesh;
+  private readonly frameId!: number;
+  private readonly mouse = { x: 0, y: 0 };
 
   ngOnInit() {
     // Staggered fade-in animation
@@ -195,8 +186,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: "power2.out" },
     );
   }
-
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
     ScrollTrigger.getAll().forEach((t) => t.kill());

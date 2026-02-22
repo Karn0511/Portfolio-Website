@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { CustomCursorComponent } from "../../shared/components/custom-cursor/custom-cursor.component";
@@ -103,7 +103,7 @@ interface Technology {
   `,
   styles: [],
 })
-export class SystemsComponent implements OnInit, OnDestroy {
+export class SystemsComponent {
   technologies: Technology[] = [
     { name: "TypeScript", category: "Language", proficiency: 95 },
     { name: "Angular", category: "Frontend", proficiency: 92 },
@@ -126,7 +126,4 @@ export class SystemsComponent implements OnInit, OnDestroy {
     { name: "TensorFlow", category: "AI/ML", proficiency: 82 },
     { name: "Git", category: "VCS", proficiency: 95 },
   ];
-
-  ngOnInit() {}
-  ngOnDestroy() {}
 }
