@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karn Ashutosh | Imperial System Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --gold-imperial: #d4af37;
+        --gold-bright: #ffd700;
+        --deep-void: #020408;
+        --electric-blue: #00a3ff;
+        --glass-core: rgba(10, 15, 25, 0.7);
+      }
+
+      body {
+        background-color: var(--deep-void);
+        color: #f8fafc;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        overflow: hidden;
+        margin: 0;
+        cursor: none;
+      }
+
+      .font-display {
+        font-family: "Outfit", sans-serif;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Custom Neural Cursor */
+      #cursor {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+      }
+      #cursor-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      /* Ambient Noise Overlay */
+      .noise-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        opacity: 0.04;
+        pointer-events: none;
+        background: repeating-conic-gradient(#000 0 10deg, #fff 0 20deg) 50% /
+          3px 3px;
+      }
+
+      /* Liquid Marble Shader Background */
+      #bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      /* Hyper-Premium Glassmorphism */
+      .glass-panel {
+        background: var(--glass-core);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        box-shadow: 0 24px 80px -12px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .glass-panel:hover {
+        border-color: rgba(212, 175, 55, 0.25);
+        box-shadow: 0 32px 100px -12px rgba(0, 0, 0, 0.8);
+      }
+
+      /* Tab Bar Evolution */
+      .tab-dock {
+        background: rgba(10, 15, 25, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 100px;
+        padding: 6px;
+        display: flex;
+        gap: 4px;
+      }
+
+      .tab-btn {
+        padding: 10px 24px;
+        border-radius: 100px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .tab-btn.active {
+        color: white;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.02);
+      }
+
+      .tab-indicator {
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--gold-imperial);
+        border-radius: 10px;
+        transform: translateX(-50%);
+        transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        box-shadow: 0 0 15px var(--gold-imperial);
+      }
+
+      .tab-btn.active .tab-indicator {
+        width: 12px;
+      }
+
+      /* Imperial Text Gradients */
+      .text-imperial {
+        background: linear-gradient(
+          135deg,
+          #fff 0%,
+          var(--gold-imperial) 50%,
+          var(--gold-bright) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Bento Architecture */
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+        gap: 24px;
+        height: 100%;
+      }
+
+      /* Internal Animation */
+      .reveal-view {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      .section-view {
+        display: none;
+        height: 100%;
+      }
+
+      .section-view.active {
+        display: block;
+      }
+
+      /* Custom Scroll */
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(212, 175, 55, 0.2);
+        border-radius: 10px;
+      }
+
+      /* Interactive Core */
+      .intel-pulse {
+        width: 10px;
+        height: 10px;
+        background: var(--gold-imperial);
+        border-radius: 50%;
+        box-shadow: 0 0 20px var(--gold-imperial);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.3);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased h-screen w-screen p-8 flex flex-col gap-8">
+    <!-- FX Layers -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+    <div class="noise-overlay"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- UI Core -->
+    <header class="relative z-10 flex justify-between items-end">
+      <div class="glass-panel p-6 px-8 flex flex-col">
+        <h1
+          class="font-display text-4xl font-black text-imperial tracking-tighter leading-none"
+        >
+          KARN ASHUTOSH
+        </h1>
+        <p
+          class="font-mono text-[9px] text-white/40 uppercase tracking-[0.5em] mt-3 ml-1"
+        >
+          Architectonics of Professional Identity // V5.0.1
+        </p>
+      </div>
+
+      <div class="hidden lg:flex gap-6">
+        <div class="glass-panel p-5 px-10 text-right">
+          <span
+            class="font-mono text-[9px] text-[#00A3FF] uppercase tracking-widest font-black"
+            >Memory Integrity</span
+          >
+          <p class="font-display text-xl font-light">99.98% SLI</p>
+        </div>
+        <div class="glass-panel p-5 px-10 text-right">
+          <span
+            class="font-mono text-[9px] text-emerald-400 uppercase tracking-widest font-black"
+            >Kernel Status</span
+          >
+          <p class="font-display text-xl font-light">OPERATIONAL</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Engine -->
+    <main class="relative z-10 flex-grow h-0">
+      <!-- SECTION: CONSOLE -->
+      <div id="home" class="section-view active">
+        <div class="bento-grid">
+          <!-- Hero Panel -->
+          <div
+            class="col-span-12 lg:col-span-8 row-span-8 glass-panel p-12 flex flex-col justify-center relative overflow-hidden group"
+          >
+            <div
+              class="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-blue-500/5 to-transparent opacity-50"
+            ></div>
+            <span
+              class="font-mono text-[10px] text-[#A3FFD6] mb-6 block tracking-[0.5em]"
+              >INITIALIZING_NEURAL_INTERFACE...</span
+            >
+            <h2
+              class="font-display text-7xl font-black text-white leading-[0.85] tracking-tighter mb-8"
+            >
+              FORGING THE <br />
+              <span class="text-imperial italic">FUTURE FLOW</span>
+            </h2>
+            <p
+              class="text-white/50 max-w-xl text-lg font-light leading-relaxed mb-12"
+            >
+              Pioneering high-frequency cloud architectures and deterministic AI
+              systems. Bridging the gap between $100M engineering standards and
+              tactile digital experiences.
+            </p>
+            <div class="flex gap-4">
+              <button
+                onclick="switchView('terminal')"
+                class="px-10 h-14 bg-white/10 border border-white/20 hover:border-gold-imperial/50 rounded-2xl font-mono text-[11px] font-bold tracking-widest text-[#D4AF37] hover:bg-gold-imperial/10 transition-all"
+              >
+                SYSTEM_AUDIT_EX
+              </button>
+              <button
+                onclick="switchView('storage')"
+                class="px-10 h-14 bg-[#D4AF37] text-black rounded-2xl font-mono text-[11px] font-bold tracking-widest hover:bg-white transition-all"
+              >
+                MOUNT_REPOSITORY
+              </button>
+            </div>
+          </div>
+
+          <!-- Metrics Wall -->
+          <div
+            class="col-span-6 lg:col-span-4 row-span-4 glass-panel p-8 flex flex-col justify-between"
+          >
+            <div class="flex justify-between items-start">
+              <div
+                class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400"
+              >
+                <span class="font-mono font-bold">∑</span>
+              </div>
+              <span
+                class="font-mono text-[9px] text-white/20 uppercase tracking-widest"
+                >Efficiency Index</span
+              >
+            </div>
+            <div>
+              <h3 class="font-display text-5xl font-black">98.4%</h3>
+              <p
+                class="font-mono text-[9px] text-emerald-400/60 uppercase mt-2"
+              >
+                OPTIMIZED_BYTE_O(N)
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="col-span-6 lg:col-span-4 row-span-4 glass-panel p-8 flex flex-col justify-between overflow-hidden relative"
+          >
+            <div
+              class="absolute -bottom-10 -right-10 w-40 h-40 bg-gold-imperial/10 blur-3xl"
+            ></div>
+            <h3
+              class="font-mono text-[10px] text-[#D4AF37] uppercase tracking-widest mb-4"
+            >
+              Stack_Symmetry.cfg
+            </h3>
+            <div class="flex-grow flex items-center justify-center">
+              <canvas id="stackChart" style="max-height: 180px"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: STORAGE -->
+      <div id="storage" class="section-view h-full">
+        <div class="glass-panel h-full p-12 flex flex-col">
+          <div class="flex justify-between items-end mb-12">
+            <div>
+              <h2 class="font-display text-5xl font-black text-imperial">
+                CORE_MODULES.BIN
+              </h2>
+              <p
+                class="font-mono text-[10px] text-white/30 uppercase tracking-[0.4em] mt-3"
+              >
+                High-Impact Engineering Repository
+              </p>
+            </div>
+            <div
+              class="font-mono text-[10px] text-blue-400 font-bold uppercase"
+            >
+              TOTAL_NODES: 03
+            </div>
+          </div>
+
+          <div
+            class="flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-y-auto pr-4 custom-scroll"
+          >
+            <!-- Project Node -->
+            <div
+              class="glass-panel p-1 group hover:border-gold-imperial/50 transition-all cursor-pointer"
+            >
+              <div
+                class="bg-black/20 rounded-[22px] p-8 h-full flex flex-col border border-white/5 transition-all group-hover:bg-gold-imperial/5"
+              >
+                <span class="font-mono text-[10px] text-[#00A3FF] mb-3 block"
+                  >ACCESS_ID // 0x821</span
+                >
+                <h4
+                  class="font-display text-2xl font-black text-white mb-4 italic"
+                >
+                  AROGYA VAULT
+                </h4>
+                <p
+                  class="text-sm font-light text-white/40 leading-relaxed mb-10 flex-grow"
+                >
+                  Secure blockchain-based healthcare records. Zero-trust
+                  architecture with NLP document summarization clusters.
+                </p>
+                <div class="flex gap-2 mb-8">
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >Angular 19</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >AWS Academy</span
+                  >
+                </div>
+                <button
+                  class="w-full py-3 border border-gold-imperial/30 rounded-xl font-mono text-[10px] font-bold tracking-widest text-[#D4AF37] hover:bg-gold-imperial hover:text-black transition-all"
+                >
+                  LINK_BYTE_STREAM
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="glass-panel p-1 group hover:border-gold-imperial/50 transition-all cursor-pointer"
+            >
+              <div
+                class="bg-black/20 rounded-[22px] p-8 h-full flex flex-col border border-white/5 transition-all group-hover:bg-gold-imperial/5"
+              >
+                <span class="font-mono text-[10px] text-[#00A3FF] mb-3 block"
+                  >ACCESS_ID // 0x419</span
+                >
+                <h4
+                  class="font-display text-2xl font-black text-white mb-4 italic"
+                >
+                  SKYCAST RADAR
+                </h4>
+                <p
+                  class="text-sm font-light text-white/40 leading-relaxed mb-10 flex-grow"
+                >
+                  Predictive atmospheric engine. Reactive visualization for
+                  multi-vector weather patterns using open-stream APIs.
+                </p>
+                <div class="flex gap-2 mb-8">
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >Three.js</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >TypeScript</span
+                  >
+                </div>
+                <button
+                  class="w-full py-3 border border-gold-imperial/30 rounded-xl font-mono text-[10px] font-bold tracking-widest text-[#D4AF37] hover:bg-gold-imperial hover:text-black transition-all"
+                >
+                  LINK_BYTE_STREAM
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="glass-panel p-1 group hover:border-gold-imperial/50 transition-all cursor-pointer"
+            >
+              <div
+                class="bg-black/20 rounded-[22px] p-8 h-full flex flex-col border border-white/5 transition-all group-hover:bg-gold-imperial/5"
+              >
+                <span class="font-mono text-[10px] text-[#00A3FF] mb-3 block"
+                  >ACCESS_ID // 0x77A</span
+                >
+                <h4
+                  class="font-display text-2xl font-black text-white mb-4 italic"
+                >
+                  JARVIS HUD
+                </h4>
+                <p
+                  class="text-sm font-light text-white/40 leading-relaxed mb-10 flex-grow"
+                >
+                  A holographic system diagnostic interface. Real-time telemetry
+                  monitoring for distributed cloud instances.
+                </p>
+                <div class="flex gap-2 mb-8">
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >GSAP</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-mono text-white/60 uppercase"
+                    >Docker</span
+                  >
+                </div>
+                <button
+                  class="w-full py-3 border border-gold-imperial/30 rounded-xl font-mono text-[10px] font-bold tracking-widest text-[#D4AF37] hover:bg-gold-imperial hover:text-black transition-all"
+                >
+                  LINK_BYTE_STREAM
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: TERMINAL -->
+      <div id="terminal" class="section-view h-full">
+        <div class="glass-panel h-full flex flex-col overflow-hidden">
+          <div
+            class="bg-white/5 p-5 px-10 border-b border-white/10 flex justify-between items-center"
+          >
+            <div class="flex items-center gap-4">
+              <div class="intel-pulse"></div>
+              <span
+                class="font-mono text-[11px] text-white/60 tracking-[0.3em] font-bold uppercase"
+                >Intelligence Core // Jarvis_AI</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex-grow p-12 font-mono text-sm overflow-y-auto custom-scroll space-y-6"
+            id="termOutput"
+          >
+            <p class="text-blue-400 opacity-60">
+              >> Handshake established with 0x4f12... Secure tunnel active.
+            </p>
+            <p class="text-white/40 leading-relaxed italic">
+              > Good morning, Karn. I have indexed your latest repository
+              changes. All cloud nodes are reporting stable latency. How shall
+              we proceed with the architectural audit?
+            </p>
+          </div>
+          <div
+            class="p-8 bg-black/40 border-t border-white/10 flex items-center gap-6"
+          >
+            <span class="font-mono text-[#D4AF37] text-xl">></span>
+            <input
+              type="text"
+              id="termInput"
+              placeholder="AWAITING SYSTEM COMMAND_"
+              class="bg-transparent border-none outline-none flex-grow font-mono text-[#D4AF37] tracking-widest uppercase text-sm placeholder:text-[#D4AF37]/20"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Navigation Architecture -->
+    <footer class="relative z-10 flex justify-between items-center">
+      <div
+        class="font-mono text-[9px] text-white/20 tracking-[0.5em] space-y-2 uppercase"
+      >
+        <p>© 2026 ASHUTOSH_KARN</p>
+        <p>BUILD_SIG: LIQUID_MARBLE_CORE_V5</p>
+      </div>
+
+      <nav class="tab-dock" id="navDock">
+        <div class="tab-btn active" onclick="switchView('home')">
+          CONSOLE
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-btn" onclick="switchView('storage')">
+          STORAGE
+          <div class="tab-indicator"></div>
+        </div>
+        <div class="tab-btn" onclick="switchView('terminal')">
+          INTELLIGENCE
+          <div class="tab-indicator"></div>
+        </div>
+      </nav>
+
+      <div class="flex gap-4">
+        <a
+          href="https://github.com/Karn0511"
+          class="w-10 h-10 glass-panel flex items-center justify-center font-mono text-[10px] hover:bg-white hover:text-black transform hover:-translate-y-1 transition-all"
+          >GH</a
+        >
+        <a
+          href="https://linkedin.com/in/Karn1105"
+          class="w-10 h-10 glass-panel flex items-center justify-center font-mono text-[10px] hover:bg-white hover:text-black transform hover:-translate-y-1 transition-all"
+          >LI</a
+        >
+      </div>
+    </footer>
+
+    <!-- Imperial Liquid Marble Shader Engine -->
+    <script id="vsh" type="x-shader/x-vertex">
+      varying vec2 vUv;
+      void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+    <script id="fsh" type="x-shader/x-fragment">
+      varying vec2 vUv;
+      uniform float uTime;
+
+      // Fluid noise functions for Marble effect
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+      float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+          vec2 i  = floor(v + dot(v, C.yy) );
+          vec2 x0 = v -   i + dot(i, C.xx);
+          vec2 i1;
+          i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod289(i);
+          vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+          m = m*m; m = m*m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+          vec3 g;
+          g.x  = a0.x  * x0.x  + h.x  * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
+      }
+
+      void main() {
+          vec2 p = vUv * 2.0 - 1.0;
+          p.x *= 1.5;
+
+          float n = snoise(p * 1.5 + uTime * 0.15);
+          n += snoise(p * 3.0 - uTime * 0.1) * 0.5;
+          n += snoise(p * 6.0 + uTime * 0.05) * 0.25;
+
+          // Marble color vectors: Gold, Blue, Deep Dark
+          vec3 dark = vec3(0.01, 0.02, 0.04);
+          vec3 blue = vec3(0.0, 0.4, 1.0); // Electric Blue
+          vec3 gold = vec3(0.83, 0.68, 0.21); // Imperial Gold
+
+          // Mixing logic
+          vec3 color = mix(dark, blue, clamp(n * 2.5, 0.0, 1.0));
+          color = mix(color, gold, clamp((n - 0.6) * 5.0, 0.0, 1.0));
+
+          // Final polish: contrast and glint
+          color += vec3(1.0) * pow(clamp(n, 0.0, 1.0), 12.0) * 0.5; // High-specular glint
+
+          gl_FragColor = vec4(color, 1.0);
+      }
+    </script>
+
+    <script>
+      // Init Three.js Shader Engine
+      const initBackground = () => {
+        const canvas = document.getElementById("bg-canvas");
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: true,
+          alpha: true,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const mat = new THREE.ShaderMaterial({
+          vertexShader: document.getElementById("vsh").textContent,
+          fragmentShader: document.getElementById("fsh").textContent,
+          uniforms: { uTime: { value: 0 } },
+        });
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+
+        const animate = (t) => {
+          mat.uniforms.uTime.value = t * 0.001;
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+        };
+        animate(0);
+
+        window.addEventListener("resize", () => {
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      };
+
+      // Interactive Cursor
+      const initCursor = () => {
+        const c = document.getElementById("cursor");
+        const r = document.getElementById("cursor-ring");
+        window.addEventListener("mousemove", (e) => {
+          gsap.to(c, { x: e.clientX, y: e.clientY, duration: 0 });
+          gsap.to(r, { x: e.clientX - 16, y: e.clientY - 16, duration: 0.15 });
+        });
+        document.querySelectorAll("button, a, .glass-panel").forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            gsap.to(r, { scale: 1.5, borderColor: "#D4AF37", duration: 0.3 }),
+          );
+          el.addEventListener("mouseleave", () =>
+            gsap.to(r, {
+              scale: 1,
+              borderColor: "rgba(255,255,255,0.2)",
+              duration: 0.3,
+            }),
+          );
+        });
+      };
+
+      // Section Navigation
+      const switchView = (id) => {
+        const panels = document.querySelectorAll(".section-view");
+        const btns = document.querySelectorAll(".tab-btn");
+
+        panels.forEach((p) => {
+          if (p.id === id) {
+            p.classList.add("active");
+            gsap.fromTo(
+              p,
+              { opacity: 0, scale: 0.98, y: 30 },
+              { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power4.out" },
+            );
+          } else {
+            p.classList.remove("active");
+          }
+        });
+
+        btns.forEach((b) => {
+          const text = b.innerText.toLowerCase();
+          if (
+            text.includes(id) ||
+            (id === "home" && text.includes("console")) ||
+            (id === "storage" && text.includes("storage")) ||
+            (id === "terminal" && text.includes("intelligence"))
+          ) {
+            b.classList.add("active");
+          } else {
+            b.classList.remove("active");
+          }
+        });
+      };
+
+      // Terminal Interaction
+      const initTerminal = () => {
+        const tin = document.getElementById("termInput");
+        const tout = document.getElementById("termOutput");
+
+        tin.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            const row = document.createElement("p");
+            row.className = "text-white/80";
+            row.innerHTML = `<span class="text-[#D4AF37]">> </span>${tin.value}`;
+            tout.appendChild(row);
+            const cmd = tin.value.toLowerCase();
+            tin.value = "";
+            tout.scrollTop = tout.scrollHeight;
+
+            setTimeout(() => {
+              const res = document.createElement("p");
+              res.className = "text-blue-400 opacity-60 italic";
+              res.innerHTML = `> Executing neural task "${cmd}"... Process complete. [LATENCY: 4ms]`;
+              tout.appendChild(res);
+              tout.scrollTop = tout.scrollHeight;
+            }, 600);
+          }
+        });
+      };
+
+      // Chart Registry
+      const initCharts = () => {
+        const ctx = document.getElementById("stackChart").getContext("2d");
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Engine", "Logic", "Cloud", "ML"],
+            datasets: [
+              {
+                data: [40, 30, 20, 10],
+                backgroundColor: [
+                  "#D4AF37",
+                  "#00A3FF",
+                  "rgba(255,255,255,0.1)",
+                  "rgba(255,255,255,0.05)",
+                ],
+                borderColor: "transparent",
+                hoverOffset: 15,
+              },
+            ],
+          },
+          options: { cutout: "82%", plugins: { legend: { display: false } } },
+        });
+      };
+
+      window.onload = () => {
+        initBackground();
+        initCursor();
+        initCharts();
+        initTerminal();
+        // Initial animation
+        gsap.from("header, footer, main", {
+          opacity: 0,
+          y: 40,
+          stagger: 0.1,
+          duration: 1.2,
+          ease: "power4.out",
+        });
+      };
+    </script>
+  </body>
+</html>
