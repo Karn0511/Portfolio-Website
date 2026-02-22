@@ -2,10 +2,11 @@ import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TechBadge3dComponent } from "../../shared/components/tech-badge-3d/tech-badge-3d.component";
 
 interface TechBadge {
   name: string;
-  logo: string;
+  icon: string;
   color: string;
   category: "language" | "framework" | "platform" | "tool";
 }
@@ -19,11 +20,11 @@ interface TechBadge {
 @Component({
   selector: "app-tech-stack-3d",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TechBadge3dComponent],
   template: `
     <section
+      id="stack"
       class="relative w-full py-24 md:py-32 px-6 md:px-12 overflow-hidden"
-      style="background: linear-gradient(180deg, #0a0e1a 0%, #0f1420 50%, #0a0e1a 100%);"
     >
       <!-- Section Header -->
       <div class="relative z-10 max-w-7xl mx-auto mb-16 md:mb-24">
@@ -68,41 +69,14 @@ interface TechBadge {
               class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6"
               #techGrid
             >
-              <!-- Tech Cards -->
+              <!-- Tech Cards using 3D Badge Component -->
               <div
                 *ngFor="let tech of techStack; let i = index"
-                class="tech-card group relative aspect-square backdrop-blur-md border border-white/5 rounded-xl overflow-hidden cursor-pointer transition-all duration-500 hover:border-gold-primary/40"
+                class="h-32 md:h-40"
                 [style.animation-delay]="i * 50 + 'ms'"
-                style="background: linear-gradient(135deg, rgba(15, 20, 32, 0.6) 0%, rgba(26, 37, 64, 0.4) 100%);"
                 (mouseenter)="onTechHover(tech)"
               >
-                <!-- Hover Glow Effect -->
-                <div
-                  class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  [style.background]="
-                    'radial-gradient(circle at center, ' +
-                    tech.color +
-                    ' 0%, transparent 70%)'
-                  "
-                ></div>
-
-                <!-- Logo Container -->
-                <div
-                  class="relative z-10 w-full h-full flex items-center justify-center p-6 group-hover:scale-110 transition-transform duration-500"
-                >
-                  <img
-                    [src]="tech.logo"
-                    [alt]="tech.name"
-                    class="w-full h-full object-contain drop-shadow-2xl"
-                    style="filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));"
-                  />
-                </div>
-
-                <!-- Soft Border Glow on Hover -->
-                <div
-                  class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  [style.box-shadow]="'inset 0 0 20px ' + tech.color"
-                ></div>
+                <app-tech-badge-3d [badge]="tech"></app-tech-badge-3d>
               </div>
             </div>
           </div>
@@ -125,15 +99,17 @@ interface TechBadge {
                   <span
                     class="text-sm text-gold-primary font-mono uppercase tracking-wider"
                   >
-                    > SELECTED STACK: {{ selectedTech?.name || "React.js" }}
+                    > SELECTED STACK: {{ selectedTech?.name || "React" }}
                   </span>
                 </div>
 
                 <!-- Version Info -->
                 <div class="space-y-2">
                   <div class="flex items-center justify-between text-sm">
-                    <span class="text-text-tertiary font-mono">VERSION:</span>
-                    <span class="text-white font-mono">18.2.0</span>
+                    <span class="text-text-tertiary font-mono">CATEGORY:</span>
+                    <span class="text-white font-mono uppercase">{{
+                      selectedTech?.category
+                    }}</span>
                   </div>
                 </div>
 
@@ -142,73 +118,21 @@ interface TechBadge {
                   <span
                     class="text-sm text-gold-primary font-mono uppercase tracking-wider"
                   >
-                    > KEY FEATURES:
+                    > STATUS:
                   </span>
-                  <ul class="space-y-2 text-sm text-text-secondary">
-                    <li class="flex items-start gap-2">
-                      <span class="text-gold-primary mt-0.5">-</span>
-                      <span>Component-Based Architecture</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-gold-primary mt-0.5">-</span>
-                      <span>Virtual DOM</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-gold-primary mt-0.5">-</span>
-                      <span>Hooks & Context API</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-gold-primary mt-0.5">-</span>
-                      <span>Server-Side Rendering (SSR)</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Related Skills -->
-                <div class="space-y-3">
-                  <span
-                    class="text-sm text-gold-primary font-mono uppercase tracking-wider"
-                  >
-                    > RELATED SKILLS:
-                  </span>
-                  <ul class="space-y-2 text-sm text-text-secondary">
-                    <li class="flex items-start gap-2">
-                      <span class="text-teal-primary mt-0.5">-</span>
-                      <span>Next.js</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-teal-primary mt-0.5">-</span>
-                      <span>Redux Toolkit</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-teal-primary mt-0.5">-</span>
-                      <span>React Native</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <span class="text-teal-primary mt-0.5">-</span>
-                      <span>TypeScript</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Status -->
-                <div class="pt-4 border-t border-gold-primary/20">
                   <div class="flex items-center gap-2">
-                    <span class="text-sm text-text-tertiary font-mono"
-                      >STATUS:</span
-                    >
                     <span class="text-green-400 font-mono text-sm"
-                      >Active & Optimized</span
+                      >Production Ready</span
                     >
                   </div>
                 </div>
 
                 <!-- Scroll Hint -->
-                <div class="pt-4">
+                <div class="pt-4 mt-4 border-t border-gold-primary/20">
                   <p
                     class="text-xs text-text-muted font-mono uppercase tracking-wider"
                   >
-                    [SCROLL FOR MORE DATA]
+                    [HOVER TO INSPECT]
                   </p>
                 </div>
               </div>
@@ -216,67 +140,11 @@ interface TechBadge {
           </div>
         </div>
       </div>
-
-      <!-- Bottom Social Links Row -->
-      <div
-        class="relative z-10 max-w-7xl mx-auto mt-16 pt-16 border-t border-white/5"
-      >
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-8">
-            <a
-              href="#"
-              class="text-gold-primary hover:text-white transition-colors text-sm font-mono uppercase tracking-wider"
-              >[ HOME ]</a
-            >
-            <a
-              href="#"
-              class="text-gold-primary hover:text-white transition-colors text-sm font-mono uppercase tracking-wider"
-              >[ ABOUT ]</a
-            >
-            <a
-              href="#"
-              class="text-gold-primary hover:text-white transition-colors text-sm font-mono uppercase tracking-wider"
-              >[ PROJECTS ]</a
-            >
-            <a
-              href="#"
-              class="text-gold-primary hover:text-white transition-colors text-sm font-mono uppercase tracking-wider"
-              >[ CONTACT ]</a
-            >
-          </div>
-          <div class="flex items-center gap-6">
-            <span class="text-xs text-text-muted font-mono">GH</span>
-            <span class="text-xs text-text-muted font-mono">LI</span>
-            <span class="text-xs text-text-muted font-mono">TW</span>
-            <span class="text-xs text-text-muted font-mono">EM</span>
-          </div>
-        </div>
-      </div>
     </section>
   `,
   styles: [
     `
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .tech-card {
-        animation: fadeIn 0.8s ease-out forwards;
-        opacity: 0;
-      }
-
-      :host ::ng-deep {
-        .drop-shadow-2xl {
-          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-        }
-      }
+      /* Grid fade-in animation logic handled by GSAP in AfterViewInit */
     `,
   ],
 })
@@ -288,98 +156,74 @@ export class TechStack3dComponent implements AfterViewInit {
   techStack: TechBadge[] = [
     {
       name: "React",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
       color: "rgba(97, 218, 251, 0.15)",
       category: "framework",
     },
     {
       name: "Angular",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
       color: "rgba(221, 0, 49, 0.15)",
       category: "framework",
     },
     {
-      name: "Vue",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
-      color: "rgba(65, 184, 131, 0.15)",
-      category: "framework",
+      name: "TypeScript",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      color: "rgba(0, 122, 204, 0.15)",
+      category: "language",
     },
     {
-      name: "Svelte",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
-      color: "rgba(255, 62, 0, 0.15)",
-      category: "framework",
+      name: "JavaScript",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      color: "rgba(240, 219, 79, 0.15)",
+      category: "language",
     },
     {
       name: "Node.js",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
       color: "rgba(104, 160, 99, 0.15)",
       category: "platform",
     },
     {
       name: "Python",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
       color: "rgba(55, 118, 171, 0.15)",
       category: "language",
     },
     {
-      name: "Go",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
-      color: "rgba(0, 173, 216, 0.15)",
-      category: "language",
-    },
-    {
-      name: "Rust",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg",
-      color: "rgba(206, 74, 31, 0.15)",
+      name: "Java",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+      color: "rgba(248, 152, 32, 0.15)",
       category: "language",
     },
     {
       name: "AWS",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
       color: "rgba(255, 153, 0, 0.15)",
       category: "platform",
     },
     {
-      name: "Azure",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-      color: "rgba(0, 120, 212, 0.15)",
-      category: "platform",
-    },
-    {
-      name: "GCP",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
-      color: "rgba(66, 133, 244, 0.15)",
-      category: "platform",
-    },
-    {
       name: "Docker",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
       color: "rgba(0, 151, 230, 0.15)",
       category: "tool",
     },
     {
       name: "Kubernetes",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
       color: "rgba(51, 103, 214, 0.15)",
       category: "tool",
     },
     {
-      name: "GraphQL",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
-      color: "rgba(225, 0, 152, 0.15)",
-      category: "tool",
+      name: "Azure",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+      color: "rgba(0, 120, 212, 0.15)",
+      category: "platform",
     },
     {
-      name: "MongoDB",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      color: "rgba(71, 162, 72, 0.15)",
-      category: "tool",
-    },
-    {
-      name: "PostgreSQL",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      color: "rgba(51, 103, 145, 0.15)",
+      name: "GitHub Actions",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+      color: "rgba(24, 23, 23, 0.15)",
       category: "tool",
     },
   ];
@@ -396,7 +240,7 @@ export class TechStack3dComponent implements AfterViewInit {
   private setupScrollAnimations(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".tech-card", {
+    gsap.from(this.techGrid.nativeElement.children, {
       scrollTrigger: {
         trigger: this.techGrid.nativeElement,
         start: "top 80%",

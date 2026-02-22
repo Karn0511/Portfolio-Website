@@ -4,30 +4,22 @@ export const routes: Routes = [
   {
     path: "",
     loadComponent: () =>
-      import("./features/home/home-redesigned.component").then(
-        (m) => m.HomeRedesignedComponent,
-      ),
+      import("./features/home/home.component").then((m) => m.HomeComponent),
   },
   {
     path: "projects",
     loadComponent: () =>
-      import("./features/projects/projects.component").then(
-        (m) => m.ProjectsComponent,
-      ),
+      import("./features/home/home.component").then((m) => m.HomeComponent),
   },
   {
     path: "systems",
     loadComponent: () =>
-      import("./features/systems/systems.component").then(
-        (m) => m.SystemsComponent,
-      ),
+      import("./features/home/home.component").then((m) => m.HomeComponent),
   },
   {
     path: "experience",
     loadComponent: () =>
-      import("./features/experience/experience.component").then(
-        (m) => m.ExperienceComponent,
-      ),
+      import("./features/home/home.component").then((m) => m.HomeComponent),
   },
   {
     path: "**",

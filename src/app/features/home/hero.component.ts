@@ -182,7 +182,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
           <div #socialLinks class="hidden lg:block lg:col-span-3 opacity-0">
             <div class="flex flex-col items-end gap-4 text-right">
               <a
-                href="https://github.com"
+                href="https://github.com/Karn0511"
                 target="_blank"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
@@ -195,7 +195,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
                 >
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/Karn1105"
                 target="_blank"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
@@ -208,20 +208,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
                 >
               </a>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
-              >
-                <span class="text-sm font-mono uppercase tracking-wider"
-                  >Twitter</span
-                >
-                <span
-                  class="text-2xl group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
-              </a>
-              <a
-                href="mailto:contact@ashutosh.dev"
+                href="mailto:karnashutosh6@gmail.com"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
                 <span class="text-sm font-mono uppercase tracking-wider"

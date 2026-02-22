@@ -16,8 +16,8 @@ import { SectionHeaderComponent } from "../../shared/components/section-header/s
   standalone: true,
   imports: [CommonModule, ProjectCardComponent, SectionHeaderComponent],
   template: `
-    <section class="section-container">
-      <div class="content-wrapper">
+    <section class="section-container relative py-24 md:py-32 px-6 md:px-12">
+      <div class="max-w-7xl mx-auto">
         <!-- Section header -->
         <app-section-header
           title="Featured Projects"
@@ -49,30 +49,29 @@ export class ProjectsSectionComponent implements OnInit {
   private initializeProjects(): void {
     this.projects = [
       {
-        title: "SkyCast - Advanced Weather App",
+        title: "SkyCast Weather Advance App",
         description:
-          "A sophisticated weather forecasting application built with React and TypeScript, featuring real-time weather updates, beautiful data visualizations, and an intuitive user interface.",
+          "Developed a real-time weather application with 5-day weather forecast and an optimized user interface. Integrated OpenWeatherMap API with enhanced functionality and interactive interface.",
         role: "Full Stack Developer",
         technologies: [
-          "React",
           "TypeScript",
+          "React",
           "OpenWeatherMap API",
           "Chart.js",
           "Tailwind CSS",
         ],
         highlights: [
-          "Real-time weather data from OpenWeatherMap API",
-          "Beautiful interactive charts and data visualization",
-          "Responsive design for all devices",
-          "Location-based weather forecasting",
-          "Dark mode support",
+          "Real-time weather data",
+          "5-day forecast visualization",
+          "Interactive & optimized UI",
+          "Responsive design",
         ],
-        link: "#",
+        link: "https://github.com/Karn0511/skycast",
       },
       {
-        title: "Arogya Vault - Health Records Platform",
+        title: "Arogya Vault Health Record App",
         description:
-          "Enterprise-grade health record management system with role-based access control, NLP-powered summarization, and secure cloud storage. Deployed on AWS with Docker containerization.",
+          "Developed a secure platform for managing digital medical records with Role-Based Access Control. Implemented NLP-driven summarization to extract key insights from uploaded health documents.",
         role: "Lead Developer",
         technologies: [
           "Angular 18",
@@ -80,17 +79,15 @@ export class ProjectsSectionComponent implements OnInit {
           "MongoDB",
           "AWS S3",
           "Docker",
-          "Kubernetes",
+          "NLP",
         ],
         highlights: [
-          "Role-based access control (RBAC)",
-          "NLP-powered health data summarization",
-          "Secure REST API with authentication",
-          "AWS S3 integration for document storage",
-          "Fully containerized with Docker",
-          "Kubernetes deployment ready",
+          "Role-Based Access Control (RBAC)",
+          "NLP-driven summarization",
+          "Secure REST API",
+          "AWS S3 & Docker integration",
         ],
-        link: "#",
+        link: "https://github.com/Karn0511/Arogya-Vault-Health-Record-App",
       },
       {
         title: "Portfolio OS - Personal Brand Site",
@@ -106,34 +103,11 @@ export class ProjectsSectionComponent implements OnInit {
         ],
         highlights: [
           "Liquid morphing background with WebGL",
-          "3D tech badge showcase with hover effects",
+          "3D tech badge showcase",
           "Smooth parallax scrolling",
-          "Glassmorphic design system",
-          "Fully responsive and accessible",
+          "Hacker-inspired aesthetic",
         ],
-        link: "#",
-      },
-      {
-        title: "AI Integration Framework",
-        description:
-          "Custom framework for integrating machine learning models into web applications. Includes model deployment pipeline, real-time inference, and performance monitoring.",
-        role: "Architecture Lead",
-        technologies: [
-          "Python",
-          "TensorFlow",
-          "FastAPI",
-          "Docker",
-          "AWS Lambda",
-          "Azure",
-        ],
-        highlights: [
-          "FastAPI-based inference server",
-          "Real-time model predictions",
-          "Automated model deployment pipeline",
-          "Performance monitoring and logging",
-          "Multi-cloud deployment support",
-        ],
-        link: "#",
+        link: "https://github.com/Karn0511",
       },
     ];
   }

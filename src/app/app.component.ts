@@ -169,10 +169,10 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
       ::-webkit-scrollbar-thumb {
         background: rgba(212, 175, 55, 0.5);
         border-radius: 4px;
-      }
 
-      ::-webkit-scrollbar-thumb:hover {
-        background: rgba(212, 175, 55, 0.8);
+        &:hover {
+          background: rgba(212, 175, 55, 0.8);
+        }
       }
     `,
   ],
