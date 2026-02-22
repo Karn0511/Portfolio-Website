@@ -1,41 +1,64 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-/**
- * Glass Card Component
- * Glassmorphism design - clean, subtle, premium
- * Used for projects, experience, contact sections
- */
+type GlassVariant = "light" | "medium" | "strong";
 
+/**
+ * GLASS CARD COMPONENT
+ * Premium glass panel with consistent styling
+ * Aligns with new design system
+ */
 @Component({
   selector: "app-glass-card",
   standalone: true,
   imports: [CommonModule],
   template: `
     <div
-      class="group relative h-full p-6 md:p-8 transition-all duration-300 ease-out hover:translate-y-[-4px] hover:shadow-glowMd"
-      [class.hover:translate-y-[-0]]="!interactive"
-      [class.hover:shadow-[none]]="!interactive"
+      class="glass-card"
+      [ngClass]="'glass-' + variant"
+      [style.padding]="padding"
     >
-      <div
-        class="absolute inset-0 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300 group-hover:bg-white/8 group-hover:border-white/20"
-      ></div>
-      <div
-        *ngIf="interactive"
-        class="absolute -inset-px rounded-lg bg-gradient-to-br from-amber-500/0 via-transparent to-blue-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-10 pointer-events-none"
-      ></div>
-      <div class="relative z-10"><ng-content></ng-content></div>
+      <ng-content></ng-content>
     </div>
   `,
   styles: [
     `
-      :host {
-        display: block;
-        height: 100%;
+      .glass-card {
+        background: rgba(15, 20, 31, 0.5);
+        backdrop-filter: blur(16px) brightness(1.05);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        border-radius: 12px;
+        transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .glass-card:hover {
+        background: rgba(15, 20, 31, 0.6);
+        border-color: rgba(212, 175, 55, 0.25);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .glass-light {
+        background: rgba(20, 25, 40, 0.4);
+        backdrop-filter: blur(10px) brightness(1.1);
+        border-color: rgba(212, 175, 55, 0.1);
+      }
+
+      .glass-medium {
+        background: rgba(15, 20, 31, 0.5);
+        backdrop-filter: blur(16px) brightness(1.05);
+        border-color: rgba(212, 175, 55, 0.15);
+      }
+
+      .glass-strong {
+        background: rgba(10, 15, 26, 0.6);
+        backdrop-filter: blur(20px);
+        border-color: rgba(212, 175, 55, 0.2);
       }
     `,
   ],
 })
 export class GlassCardComponent {
-  @Input() interactive = true;
+  @Input() variant: GlassVariant = "medium";
+  @Input() padding: string = "24px";
 }

@@ -40,26 +40,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
       <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <!-- LEFT: Terminal Panel -->
-          <div
-            #terminalPanel
-            class="hidden lg:block lg:col-span-3 opacity-0"
-          >
+          <div #terminalPanel class="hidden lg:block lg:col-span-3 opacity-0">
             <div
               class="relative backdrop-blur-md border border-gold-primary/20 p-6 rounded-sm"
               style="background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 37, 64, 0.7) 100%);"
             >
               <!-- Terminal Header -->
-              <div class="flex items-center gap-2 mb-4 pb-3 border-b border-gold-primary/20">
+              <div
+                class="flex items-center gap-2 mb-4 pb-3 border-b border-gold-primary/20"
+              >
                 <div class="flex gap-1.5">
                   <div class="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
                   <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
                   <div class="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
                 </div>
-                <span class="text-xs text-gold-primary/60 font-mono ml-2">system.sh</span>
+                <span class="text-xs text-gold-primary/60 font-mono ml-2"
+                  >system.sh</span
+                >
               </div>
-              
+
               <!-- Terminal Content -->
-              <div class="font-mono text-xs leading-relaxed space-y-2 text-text-secondary">
+              <div
+                class="font-mono text-xs leading-relaxed space-y-2 text-text-secondary"
+              >
                 <div class="flex items-start gap-2">
                   <span class="text-gold-primary">[BOOT_SEQ]</span>
                   <span class="text-teal-primary">&gt;</span>
@@ -101,15 +104,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
           </div>
 
           <!-- CENTER: Hero Content -->
-          <div #heroContent class="lg:col-span-6 text-center space-y-8 opacity-0">
+          <div
+            #heroContent
+            class="lg:col-span-6 text-center space-y-8 opacity-0"
+          >
             <!-- Label Badge -->
             <div class="flex justify-center">
               <div
                 class="inline-flex items-center gap-3 backdrop-blur-md border border-gold-primary/30 rounded-full px-5 py-2.5"
                 style="background: rgba(244, 208, 63, 0.05);"
               >
-                <div class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"></div>
-                <span class="text-sm text-gold-primary font-mono uppercase tracking-wider">
+                <div
+                  class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"
+                ></div>
+                <span
+                  class="text-sm text-gold-primary font-mono uppercase tracking-wider"
+                >
                   CINEMATIC ARCHITECT (VARIANT 2)
                 </span>
               </div>
@@ -139,9 +149,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
             <!-- Description -->
             <div class="max-w-2xl mx-auto">
-              <p class="text-base md:text-lg text-text-secondary leading-relaxed">
+              <p
+                class="text-base md:text-lg text-text-secondary leading-relaxed"
+              >
                 Frontend Engineer • Cloud & AI Enthusiast<br />
-                Building intelligent, scalable systems with precision engineering
+                Building intelligent, scalable systems with precision
+                engineering
               </p>
             </div>
 
@@ -166,41 +179,58 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
           </div>
 
           <!-- RIGHT: Social Links -->
-          <div
-            #socialLinks
-            class="hidden lg:block lg:col-span-3 opacity-0"
-          >
+          <div #socialLinks class="hidden lg:block lg:col-span-3 opacity-0">
             <div class="flex flex-col items-end gap-4 text-right">
               <a
                 href="https://github.com"
                 target="_blank"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
-                <span class="text-sm font-mono uppercase tracking-wider">GitHub</span>
-                <span class="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-sm font-mono uppercase tracking-wider"
+                  >GitHub</span
+                >
+                <span
+                  class="text-2xl group-hover:translate-x-1 transition-transform"
+                  >→</span
+                >
               </a>
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
-                <span class="text-sm font-mono uppercase tracking-wider">LinkedIn</span>
-                <span class="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-sm font-mono uppercase tracking-wider"
+                  >LinkedIn</span
+                >
+                <span
+                  class="text-2xl group-hover:translate-x-1 transition-transform"
+                  >→</span
+                >
               </a>
               <a
                 href="https://twitter.com"
                 target="_blank"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
-                <span class="text-sm font-mono uppercase tracking-wider">Twitter</span>
-                <span class="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-sm font-mono uppercase tracking-wider"
+                  >Twitter</span
+                >
+                <span
+                  class="text-2xl group-hover:translate-x-1 transition-transform"
+                  >→</span
+                >
               </a>
               <a
                 href="mailto:contact@ashutosh.dev"
                 class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
               >
-                <span class="text-sm font-mono uppercase tracking-wider">Email</span>
-                <span class="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-sm font-mono uppercase tracking-wider"
+                  >Email</span
+                >
+                <span
+                  class="text-2xl group-hover:translate-x-1 transition-transform"
+                  >→</span
+                >
               </a>
             </div>
           </div>
@@ -210,9 +240,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
       <!-- Scroll Indicator -->
       <div
         #scrollIndicator
-        class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-50 hover:opacity-100 transition-opacity opacity-0"
+        class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-0 hover:opacity-100 transition-opacity"
       >
-        <p class="text-xs text-text-tertiary uppercase tracking-widest font-mono">
+        <p
+          class="text-xs text-text-tertiary uppercase tracking-widest font-mono"
+        >
           Scroll
         </p>
         <div
@@ -255,10 +287,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
   ],
 })
 export class HeroComponent implements AfterViewInit {
-  @ViewChild('terminalPanel') terminalPanel!: ElementRef;
-  @ViewChild('heroContent') heroContent!: ElementRef;
-  @ViewChild('socialLinks') socialLinks!: ElementRef;
-  @ViewChild('scrollIndicator') scrollIndicator!: ElementRef;
+  @ViewChild("terminalPanel") terminalPanel!: ElementRef;
+  @ViewChild("heroContent") heroContent!: ElementRef;
+  @ViewChild("socialLinks") socialLinks!: ElementRef;
+  @ViewChild("scrollIndicator") scrollIndicator!: ElementRef;
 
   ngAfterViewInit(): void {
     this.setupCinematicAnimations();
@@ -270,35 +302,51 @@ export class HeroComponent implements AfterViewInit {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     // Terminal panel slides and fades in
-    tl.to(this.terminalPanel.nativeElement, {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      delay: 0.3,
-    }, 0);
+    tl.to(
+      this.terminalPanel.nativeElement,
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        delay: 0.3,
+      },
+      0,
+    );
 
     // Hero content fades in
-    tl.to(this.heroContent.nativeElement, {
-      opacity: 1,
-      y: 0,
-      duration: 1.2,
-      delay: 0.5,
-    }, 0);
+    tl.to(
+      this.heroContent.nativeElement,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        delay: 0.5,
+      },
+      0,
+    );
 
     // Social links slide in
-    tl.to(this.socialLinks.nativeElement, {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      delay: 0.7,
-    }, 0);
+    tl.to(
+      this.socialLinks.nativeElement,
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        delay: 0.7,
+      },
+      0,
+    );
 
     // Scroll indicator fades in
-    tl.to(this.scrollIndicator.nativeElement, {
-      opacity: 0.5,
-      duration: 0.8,
-      delay: 1.2,
-    }, 0);
+    tl.to(
+      this.scrollIndicator.nativeElement,
+      {
+        opacity: 0.5,
+        duration: 0.8,
+        delay: 1.2,
+      },
+      0,
+    );
 
     // Parallax scroll effect
     gsap.to(".absolute.inset-0.z-0.opacity-30", {
@@ -321,20 +369,6 @@ export class HeroComponent implements AfterViewInit {
         scrub: 0.5,
       },
       opacity: 0,
-    });
-  }
-}
-
-    gsap.to('[data-gsap="hero-parallax"]', {
-      scrollTrigger: {
-        trigger: '[data-gsap="hero-parallax"]',
-        start: "top center",
-        end: "bottom center",
-        scrub: 0.5,
-        markers: false,
-      },
-      y: -100,
-      ease: "power2.inOut",
     });
   }
 }

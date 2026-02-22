@@ -49,7 +49,9 @@ interface TechBadge {
               class="inline-flex items-center gap-2 backdrop-blur-md border border-gold-primary/30 rounded-full px-4 py-2"
               style="background: rgba(244, 208, 63, 0.05);"
             >
-              <span class="text-xs text-gold-primary font-mono uppercase tracking-wider">
+              <span
+                class="text-xs text-gold-primary font-mono uppercase tracking-wider"
+              >
                 > SYSTEM COMPONENTS
               </span>
             </div>
@@ -80,7 +82,7 @@ interface TechBadge {
                   [style.background]="
                     'radial-gradient(circle at center, ' +
                     tech.color +
-                    '15 0%, transparent 70%)'
+                    ' 0%, transparent 70%)'
                   "
                 ></div>
 
@@ -99,7 +101,7 @@ interface TechBadge {
                 <!-- Soft Border Glow on Hover -->
                 <div
                   class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  [style.box-shadow]="'inset 0 0 20px ' + tech.color + '20'"
+                  [style.box-shadow]="'inset 0 0 20px ' + tech.color"
                 ></div>
               </div>
             </div>
@@ -114,10 +116,16 @@ interface TechBadge {
               <!-- Current Selection Display -->
               <div class="space-y-6">
                 <!-- Header -->
-                <div class="flex items-center gap-3 pb-4 border-b border-gold-primary/20">
-                  <div class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"></div>
-                  <span class="text-sm text-gold-primary font-mono uppercase tracking-wider">
-                    > SELECTED STACK: {{ selectedTech?.name || 'React.js' }}
+                <div
+                  class="flex items-center gap-3 pb-4 border-b border-gold-primary/20"
+                >
+                  <div
+                    class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"
+                  ></div>
+                  <span
+                    class="text-sm text-gold-primary font-mono uppercase tracking-wider"
+                  >
+                    > SELECTED STACK: {{ selectedTech?.name || "React.js" }}
                   </span>
                 </div>
 
@@ -131,7 +139,9 @@ interface TechBadge {
 
                 <!-- Key Features -->
                 <div class="space-y-3">
-                  <span class="text-sm text-gold-primary font-mono uppercase tracking-wider">
+                  <span
+                    class="text-sm text-gold-primary font-mono uppercase tracking-wider"
+                  >
                     > KEY FEATURES:
                   </span>
                   <ul class="space-y-2 text-sm text-text-secondary">
@@ -156,7 +166,9 @@ interface TechBadge {
 
                 <!-- Related Skills -->
                 <div class="space-y-3">
-                  <span class="text-sm text-gold-primary font-mono uppercase tracking-wider">
+                  <span
+                    class="text-sm text-gold-primary font-mono uppercase tracking-wider"
+                  >
                     > RELATED SKILLS:
                   </span>
                   <ul class="space-y-2 text-sm text-text-secondary">
@@ -182,14 +194,20 @@ interface TechBadge {
                 <!-- Status -->
                 <div class="pt-4 border-t border-gold-primary/20">
                   <div class="flex items-center gap-2">
-                    <span class="text-sm text-text-tertiary font-mono">STATUS:</span>
-                    <span class="text-green-400 font-mono text-sm">Active & Optimized</span>
+                    <span class="text-sm text-text-tertiary font-mono"
+                      >STATUS:</span
+                    >
+                    <span class="text-green-400 font-mono text-sm"
+                      >Active & Optimized</span
+                    >
                   </div>
                 </div>
 
                 <!-- Scroll Hint -->
                 <div class="pt-4">
-                  <p class="text-xs text-text-muted font-mono uppercase tracking-wider">
+                  <p
+                    class="text-xs text-text-muted font-mono uppercase tracking-wider"
+                  >
                     [SCROLL FOR MORE DATA]
                   </p>
                 </div>
@@ -263,105 +281,105 @@ interface TechBadge {
   ],
 })
 export class TechStack3dComponent implements AfterViewInit {
-  @ViewChild('techGrid') techGrid!: ElementRef;
-  
+  @ViewChild("techGrid") techGrid!: ElementRef;
+
   selectedTech: TechBadge | null = null;
 
   techStack: TechBadge[] = [
     {
       name: "React",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      color: "rgba(97, 218, 251,",
+      color: "rgba(97, 218, 251, 0.15)",
       category: "framework",
     },
     {
       name: "Angular",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-      color: "rgba(221, 0, 49,",
+      color: "rgba(221, 0, 49, 0.15)",
       category: "framework",
     },
     {
       name: "Vue",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
-      color: "rgba(65, 184, 131,",
+      color: "rgba(65, 184, 131, 0.15)",
       category: "framework",
     },
     {
       name: "Svelte",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
-      color: "rgba(255, 62, 0,",
+      color: "rgba(255, 62, 0, 0.15)",
       category: "framework",
     },
     {
       name: "Node.js",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      color: "rgba(104, 160, 99,",
+      color: "rgba(104, 160, 99, 0.15)",
       category: "platform",
     },
     {
       name: "Python",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      color: "rgba(55, 118, 171,",
+      color: "rgba(55, 118, 171, 0.15)",
       category: "language",
     },
     {
       name: "Go",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
-      color: "rgba(0, 173, 216,",
+      color: "rgba(0, 173, 216, 0.15)",
       category: "language",
     },
     {
       name: "Rust",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg",
-      color: "rgba(206, 74, 31,",
+      color: "rgba(206, 74, 31, 0.15)",
       category: "language",
     },
     {
       name: "AWS",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-      color: "rgba(255, 153, 0,",
+      color: "rgba(255, 153, 0, 0.15)",
       category: "platform",
     },
     {
       name: "Azure",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-      color: "rgba(0, 120, 212,",
+      color: "rgba(0, 120, 212, 0.15)",
       category: "platform",
     },
     {
       name: "GCP",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
-      color: "rgba(66, 133, 244,",
+      color: "rgba(66, 133, 244, 0.15)",
       category: "platform",
     },
     {
       name: "Docker",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-      color: "rgba(0, 151, 230,",
+      color: "rgba(0, 151, 230, 0.15)",
       category: "tool",
     },
     {
       name: "Kubernetes",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-      color: "rgba(51, 103, 214,",
+      color: "rgba(51, 103, 214, 0.15)",
       category: "tool",
     },
     {
       name: "GraphQL",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
-      color: "rgba(225, 0, 152,",
+      color: "rgba(225, 0, 152, 0.15)",
       category: "tool",
     },
     {
       name: "MongoDB",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      color: "rgba(71, 162, 72,",
+      color: "rgba(71, 162, 72, 0.15)",
       category: "tool",
     },
     {
       name: "PostgreSQL",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      color: "rgba(51, 103, 145,",
+      color: "rgba(51, 103, 145, 0.15)",
       category: "tool",
     },
   ];
@@ -391,65 +409,5 @@ export class TechStack3dComponent implements AfterViewInit {
       duration: 0.8,
       ease: "power2.out",
     });
-  }
-}
-        icon: "https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white",
-        category: "framework",
-      },
-      {
-        name: "Node.js",
-        icon: "https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white",
-        category: "framework",
-      },
-      {
-        name: "Express",
-        icon: "https://img.shields.io/badge/Express.js-404D59?style=for-the-badge",
-        category: "framework",
-      },
-
-      // Platforms
-      {
-        name: "Docker",
-        icon: "https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white",
-        category: "platform",
-      },
-      {
-        name: "Kubernetes",
-        icon: "https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white",
-        category: "platform",
-      },
-      {
-        name: "AWS",
-        icon: "https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900",
-        category: "platform",
-      },
-      {
-        name: "Azure",
-        icon: "https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoft-azure&logoColor=white",
-        category: "platform",
-      },
-
-      // Tools
-      {
-        name: "GitHub",
-        icon: "https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white",
-        category: "tool",
-      },
-      {
-        name: "GitHub Actions",
-        icon: "https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white",
-        category: "tool",
-      },
-      {
-        name: "Tailwind CSS",
-        icon: "https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white",
-        category: "tool",
-      },
-      {
-        name: "Firebase",
-        icon: "https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black",
-        category: "tool",
-      },
-    ];
   }
 }

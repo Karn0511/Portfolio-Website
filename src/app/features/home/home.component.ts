@@ -12,7 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule, RouterModule, TerminalComponent, AnimatedStatsComponent, MatrixRainComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TerminalComponent,
+    AnimatedStatsComponent,
+    MatrixRainComponent,
+  ],
   template: `
     <!-- Navigation Bar -->
     <nav
@@ -254,12 +260,16 @@ gsap.registerPlugin(ScrollTrigger);
     </section>
 
     <!-- STATS SECTION -->
-    <section class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-950 overflow-hidden">
+    <section
+      class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-950 overflow-hidden"
+    >
       <!-- Matrix Rain Background -->
       <app-matrix-rain></app-matrix-rain>
-      
+
       <div class="relative z-10 container mx-auto max-w-6xl">
-        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight">
+        <h2
+          class="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight"
+        >
           <span class="text-gold-primary">BY THE NUMBERS</span>
         </h2>
         <app-animated-stats></app-animated-stats>
@@ -267,9 +277,13 @@ gsap.registerPlugin(ScrollTrigger);
     </section>
 
     <!-- TERMINAL SECTION -->
-    <section class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-900 border-y border-gold-primary/10">
+    <section
+      class="relative py-20 md:py-32 px-6 md:px-12 bg-navy-900 border-y border-gold-primary/10"
+    >
       <div class="container mx-auto max-w-5xl">
-        <h2 class="text-4xl md:text-5xl font-black text-center mb-12 tracking-tight">
+        <h2
+          class="text-4xl md:text-5xl font-black text-center mb-12 tracking-tight"
+        >
           <span class="text-gold-primary">TECHNICAL PROFILE</span>
         </h2>
         <app-terminal></app-terminal>

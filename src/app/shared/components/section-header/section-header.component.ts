@@ -2,38 +2,73 @@ import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 /**
- * Section Header Component
- * Calm, professional heading for portfolio sections
+ * SECTION HEADER COMPONENT
+ * Consistent section titles with gold accent
+ * Premium, refined styling
  */
-
 @Component({
   selector: "app-section-header",
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="space-y-4 mb-12 md:mb-16">
-      <p
-        *ngIf="subtitle"
-        class="text-amber-600/80 text-sm md:text-base font-semibold uppercase tracking-widest"
-      >
-        {{ subtitle }}
-      </p>
-      <h2
-        class="text-3xl md:text-4xl font-bold text-white leading-tight max-w-2xl"
-      >
-        {{ title }}
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="text-accent">{{ accentText }}</span>
+        <span class="text-primary" *ngIf="primaryText">{{ primaryText }}</span>
       </h2>
-      <p
-        *ngIf="description"
-        class="text-base md:text-lg text-slate-400 max-w-2xl leading-relaxed"
-      >
-        {{ description }}
-      </p>
+      <p class="section-description" *ngIf="description">{{ description }}</p>
     </div>
   `,
+  styles: [
+    `
+      .section-header {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 0 0 1rem 0;
+      }
+
+      .text-accent {
+        color: #d4af37;
+        display: block;
+      }
+
+      .text-primary {
+        color: #ffffff;
+        display: block;
+      }
+
+      .section-description {
+        font-size: 1.125rem;
+        color: #b0b8c1;
+        max-width: 600px;
+        line-height: 1.7;
+        margin: 1rem 0 0 0;
+      }
+
+      @media (max-width: 768px) {
+        .section-header {
+          margin-bottom: 2rem;
+        }
+
+        .section-title {
+          font-size: 1.875rem;
+        }
+
+        .section-description {
+          font-size: 1rem;
+        }
+      }
+    `,
+  ],
 })
 export class SectionHeaderComponent {
-  @Input() title!: string;
-  @Input() subtitle?: string;
-  @Input() description?: string;
+  @Input() accentText: string = "";
+  @Input() primaryText: string = "";
+  @Input() description: string = "";
 }

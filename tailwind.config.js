@@ -128,24 +128,24 @@ module.exports = {
         "glass-md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
         "glass-lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
 
-        // Gold glow shadows
-        "glow-sm": "0 0 15px rgba(212, 175, 55, 0.2)",
-        "glow-md": "0 0 30px rgba(212, 175, 55, 0.15)",
-        "glow-lg": "0 0 50px rgba(212, 175, 55, 0.1)",
+        // Liquid Gold glow shadows (updated)
+        "glow-sm": "0 0 15px rgba(244, 208, 63, 0.3)",
+        "glow-md": "0 0 30px rgba(244, 208, 63, 0.25)",
+        "glow-lg": "0 0 50px rgba(244, 208, 63, 0.2)",
 
-        // Teal glow shadows
-        "glowTeal-sm": "0 0 15px rgba(6, 214, 208, 0.25)",
-        "glowTeal-md": "0 0 30px rgba(6, 214, 208, 0.2)",
-        "glowTeal-lg": "0 0 50px rgba(6, 214, 208, 0.15)",
+        // Teal glow shadows (updated)
+        "glowTeal-sm": "0 0 15px rgba(0, 212, 255, 0.3)",
+        "glowTeal-md": "0 0 30px rgba(0, 212, 255, 0.25)",
+        "glowTeal-lg": "0 0 50px rgba(0, 212, 255, 0.2)",
 
         // Combined energy glow
         "glowEnergy-md":
-          "0 0 30px rgba(212, 175, 55, 0.1), 0 0 25px rgba(6, 214, 208, 0.15)",
+          "0 0 30px rgba(244, 208, 63, 0.15), 0 0 25px rgba(0, 212, 255, 0.15)",
         "glowEnergy-lg":
-          "0 0 50px rgba(212, 175, 55, 0.08), 0 0 40px rgba(6, 214, 208, 0.12)",
+          "0 0 50px rgba(244, 208, 63, 0.12), 0 0 40px rgba(0, 212, 255, 0.12)",
 
         // Depth shadow
-        depth: "0 20px 60px rgba(0, 0, 0, 0.3)",
+        depth: "0 20px 60px rgba(0, 0, 0, 0.4)",
       },
       backdropBlur: {
         xs: "2px",

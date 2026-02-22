@@ -8,84 +8,155 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-/**
- * 3D Tech Badge Component
- * Displays technology logos with subtle 3D tilt effect
- * Clean, professional, premium feel
- */
-
 interface TechBadge {
   name: string;
-  icon: string; // SVG or image URL
+  icon: string;
   category: "language" | "framework" | "platform" | "tool";
-  color?: string; // Optional brand color
+  color?: string;
 }
 
+/**
+ * TECH BADGE 3D COMPONENT
+ * Premium tech stack display with subtle 3D tilt
+ * No spinning, no chaos - just elegant interaction
+ */
 @Component({
   selector: "app-tech-badge-3d",
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div
-      #badgeContainer
-      class="relative w-full h-full group perspective transition-transform duration-300 ease-out"
-      [style.transform-style]="'preserve-3d'"
-      [style.transform]="transform"
-    >
-      <!-- Glass background container -->
-      <div
-        class="absolute inset-0 rounded-xl bg-gradient-to-br from-white/8 to-white/2 backdrop-blur-lg border border-white/10 transition-all duration-300 ease-out overflow-hidden"
-        [class.group-hover:from-white/12]="true"
-        [class.group-hover:to-white/4]="true"
-        [class.group-hover:border-white/20]="true"
-      >
-        <!-- Glow effect on hover -->
-        <div
-          class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          [style.background]="glowGradient"
-        ></div>
-      </div>
+    <div #badgeContainer class="tech-badge" [style.transform]="transform">
+      <!-- Glass background -->
+      <div class="badge-bg"></div>
 
-      <!-- Content container -->
-      <div
-        class="relative z-10 h-full flex flex-col items-center justify-center p-6 gap-3"
-      >
-        <!-- Icon/Logo -->
-        <div
-          class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform duration-300"
-          [class.group-hover:scale-110]="true"
-        >
-          <img
-            [src]="badge.icon"
-            [alt]="badge.name"
-            class="w-full h-full object-contain drop-shadow-lg"
-          />
+      <!-- Content -->
+      <div class="badge-content">
+        <!-- Icon -->
+        <div class="badge-icon">
+          <img [src]="badge.icon" [alt]="badge.name" />
         </div>
 
         <!-- Label -->
-        <div class="text-center">
-          <p
-            class="text-xs md:text-sm font-semibold text-white/90 transition-colors duration-300 group-hover:text-white"
-          >
-            {{ badge.name }}
-          </p>
-          <p class="text-[10px] md:text-xs text-white/50 capitalize">
-            {{ badge.category }}
-          </p>
+        <div class="badge-label">
+          <p class="badge-name">{{ badge.name }}</p>
+          <p class="badge-category">{{ badge.category }}</p>
         </div>
 
-        <!-- Category accent line -->
-        <div
-          class="w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-500/60 to-transparent rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        ></div>
+        <!-- Accent line (appears on hover) -->
+        <div class="badge-accent"></div>
       </div>
     </div>
   `,
   styles: [
     `
-      :host {
-        display: block;
+      .tech-badge {
+        position: relative;
+        width: 100%;
+        height: 100%;
         perspective: 1200px;
+        transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .badge-bg {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 20, 31, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+        border-radius: 12px;
+        transition: all 300ms ease;
+      }
+
+      .tech-badge:hover .badge-bg {
+        background: rgba(15, 20, 31, 0.5);
+        border-color: rgba(212, 175, 55, 0.2);
+        box-shadow:
+          0 8px 24px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .badge-content {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        gap: 12px;
+      }
+
+      .badge-icon {
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 300ms ease;
+      }
+
+      .tech-badge:hover .badge-icon {
+        transform: scale(1.1);
+      }
+
+      .badge-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+      }
+
+      .badge-label {
+        text-align: center;
+      }
+
+      .badge-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0;
+        transition: color 300ms ease;
+      }
+
+      .tech-badge:hover .badge-name {
+        color: #d4af37;
+      }
+
+      .badge-category {
+        font-size: 0.75rem;
+        color: #7a8a99;
+        margin: 0;
+        text-transform: capitalize;
+        letter-spacing: 0.05em;
+      }
+
+      .badge-accent {
+        width: 24px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        opacity: 0;
+        transition: opacity 300ms ease;
+      }
+
+      .tech-badge:hover .badge-accent {
+        opacity: 1;
+      }
+
+      @media (max-width: 768px) {
+        .badge-content {
+          padding: 16px 12px;
+          gap: 8px;
+        }
+
+        .badge-icon {
+          width: 48px;
+          height: 48px;
+        }
+
+        .badge-name {
+          font-size: 0.75rem;
+        }
       }
     `,
   ],
@@ -94,13 +165,7 @@ export class TechBadge3dComponent implements OnDestroy {
   @Input() badge!: TechBadge;
   @ViewChild("badgeContainer") badgeContainer!: ElementRef;
 
-  transform = "rotateX(0deg) rotateY(0deg) rotateZ(0deg)";
-  glowGradient =
-    "radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.1), transparent)";
-
-  private readonly mouseX = 0;
-  private readonly mouseY = 0;
-  private readonly animationId: number | null = null;
+  transform = "rotateX(0deg) rotateY(0deg) translateZ(0)";
 
   @HostListener("mousemove", ["$event"])
   onMouseMove(event: MouseEvent): void {
@@ -110,9 +175,8 @@ export class TechBadge3dComponent implements OnDestroy {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    // Calculate rotation based on mouse position
-    const rotateY = (x / rect.width - 0.5) * 20; // -10 to 10 degrees
-    const rotateX = (y / rect.height - 0.5) * -20; // -10 to 10 degrees
+    const rotateY = (x / rect.width - 0.5) * 15;
+    const rotateX = (y / rect.height - 0.5) * -15;
 
     this.updateTransform(rotateX, rotateY);
   }
@@ -123,12 +187,10 @@ export class TechBadge3dComponent implements OnDestroy {
   }
 
   private updateTransform(rotateX: number, rotateY: number): void {
-    this.transform = `rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(0px)`;
+    this.transform = `rotateX(${rotateX.toFixed(1)}deg) rotateY(${rotateY.toFixed(1)}deg) translateZ(0)`;
   }
 
-  ngOnDestroy(): void {
-    if (this.animationId !== null) {
-      cancelAnimationFrame(this.animationId);
-    }
+  ngOnDestroy() {
+    // Cleanup
   }
 }
