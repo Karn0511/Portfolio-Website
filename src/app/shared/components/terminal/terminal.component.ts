@@ -98,13 +98,13 @@ interface TerminalLine {
   ],
 })
 export class TerminalComponent implements OnInit {
-  displayedLines = signal<TerminalLine[]>([]);
+  readonly displayedLines = signal<TerminalLine[]>([]);
   isTyping = signal(false);
   showInput = signal(false);
   interactive = signal(false);
   userInput = "";
 
-  private allLines: TerminalLine[] = [
+  private readonly allLines: TerminalLine[] = [
     { type: "command", content: "whoami" },
     {
       type: "output",
@@ -249,7 +249,7 @@ export class TerminalComponent implements OnInit {
     },
   ];
 
-  private commands: Record<string, () => void> = {
+  private readonly commands: Record<string, () => void> = {
     help: () => this.showHelp(),
     clear: () => this.clearTerminal(),
     projects: () => this.showProjects(),

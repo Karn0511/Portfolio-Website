@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit {
   isScrolled = false;
 
   ngOnInit(): void {
-    if (typeof globalThis.window !== "undefined") {
+    if (globalThis.window) {
       this.checkScroll();
     }
   }
@@ -106,7 +106,7 @@ export class NavbarComponent implements OnInit {
   }
 
   private checkScroll(): void {
-    if (typeof globalThis.window !== "undefined") {
+    if (globalThis.window) {
       this.isScrolled = globalThis.window.pageYOffset > 50;
     }
   }
