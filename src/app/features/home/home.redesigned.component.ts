@@ -41,13 +41,14 @@ gsap.registerPlugin(ScrollTrigger);
 
     <!-- Navigation -->
     <nav
-      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-amber-600/10"
+      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md hero-nav"
       aria-label="Main navigation"
     >
+      <div class="hero-nav-glow"></div>
       <div
         class="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between"
       >
-        <div class="text-amber-600 font-mono text-sm font-bold tracking-widest">
+        <div class="text-amber-400 font-mono text-sm font-bold tracking-widest">
           ASHUTOSH.SYS
         </div>
         <div class="hidden md:flex gap-12 text-sm text-gray-400">
@@ -153,14 +154,14 @@ gsap.registerPlugin(ScrollTrigger);
           <div class="flex flex-col sm:flex-row gap-4 pt-6">
             <a
               href="#projects"
-              class="cta-btn px-8 py-3 rounded-lg bg-amber-600 text-black font-semibold hover:bg-amber-500 transition-colors"
+              class="cta-primary"
               aria-label="View my work and projects"
             >
               View Work
             </a>
             <a
               href="#contact"
-              class="cta-btn px-8 py-3 rounded-lg border border-amber-600/50 text-amber-600 font-semibold hover:bg-amber-600/10 transition-colors"
+              class="cta-ghost"
               aria-label="Get in touch with me"
             >
               Get in Touch

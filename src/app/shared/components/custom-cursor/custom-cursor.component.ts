@@ -19,6 +19,14 @@ import { CommonModule } from "@angular/common";
         [style.top.px]="cursorY"
       ></div>
 
+      <!-- Cursor crosshair -->
+      <div
+        #crosshair
+        class="cursor-crosshair"
+        [style.left.px]="cursorX"
+        [style.top.px]="cursorY"
+      ></div>
+
       <!-- Cursor ring (follows slower for lag effect) -->
       <div
         #ringCursor
@@ -50,57 +58,61 @@ import { CommonModule } from "@angular/common";
 
       .cursor-main {
         position: fixed;
-        width: 8px;
-        height: 8px;
-        background: radial-gradient(circle, #d4af37, #a89968);
-        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, #f4d03f 0%, #e6b422 70%);
+        border-radius: 2px;
         transform: translate(-50%, -50%);
         pointer-events: none;
         box-shadow:
-          0 0 10px rgba(212, 175, 55, 0.6),
-          inset 0 0 4px rgba(255, 255, 255, 0.4);
-        transition: transform 0.1s ease-out;
+          0 0 12px rgba(244, 208, 63, 0.7),
+          inset 0 0 6px rgba(255, 255, 255, 0.4);
+        transition:
+          transform 0.12s ease-out,
+          box-shadow 0.2s ease-out;
         z-index: 10001;
       }
 
-      .cursor-ring {
+      .cursor-crosshair {
         position: fixed;
-        width: 28px;
-        height: 28px;
-        border: 2px solid rgba(212, 175, 55, 0.4);
+        width: 18px;
+        height: 18px;
+        border: 1px solid rgba(244, 208, 63, 0.5);
         border-radius: 50%;
         transform: translate(-50%, -50%);
         pointer-events: none;
         z-index: 10000;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 0 12px rgba(0, 212, 255, 0.25);
+      }
+
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 2px solid rgba(244, 208, 63, 0.45);
+        border-radius: 10px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10000;
+        transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 0 20px rgba(244, 208, 63, 0.2);
       }
 
       .cursor-glow {
         position: fixed;
-        width: 60px;
-        height: 60px;
+        width: 90px;
+        height: 90px;
         background: radial-gradient(
           circle,
-          rgba(212, 175, 55, 0.15),
+          rgba(244, 208, 63, 0.18),
           transparent
         );
         border-radius: 50%;
         transform: translate(-50%, -50%);
         pointer-events: none;
         z-index: 9999;
-        filter: blur(10px);
-        opacity: 0.6;
-      }
-
-      /* Hide default cursor */
-      :global(body) {
-        cursor: none !important;
-      }
-
-      :global(a),
-      :global(button),
-      :global([role="button"]) {
-        cursor: none !important;
+        filter: blur(12px);
+        opacity: 0.65;
       }
     `,
   ],
@@ -119,10 +131,14 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
   private ringY_smooth = 0;
   private animationId: number | null = null;
 
+  private handleMouseMove = (e: MouseEvent) => this.onMouseMove(e);
+  private handleMouseEnter = () => this.onMouseEnter();
+  private handleMouseLeave = () => this.onMouseLeave();
+
   ngOnInit() {
-    globalThis.addEventListener("mousemove", (e) => this.onMouseMove(e));
-    globalThis.addEventListener("mouseenter", () => this.onMouseEnter());
-    globalThis.addEventListener("mouseleave", () => this.onMouseLeave());
+    globalThis.addEventListener("mousemove", this.handleMouseMove);
+    globalThis.addEventListener("mouseenter", this.handleMouseEnter);
+    globalThis.addEventListener("mouseleave", this.handleMouseLeave);
 
     // Smooth animation loop for ring cursor
     const animate = () => {
@@ -155,8 +171,21 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
     ) {
       const mainEl = document.querySelector(".cursor-main") as HTMLElement;
       const ringEl = document.querySelector(".cursor-ring") as HTMLElement;
+      const crossEl = document.querySelector(
+        ".cursor-crosshair",
+      ) as HTMLElement;
       if (mainEl) mainEl.style.transform = "translate(-50%, -50%) scale(1.5)";
-      if (ringEl) ringEl.style.transform = "translate(-50%, -50%) scale(1.3)";
+      if (ringEl) ringEl.style.transform = "translate(-50%, -50%) scale(1.2)";
+      if (crossEl) crossEl.style.transform = "translate(-50%, -50%) scale(1.1)";
+    } else {
+      const mainEl = document.querySelector(".cursor-main") as HTMLElement;
+      const ringEl = document.querySelector(".cursor-ring") as HTMLElement;
+      const crossEl = document.querySelector(
+        ".cursor-crosshair",
+      ) as HTMLElement;
+      if (mainEl) mainEl.style.transform = "translate(-50%, -50%) scale(1)";
+      if (ringEl) ringEl.style.transform = "translate(-50%, -50%) scale(1)";
+      if (crossEl) crossEl.style.transform = "translate(-50%, -50%) scale(1)";
     }
   }
 
@@ -171,7 +200,9 @@ export class CustomCursorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    globalThis.removeEventListener("mousemove", (e) => this.onMouseMove(e));
+    globalThis.removeEventListener("mousemove", this.handleMouseMove);
+    globalThis.removeEventListener("mouseenter", this.handleMouseEnter);
+    globalThis.removeEventListener("mouseleave", this.handleMouseLeave);
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);
     }

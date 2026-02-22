@@ -20,6 +20,102 @@ interface TechBadge {
   selector: "app-tech-stack-3d",
   standalone: true,
   imports: [CommonModule],
+  styles: [
+    `
+      .tech-card {
+        position: relative;
+        isolation: isolate;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 14, 26, 0.55) 0%,
+          rgba(26, 37, 64, 0.35) 100%
+        );
+      }
+
+      .tech-card::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 14px;
+        background: conic-gradient(
+          from 0deg,
+          rgba(244, 208, 63, 0.2),
+          rgba(0, 212, 255, 0.35),
+          rgba(244, 208, 63, 0.2)
+        );
+        filter: blur(12px);
+        opacity: 0;
+        transition: opacity 400ms ease;
+        z-index: 0;
+      }
+
+      .tech-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        border: 1px solid rgba(244, 208, 63, 0.15);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        z-index: 0;
+        transition: border-color 400ms ease;
+      }
+
+      .tech-card:hover::before {
+        opacity: 1;
+        animation: techGlow 3.5s linear infinite;
+      }
+
+      .tech-card:hover::after {
+        border-color: rgba(244, 208, 63, 0.45);
+      }
+
+      .tech-logo {
+        opacity: 0.82;
+        mix-blend-mode: screen;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .tech-card {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+      }
+
+      :host ::ng-deep {
+        .drop-shadow-2xl {
+          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+        }
+      }
+
+      .tech-card:hover .tech-logo {
+        opacity: 1;
+        filter: drop-shadow(0 14px 36px rgba(244, 208, 63, 0.25));
+      }
+
+      @keyframes techGlow {
+        0% {
+          filter: blur(10px) hue-rotate(0deg);
+        }
+        100% {
+          filter: blur(14px) hue-rotate(120deg);
+        }
+      }
+    `,
+  ],
   template: `
     <section
       class="relative w-full py-24 md:py-32 px-6 md:px-12 overflow-hidden"
@@ -93,8 +189,7 @@ interface TechBadge {
                   <img
                     [src]="tech.logo"
                     [alt]="tech.name"
-                    class="w-full h-full object-contain drop-shadow-2xl"
-                    style="filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));"
+                    class="tech-logo w-full h-full object-contain"
                   />
                 </div>
 
@@ -254,31 +349,6 @@ interface TechBadge {
       </div>
     </section>
   `,
-  styles: [
-    `
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .tech-card {
-        animation: fadeIn 0.8s ease-out forwards;
-        opacity: 0;
-      }
-
-      :host ::ng-deep {
-        .drop-shadow-2xl {
-          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-        }
-      }
-    `,
-  ],
 })
 export class TechStack3dComponent implements AfterViewInit {
   @ViewChild("techGrid") techGrid!: ElementRef;

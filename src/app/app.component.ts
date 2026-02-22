@@ -10,6 +10,7 @@ import { RouterOutlet, RouterModule } from "@angular/router";
 import { LiquidBackgroundService } from "./core/services/liquid-background.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.component";
+import { CustomCursorComponent } from "./shared/components/custom-cursor/custom-cursor.component";
 
 /**
  * App Root Component - Redesigned
@@ -20,11 +21,18 @@ import { AiAssistantComponent } from "./features/ai-assistant/ai-assistant.compo
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule, AiAssistantComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterModule,
+    AiAssistantComponent,
+    CustomCursorComponent,
+  ],
   template: `
     <div
       class="relative w-full min-h-screen bg-navy-900 text-white overflow-x-hidden"
     >
+      <app-custom-cursor></app-custom-cursor>
       <!-- Liquid Background Canvas (WebGL) -->
       <div
         id="background-container"
