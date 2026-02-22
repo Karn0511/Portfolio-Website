@@ -35,7 +35,9 @@ interface StackDetail {
           >
             Professional Arsenal
           </span>
-          <h2 class="text-5xl md:text-6xl font-bold text-white mt-4 mb-6">
+          <h2
+            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 mb-6"
+          >
             <span
               class="bg-gradient-to-r from-gold-primary to-gold-primary/60 bg-clip-text text-transparent"
             >
@@ -43,7 +45,9 @@ interface StackDetail {
             ><br />
             <span class="text-white">Tech Stack</span>
           </h2>
-          <p class="text-gray-300 max-w-2xl text-base leading-relaxed">
+          <p
+            class="text-gray-300 max-w-2xl text-sm sm:text-base leading-relaxed"
+          >
             A curated selection of enterprise-grade technologies and frameworks,
             optimized for scalability, performance, and maintainability.
           </p>
@@ -79,7 +83,7 @@ interface StackDetail {
                   >
                     > SELECTED STACK:
                   </span>
-                  <h3 class="text-2xl font-bold text-white">
+                  <h3 class="text-xl sm:text-2xl font-bold text-white">
                     {{ selectedStack().name }}
                   </h3>
                 </div>
@@ -91,7 +95,7 @@ interface StackDetail {
                   >
                     > VERSION:
                   </span>
-                  <p class="text-gray-300 font-mono text-lg">
+                  <p class="text-gray-300 font-mono text-base sm:text-lg">
                     {{ selectedStack().version }}
                   </p>
                 </div>
@@ -106,7 +110,7 @@ interface StackDetail {
                   <ul class="space-y-2">
                     <li
                       *ngFor="let feature of selectedStack().features"
-                      class="text-gray-300 text-sm flex items-start gap-2"
+                      class="text-gray-300 text-xs sm:text-sm flex items-start gap-2"
                     >
                       <span class="text-gold-primary">- </span>
                       {{ feature }}

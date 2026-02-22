@@ -50,10 +50,14 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
                 > SYSTEM OVERVIEW
               </span>
             </div>
-            <h2 class="text-4xl md:text-6xl font-black text-white mb-6">
+            <h2
+              class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6"
+            >
               CORE ARCHITECTURE
             </h2>
-            <p class="text-lg text-text-secondary max-w-3xl mx-auto">
+            <p
+              class="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl mx-auto"
+            >
               Navigating the digital void with high-performance reactive
               interfaces and robust backend infrastructure. Scroll to explore
               the stack.
@@ -115,10 +119,10 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
               </div>
 
               <!-- Content -->
-              <h3 class="text-2xl font-bold text-white mb-3">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
                 React Ecosystem
               </h3>
-              <p class="text-text-secondary mb-6">
+              <p class="text-sm sm:text-base text-text-secondary mb-6">
                 Advanced state management with Redux Toolkit and server-side
                 rendering using Next.js.
               </p>
@@ -170,8 +174,10 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
               </div>
 
               <!-- Content -->
-              <h3 class="text-2xl font-bold text-white mb-3">Node Runtime</h3>
-              <p class="text-text-secondary mb-6">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+                Node Runtime
+              </h3>
+              <p class="text-sm sm:text-base text-text-secondary mb-6">
                 Scalable microservices architecture with NestJS and
                 high-throughput event streams using WS.
               </p>
@@ -232,8 +238,10 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
               </div>
 
               <!-- Content -->
-              <h3 class="text-2xl font-bold text-white mb-3">Cloud Native</h3>
-              <p class="text-text-secondary mb-6">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+                Cloud Native
+              </h3>
+              <p class="text-sm sm:text-base text-text-secondary mb-6">
                 AWS architected solutions via ECS, AWS Lambda for serverless
                 compute, and serverless compute.
               </p>
@@ -274,7 +282,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
             <!-- Stat 1 -->
             <div class="text-center">
               <div
-                class="text-5xl md:text-6xl font-black text-gold-primary mb-2"
+                class="text-3xl sm:text-4xl md:text-5xl font-black text-gold-primary mb-2"
               >
                 42
               </div>
@@ -282,7 +290,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
                 class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-gold-primary to-transparent mb-3"
               ></div>
               <div
-                class="text-sm text-text-tertiary font-mono uppercase tracking-wider"
+                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
               >
                 Completed Projects
               </div>
@@ -291,7 +299,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
             <!-- Stat 2 -->
             <div class="text-center">
               <div
-                class="text-5xl md:text-6xl font-black text-teal-primary mb-2"
+                class="text-3xl sm:text-4xl md:text-5xl font-black text-teal-primary mb-2"
               >
                 08
               </div>
@@ -299,7 +307,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
                 class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-teal-primary to-transparent mb-3"
               ></div>
               <div
-                class="text-sm text-text-tertiary font-mono uppercase tracking-wider"
+                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
               >
                 Years Experience
               </div>
@@ -308,7 +316,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
             <!-- Stat 3 -->
             <div class="text-center">
               <div
-                class="text-5xl md:text-6xl font-black text-gold-primary mb-2"
+                class="text-3xl sm:text-4xl md:text-5xl font-black text-gold-primary mb-2"
               >
                 2.5k
               </div>
@@ -316,7 +324,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
                 class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-gold-primary to-transparent mb-3"
               ></div>
               <div
-                class="text-sm text-text-tertiary font-mono uppercase tracking-wider"
+                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
               >
                 GitHub Stars
               </div>
@@ -325,7 +333,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
             <!-- Stat 4 -->
             <div class="text-center">
               <div
-                class="text-5xl md:text-6xl font-black text-teal-primary mb-2"
+                class="text-3xl sm:text-4xl md:text-5xl font-black text-teal-primary mb-2"
               >
                 99
               </div>
@@ -333,7 +341,7 @@ import { NavbarComponent } from "../../shared/components/navbar/navbar.component
                 class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-teal-primary to-transparent mb-3"
               ></div>
               <div
-                class="text-sm text-text-tertiary font-mono uppercase tracking-wider"
+                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
               >
                 Client Reviews
               </div>

@@ -83,6 +83,21 @@ gsap.registerPlugin(ScrollTrigger);
     <section
       class="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-6 md:px-12"
     >
+      <!-- Hero atmospheric layers -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div
+          class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full blur-3xl opacity-60"
+          style="background: radial-gradient(circle, rgba(244, 208, 63, 0.22) 0%, rgba(244, 208, 63, 0.05) 45%, transparent 70%);"
+        ></div>
+        <div
+          class="absolute -bottom-48 right-12 w-[700px] h-[700px] rounded-full blur-3xl opacity-50"
+          style="background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, rgba(0, 212, 255, 0.04) 50%, transparent 75%);"
+        ></div>
+        <div
+          class="absolute inset-0 opacity-40"
+          style="background: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.04), transparent 45%), radial-gradient(circle at 80% 60%, rgba(244, 208, 63, 0.08), transparent 55%);"
+        ></div>
+      </div>
       <div class="max-w-5xl w-full">
         <!-- Grid decorations -->
         <div
@@ -109,8 +124,16 @@ gsap.registerPlugin(ScrollTrigger);
             <h1
               class="text-6xl md:text-8xl font-black leading-tight tracking-tight"
             >
-              <span class="block text-white">ASHUTOSH</span>
-              <span class="block text-amber-600">KARN</span>
+              <span
+                class="block text-white"
+                style="text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);"
+                >ASHUTOSH</span
+              >
+              <span
+                class="block text-amber-600"
+                style="text-shadow: 0 0 36px rgba(244, 208, 63, 0.35);"
+                >KARN</span
+              >
             </h1>
           </div>
 

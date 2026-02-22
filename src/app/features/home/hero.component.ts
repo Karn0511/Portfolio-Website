@@ -111,14 +111,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
             <!-- Label Badge -->
             <div class="flex justify-center">
               <div
-                class="inline-flex items-center gap-3 backdrop-blur-md border border-gold-primary/30 rounded-full px-5 py-2.5"
+                class="inline-flex items-center gap-3 backdrop-blur-md border border-gold-primary/30 rounded-full px-3 py-2 sm:px-5 sm:py-2.5"
                 style="background: rgba(244, 208, 63, 0.05);"
               >
                 <div
                   class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"
                 ></div>
                 <span
-                  class="text-sm text-gold-primary font-mono uppercase tracking-wider"
+                  class="text-xs sm:text-sm text-gold-primary font-mono uppercase tracking-wider"
                 >
                   CINEMATIC ARCHITECT (VARIANT 2)
                 </span>
@@ -128,7 +128,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
             <!-- Main Name Display -->
             <div class="space-y-4">
               <h1
-                class="text-7xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter"
+                class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none tracking-tighter"
               >
                 <span class="block text-white">ASHUTOSH</span>
                 <span
@@ -141,7 +141,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
               <!-- Subtitle -->
               <p
-                class="text-xl md:text-2xl text-gold-secondary font-light tracking-[0.3em] uppercase"
+                class="text-sm sm:text-base md:text-lg lg:text-xl text-gold-secondary font-light tracking-[0.25em] sm:tracking-[0.3em] uppercase"
               >
                 SENIOR FRONTEND ENGINEER
               </p>
@@ -150,7 +150,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
             <!-- Description -->
             <div class="max-w-2xl mx-auto">
               <p
-                class="text-base md:text-lg text-text-secondary leading-relaxed"
+                class="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed"
               >
                 Frontend Engineer • Cloud & AI Enthusiast<br />
                 Building intelligent, scalable systems with precision
@@ -163,7 +163,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
               class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
             >
               <button
-                class="group relative px-10 py-4 bg-gold-primary text-navy-950 font-bold text-sm tracking-widest overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(244,208,63,0.4)] hover:scale-105"
+                class="group relative px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 bg-gold-primary text-navy-950 font-bold text-xs sm:text-sm tracking-widest overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(244,208,63,0.4)] hover:scale-105"
               >
                 <span class="relative z-10">VIEW MY WORK</span>
                 <div
@@ -171,7 +171,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
                 ></div>
               </button>
               <button
-                class="px-10 py-4 border-2 border-gold-primary text-gold-primary font-bold text-sm tracking-widest hover:bg-gold-primary/10 transition-all duration-300"
+                class="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border-2 border-gold-primary text-gold-primary font-bold text-xs sm:text-sm tracking-widest hover:bg-gold-primary/10 transition-all duration-300"
               >
                 GET IN TOUCH
               </button>

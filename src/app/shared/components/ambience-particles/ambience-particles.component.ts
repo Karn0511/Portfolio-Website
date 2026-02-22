@@ -67,6 +67,9 @@ interface Particle {
         position: absolute;
         top: 0;
         left: 0;
+        opacity: 0.95;
+        mix-blend-mode: screen;
+        filter: drop-shadow(0 0 16px rgba(244, 208, 63, 0.25));
       }
     `,
   ],
@@ -84,20 +87,21 @@ export class AmbienceParticlesComponent
 
   // Configuration (tuned for premium feel)
   private readonly config = {
-    particleCount: 50, // Increased from 40 for richer effect
-    minSize: 0.5,
-    maxSize: 2.5,
-    minMass: 0.8,
-    maxMass: 1.2,
-    idleDriftSpeed: 0.3, // Slow, organic movement
-    cursorAttractRange: 250, // Distance at which cursor affects particles
-    cursorAttractStrength: 0.15, // Weak attraction (not snappy)
-    cursorOrbitStrength: 0.08, // Even weaker orbital influence
-    returnForceStrength: 0.05, // Spring force back to origin
-    damping: 0.92, // 0.9 = high damping (smooth), 0.95 = less damping
-    maxVelocity: 3, // Velocity ceiling
-    scrollInfluence: 0.03, // Scroll velocity effect multiplier
-    windStrength: 0.02, // Constant directional wind force
+    particleCount: 90, // Higher density for a visible field
+    minSize: 1.2,
+    maxSize: 4.2,
+    minMass: 0.7,
+    maxMass: 1.1,
+    idleDriftSpeed: 0.45, // Stronger ambient motion
+    cursorAttractRange: 320, // Larger interaction radius
+    cursorAttractStrength: 0.25, // Stronger, but still smooth
+    cursorOrbitStrength: 0.14, // More visible orbital flow
+    returnForceStrength: 0.08, // Faster spring return
+    damping: 0.9, // Slightly less damping for visible motion
+    maxVelocity: 4.5, // Higher velocity ceiling
+    scrollInfluence: 0.08, // Scroll velocity effect multiplier
+    windStrength: 0.06, // Stronger directional wind force
+    trailAlpha: 0.06, // Stronger trail persistence
   };
 
   // Cursor tracking
@@ -175,8 +179,12 @@ export class AmbienceParticlesComponent
     const canvas = this.canvasRef.nativeElement;
 
     // Clear canvas with fade instead of erase
-    this.ctx.fillStyle = "rgba(10, 15, 26, 0.02)"; // Very subtle trail fade
+    this.ctx.globalCompositeOperation = "source-over";
+    this.ctx.fillStyle = `rgba(10, 15, 26, ${this.config.trailAlpha})`;
     this.ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Use additive blending for stronger glow
+    this.ctx.globalCompositeOperation = "lighter";
 
     // Update particles
     this.particles.forEach((particle) => {
@@ -283,7 +291,7 @@ export class AmbienceParticlesComponent
 
   private renderParticle(p: Particle) {
     // Calculate opacity based on distance from cursor
-    let opacity = 0.3;
+    let opacity = 0.55;
     if (this.cursorActive) {
       const dx = this.cursorX - p.x;
       const dy = this.cursorY - p.y;
@@ -292,7 +300,7 @@ export class AmbienceParticlesComponent
       // Particles glow slightly when near cursor
       if (dist < this.config.cursorAttractRange) {
         const proximity = 1 - dist / this.config.cursorAttractRange;
-        opacity = 0.3 + proximity * 0.4; // 0.3 - 0.7
+        opacity = 0.55 + proximity * 0.35; // 0.55 - 0.9
       }
     }
 

@@ -43,7 +43,7 @@ import {
                 Professional Journey
               </span>
               <h2
-                class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
+                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight"
               >
                 <span
                   class="bg-gradient-to-r from-gold-primary to-teal-primary bg-clip-text text-transparent"
@@ -53,7 +53,7 @@ import {
               </h2>
             </div>
             <p
-              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
+              class="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
             >
               {{ yearsOfExperience }}+ years building robust, scalable systems
               across startups and enterprises. Leadership experience mentoring
@@ -79,7 +79,7 @@ import {
               class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
             >
               <p
-                class="text-3xl font-bold bg-gradient-to-r from-gold-primary to-gold-dark bg-clip-text text-transparent"
+                class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gold-primary to-gold-dark bg-clip-text text-transparent"
               >
                 {{ yearsOfExperience }}+
               </p>
@@ -89,14 +89,14 @@ import {
               class="space-y-2 p-4 bg-teal-primary/5 rounded-lg border border-teal-primary/20"
             >
               <p
-                class="text-3xl font-bold bg-gradient-to-r from-teal-primary to-teal-dark bg-clip-text text-transparent"
+                class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-primary to-teal-dark bg-clip-text text-transparent"
               >
                 {{ experiences.length }}
               </p>
               <p class="text-sm text-text-tertiary">Companies & Roles</p>
             </div>
             <div class="space-y-2">
-              <p class="text-3xl font-bold text-gold-primary">M+</p>
+              <p class="text-2xl sm:text-3xl font-bold text-gold-primary">M+</p>
               <p class="text-sm text-text-tertiary">Users Impacted</p>
             </div>
           </div>

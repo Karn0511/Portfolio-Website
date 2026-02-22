@@ -40,7 +40,7 @@ import { ProjectsData, type ProjectItem } from "../../core/data/projects.data";
                 Portfolio
               </span>
               <h2
-                class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
+                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight"
               >
                 Featured
                 <span
@@ -51,7 +51,7 @@ import { ProjectsData, type ProjectItem } from "../../core/data/projects.data";
               </h2>
             </div>
             <p
-              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
+              class="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
             >
               A selection of significant projects where I've led architecture
               decisions, solved complex technical challenges, and delivered
