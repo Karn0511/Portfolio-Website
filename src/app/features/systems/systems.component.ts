@@ -37,17 +37,24 @@ import {
           <div class="space-y-6">
             <div class="space-y-2">
               <span
-                class="font-mono text-xs text-gold-primary uppercase tracking-widest"
+                class="font-mono text-xs text-teal-primary uppercase tracking-widest"
               >
                 Technical Arsenal
               </span>
               <h2
                 class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
               >
-                Technology Stack
+                <span
+                  class="bg-gradient-to-r from-teal-primary to-gold-primary bg-clip-text text-transparent"
+                >
+                  Technology
+                </span>
+                <br />Stack
               </h2>
             </div>
-            <p class="text-lg text-text-secondary max-w-3xl leading-relaxed">
+            <p
+              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-gold-primary/40 pl-6"
+            >
               A carefully curated set of modern tools and frameworks, selected
               for scalability, reliability, and performance. Each technology is
               chosen for a specific purpose in building enterprise-grade
@@ -58,14 +65,17 @@ import {
           <!-- Technologies by Category -->
           <div class="space-y-20">
             <div *ngFor="let category of categories" class="space-y-8">
-              <!-- Category Title -->
+              <!-- Category Title with Energy -->
               <div>
                 <h3
-                  class="text-xl font-semibold text-text-primary uppercase tracking-widest"
+                  class="text-xl font-semibold text-text-primary uppercase tracking-widest flex items-center gap-3"
                 >
+                  <span class="w-2 h-2 rounded-full bg-teal-primary"></span>
                   {{ category }}
                 </h3>
-                <div class="h-px w-12 bg-gold-primary/40 mt-3"></div>
+                <div
+                  class="h-px w-12 bg-gradient-to-r from-gold-primary via-teal-primary to-transparent mt-3"
+                ></div>
               </div>
 
               <!-- Tech Grid for Category -->
@@ -80,23 +90,33 @@ import {
             </div>
           </div>
 
-          <!-- Summary Stats -->
+          <!-- Summary Stats with Dual Colors -->
           <div
             class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/10"
           >
-            <div class="space-y-2">
-              <div class="text-3xl font-bold text-gold-primary">
+            <div
+              class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
+            >
+              <div
+                class="text-3xl font-bold bg-gradient-to-r from-gold-primary to-gold-dark bg-clip-text text-transparent"
+              >
                 {{ technologies.length }}+
               </div>
               <p class="text-sm text-text-tertiary">Technologies Mastered</p>
             </div>
-            <div class="space-y-2">
-              <div class="text-3xl font-bold text-gold-primary">
+            <div
+              class="space-y-2 p-4 bg-teal-primary/5 rounded-lg border border-teal-primary/20"
+            >
+              <div
+                class="text-3xl font-bold bg-gradient-to-r from-teal-primary to-teal-dark bg-clip-text text-transparent"
+              >
                 {{ categories.length }}
               </div>
               <p class="text-sm text-text-tertiary">Categories of Expertise</p>
             </div>
-            <div class="space-y-2">
+            <div
+              class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
+            >
               <div class="text-3xl font-bold text-gold-primary">10+ yrs</div>
               <p class="text-sm text-text-tertiary">Combined Experience</p>
             </div>

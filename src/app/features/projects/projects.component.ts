@@ -35,17 +35,24 @@ import { ProjectsData, type ProjectItem } from "../../core/data/projects.data";
           <div class="space-y-6">
             <div class="space-y-2">
               <span
-                class="font-mono text-xs text-gold-primary uppercase tracking-widest"
+                class="font-mono text-xs text-teal-primary uppercase tracking-widest"
               >
                 Portfolio
               </span>
               <h2
                 class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
               >
-                Featured Projects
+                Featured
+                <span
+                  class="bg-gradient-to-r from-gold-primary to-teal-primary bg-clip-text text-transparent"
+                >
+                  Projects
+                </span>
               </h2>
             </div>
-            <p class="text-lg text-text-secondary max-w-3xl leading-relaxed">
+            <p
+              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
+            >
               A selection of significant projects where I've led architecture
               decisions, solved complex technical challenges, and delivered
               measurable impact. Each project demonstrates expertise in

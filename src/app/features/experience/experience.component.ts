@@ -38,17 +38,23 @@ import {
           <div class="space-y-6">
             <div class="space-y-2">
               <span
-                class="font-mono text-xs text-gold-primary uppercase tracking-widest"
+                class="font-mono text-xs text-teal-primary uppercase tracking-widest"
               >
                 Professional Journey
               </span>
               <h2
                 class="text-5xl md:text-6xl font-bold text-text-primary leading-tight"
               >
-                Experience
+                <span
+                  class="bg-gradient-to-r from-gold-primary to-teal-primary bg-clip-text text-transparent"
+                >
+                  Experience & Growth
+                </span>
               </h2>
             </div>
-            <p class="text-lg text-text-secondary max-w-3xl leading-relaxed">
+            <p
+              class="text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
+            >
               {{ yearsOfExperience }}+ years building robust, scalable systems
               across startups and enterprises. Leadership experience mentoring
               teams, creating CI/CD infrastructure, and driving technical
@@ -59,23 +65,32 @@ import {
           <!-- Timeline -->
           <div class="space-y-2">
             <app-experience-timeline-item
-              *ngFor="let exp of experiences"
+              *ngFor="let exp of experiences; let idx = index"
               [experience]="exp"
+              [index]="idx"
             ></app-experience-timeline-item>
           </div>
 
-          <!-- Summary Stats -->
+          <!-- Summary Stats with Energy -->
           <div
             class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/10"
           >
-            <div class="space-y-2">
-              <p class="text-3xl font-bold text-gold-primary">
+            <div
+              class="space-y-2 p-4 bg-gold-primary/5 rounded-lg border border-gold-primary/20"
+            >
+              <p
+                class="text-3xl font-bold bg-gradient-to-r from-gold-primary to-gold-dark bg-clip-text text-transparent"
+              >
                 {{ yearsOfExperience }}+
               </p>
               <p class="text-sm text-text-tertiary">Years of Experience</p>
             </div>
-            <div class="space-y-2">
-              <p class="text-3xl font-bold text-gold-primary">
+            <div
+              class="space-y-2 p-4 bg-teal-primary/5 rounded-lg border border-teal-primary/20"
+            >
+              <p
+                class="text-3xl font-bold bg-gradient-to-r from-teal-primary to-teal-dark bg-clip-text text-transparent"
+              >
                 {{ experiences.length }}
               </p>
               <p class="text-sm text-text-tertiary">Companies & Roles</p>

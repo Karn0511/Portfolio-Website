@@ -6,6 +6,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import { environment } from "../../../environments/environment";
 
 export interface Message {
   role: "user" | "assistant";
@@ -19,8 +20,8 @@ export class AiService {
   private genAI: GoogleGenerativeAI;
   private model: GenerativeModel;
 
-  // Use the high-performance Gemini key provided by user
-  private readonly GEMINI_KEY = "AIzaSyBb6t4u9YSbh2CJZz0eeVXuOShFLyVqGtE";
+  // API key loaded from environment configuration
+  private readonly GEMINI_KEY = environment.geminiApiKey;
 
   messages = signal<Message[]>([
     {

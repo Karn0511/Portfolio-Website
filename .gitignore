@@ -52,3 +52,11 @@ ui-debug.log
 functions/node_modules/
 functions/lib/
 node_modules
+
+# Environment files with secrets (DO NOT COMMIT)
+src/environments/environment.ts
+src/environments/environment.prod.ts
+src/environments/firebase.config.ts
+
+# Keep example files for reference
+!src/environments/environment.example.ts

@@ -10,6 +10,7 @@ module.exports = {
           secondary: "#cbd5e1",
           tertiary: "#94a3b8",
           muted: "#64748b",
+          code: "#06d6d0",
         },
 
         // New design system colors
@@ -26,6 +27,12 @@ module.exports = {
           dark: "#a89968",
           muted: "#8b7d2d",
           light: "#e8d5b5",
+        },
+        teal: {
+          primary: "#06d6d0",
+          dark: "#04b5b0",
+          muted: "#03a89f",
+          glow: "#06d6d0",
         },
 
         // Legacy HSL colors (kept for compatibility)
@@ -120,6 +127,17 @@ module.exports = {
         "glow-sm": "0 0 15px rgba(212, 175, 55, 0.2)",
         "glow-md": "0 0 30px rgba(212, 175, 55, 0.15)",
         "glow-lg": "0 0 50px rgba(212, 175, 55, 0.1)",
+
+        // Teal glow shadows
+        "glowTeal-sm": "0 0 15px rgba(6, 214, 208, 0.25)",
+        "glowTeal-md": "0 0 30px rgba(6, 214, 208, 0.2)",
+        "glowTeal-lg": "0 0 50px rgba(6, 214, 208, 0.15)",
+
+        // Combined energy glow
+        "glowEnergy-md":
+          "0 0 30px rgba(212, 175, 55, 0.1), 0 0 25px rgba(6, 214, 208, 0.15)",
+        "glowEnergy-lg":
+          "0 0 50px rgba(212, 175, 55, 0.08), 0 0 40px rgba(6, 214, 208, 0.12)",
 
         // Depth shadow
         depth: "0 20px 60px rgba(0, 0, 0, 0.3)",
