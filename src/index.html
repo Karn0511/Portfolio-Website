@@ -55,11 +55,12 @@
         scroll-behavior: smooth;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        background-color: #000511;
       }
 
       body {
         margin: 0;
-        background-color: #0f1419;
+        background-color: #000511;
         color: #f1f5f9;
         font-family: "Inter", sans-serif;
         line-height: 1.5;
@@ -86,142 +87,16 @@
       }
 
       ::-webkit-scrollbar-thumb {
-        background: rgba(212, 175, 55, 0.4);
+        background: rgba(212, 175, 55, 0.2);
         border-radius: 4px;
       }
 
       ::-webkit-scrollbar-thumb:hover {
-        background: rgba(212, 175, 55, 0.8);
-      }
-
-      #system-init {
-        position: fixed;
-        inset: 0;
-        background: #0f1419;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-      }
-
-      .startup-container {
-        text-align: center;
-        position: relative;
-      }
-
-      .neural-core {
-        width: 80px;
-        height: 80px;
-        border: 2px solid #d4af37;
-        border-radius: 50%;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 2rem;
-        animation: pulse-core 2s ease-in-out infinite;
-        box-shadow: 0 0 40px rgba(56, 189, 248, 0.4);
-      }
-
-      .neural-core::after {
-        content: "";
-        width: 10px;
-        height: 10px;
-        background: #fff;
-        border-radius: 50%;
-        animation: pulse-inner 1s ease-in-out infinite;
-      }
-
-      @keyframes pulse-core {
-        0%,
-        100% {
-          transform: scale(1);
-          border-color: #38bdf8;
-          box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
-        }
-        50% {
-          transform: scale(1.1);
-          border-color: #fff;
-          box-shadow: 0 0 50px rgba(56, 189, 248, 0.6);
-        }
-      }
-
-      @keyframes pulse-inner {
-        0%,
-        100% {
-          opacity: 0.5;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.5);
-        }
-      }
-
-      .loading-text {
-        font-family: "Share Tech Mono", monospace;
-        color: #fff;
-        font-size: 0.7rem;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-        opacity: 0.8;
-      }
-
-      .progress-container {
-        width: 240px;
-        height: 1px;
-        background: rgba(255, 255, 255, 0.05);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .progress-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 40%;
-        background: linear-gradient(90deg, transparent, #38bdf8, transparent);
-        animation: loading-scan 1.5s ease-in-out infinite;
-      }
-
-      @keyframes loading-scan {
-        0% {
-          left: -100%;
-        }
-        100% {
-          left: 100%;
-        }
-      }
-
-      .status-log {
-        position: absolute;
-        bottom: 2rem;
-        left: 2rem;
-        font-family: "Share Tech Mono", monospace;
-        font-size: 10px;
-        color: rgba(255, 255, 255, 0.2);
-        pointer-events: none;
+        background: rgba(212, 175, 55, 0.6);
       }
     </style>
   </head>
   <body>
-    <div id="system-init">
-      <div class="startup-container">
-        <div class="neural-core"></div>
-        <div class="loading-text">INITIALIZING_BIT_STREAM</div>
-        <div class="progress-container">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-      <div class="status-log">
-        [SYS_KERNEL] :: BOOTING_V3.0.1...<br />
-        [NEURAL_LINK] :: CONNECTING_NODES...<br />
-        [CORE] :: READY
-      </div>
-    </div>
     <app-root></app-root>
   </body>
 </html>

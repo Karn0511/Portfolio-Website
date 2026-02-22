@@ -52,6 +52,16 @@
     "lenis",
     "Phong",
     "libpeerconnection",
-    "Frontends"
-  ]
+    "Frontends",
+    "Internshala",
+    "Roadpil",
+    "Arogya",
+    "cicd",
+    "yoyo",
+    "Scanline",
+    "scanlines",
+    "fract",
+    "Satoshi"
+  ],
+  "css.lint.unknownAtRules": "ignore"
 }

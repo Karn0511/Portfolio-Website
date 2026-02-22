@@ -1,13 +1,15 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  HostListener,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextPlugin } from "gsap/TextPlugin";
 
-/**
- * Hero Component - CINEMATIC ARCHITECT STYLE
- * Terminal-inspired control deck with liquid gold flows
- * Deep navy theme with hacker aesthetic
- */
+gsap.registerPlugin(TextPlugin);
 
 @Component({
   selector: "app-hero",
@@ -15,360 +17,417 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
   imports: [CommonModule],
   template: `
     <section
-      #heroSection
-      class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-midnight"
+      class="relative w-full min-h-[95vh] flex items-center justify-center overflow-hidden"
     >
-      <!-- Liquid Gold Flow Background -->
-      <div class="absolute inset-0 z-0 opacity-30">
-        <div
-          class="absolute top-20 right-0 w-[800px] h-[800px] rounded-full blur-3xl"
-          style="background: radial-gradient(circle, rgba(244, 208, 63, 0.25) 0%, transparent 70%); animation: float 8s ease-in-out infinite;"
-        ></div>
-        <div
-          class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-3xl"
-          style="background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); animation: float 10s ease-in-out infinite reverse;"
-        ></div>
-      </div>
-
-      <!-- Grid Pattern Overlay -->
       <div
-        class="absolute inset-0 z-0 opacity-5"
-        style="background-image: linear-gradient(rgba(244, 208, 63, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(244, 208, 63, 0.1) 1px, transparent 1px); background-size: 50px 50px;"
-      ></div>
-
-      <!-- Main Content Grid -->
-      <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <!-- LEFT: Terminal Panel -->
-          <div #terminalPanel class="hidden lg:block lg:col-span-3 opacity-0">
-            <div
-              class="relative backdrop-blur-md border border-gold-primary/20 p-6 rounded-sm"
-              style="background: linear-gradient(135deg, rgba(10, 14, 26, 0.9) 0%, rgba(26, 37, 64, 0.7) 100%);"
-            >
-              <!-- Terminal Header -->
-              <div
-                class="flex items-center gap-2 mb-4 pb-3 border-b border-gold-primary/20"
-              >
-                <div class="flex gap-1.5">
-                  <div class="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
-                  <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
-                  <div class="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
-                </div>
-                <span class="text-xs text-gold-primary/60 font-mono ml-2"
-                  >system.sh</span
-                >
-              </div>
-
-              <!-- Terminal Content -->
-              <div
-                class="font-mono text-xs leading-relaxed space-y-2 text-text-secondary"
-              >
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[BOOT_SEQ]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span>Initializing system...</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[KERNEL]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span>Loading core modules...</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[USER]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span>Ashutosh Karn detected.</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[STATUS]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span class="text-green-400">Access granted.</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[INFO]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span>Project database loading...</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gold-primary">[INFO]</span>
-                  <span class="text-teal-primary">&gt;</span>
-                  <span>Architectural patterns initialized...</span>
-                </div>
-                <div class="flex items-center gap-2 pt-2">
-                  <span class="text-teal-primary">&gt;_</span>
-                  <span
-                    class="inline-block w-1.5 h-3.5 bg-gold-primary animate-pulse"
-                  ></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CENTER: Hero Content -->
+        class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+      >
+        <!-- OS Terminal / Brain Panel -->
+        <div
+          #terminal
+          class="hidden lg:block lg:col-span-4 opacity-0 -translate-x-12"
+        >
           <div
-            #heroContent
-            class="lg:col-span-6 text-center space-y-8 opacity-0"
+            class="glass-panel p-8 border-gold-500/10 shadow-glow-blue bg-navy-950/40 backdrop-blur-3xl relative overflow-hidden"
           >
-            <!-- Label Badge -->
-            <div class="flex justify-center">
-              <div
-                class="inline-flex items-center gap-3 backdrop-blur-md border border-gold-primary/30 rounded-full px-3 py-2 sm:px-5 sm:py-2.5"
-                style="background: rgba(244, 208, 63, 0.05);"
+            <!-- Light Glow Detail -->
+            <div
+              class="absolute -top-24 -left-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl"
+            ></div>
+
+            <div class="flex gap-2 mb-8 border-b border-white/5 pb-4">
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20"></div>
+              </div>
+              <span
+                class="ml-4 text-[9px] font-mono text-slate-500 uppercase tracking-[0.3em]"
+                >kernel.sys_init</span
               >
-                <div
-                  class="w-2 h-2 bg-gold-primary rounded-full animate-pulse"
-                ></div>
-                <span
-                  class="text-xs sm:text-sm text-gold-primary font-mono uppercase tracking-wider"
+            </div>
+
+            <div class="font-mono text-[11px] leading-relaxed space-y-4">
+              <div class="flex gap-3 terminal-line opacity-0">
+                <span class="text-gold-500/60 font-bold">01</span>
+                <span class="text-slate-300">NEURAL_SYS: LOADED</span>
+              </div>
+              <div class="flex gap-3 terminal-line opacity-0">
+                <span class="text-cyan-500/60 font-bold">02</span>
+                <span class="text-slate-300">AUTH: KARN_VERIFIED</span>
+              </div>
+              <div
+                class="flex gap-3 terminal-line opacity-0 text-emerald-500/60"
+              >
+                <span class="font-bold">03</span>
+                <span>ENV_STABLE: OK</span>
+              </div>
+
+              <div class="pt-6 border-t border-white/5 mt-6">
+                <p
+                  class="text-[8px] text-slate-500 mb-3 uppercase tracking-widest"
                 >
-                  CINEMATIC ARCHITECT (VARIANT 2)
-                </span>
+                  Architectural Target:
+                </p>
+                <div class="grid grid-cols-1 gap-2 text-[10px]">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-1 h-1 bg-gold-500 shadow-glow-gold rounded-full"
+                    ></div>
+                    <span class="text-slate-300 uppercase"
+                      >Scalable Intelligence</span
+                    >
+                  </div>
+                  <div class="flex items-center gap-2 text-slate-500">
+                    <div class="w-1 h-1 bg-slate-700 rounded-full"></div>
+                    <span class="uppercase">Cinematic Interaction</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 pt-6">
+                <span class="text-gold-500">></span>
+                <span
+                  id="terminal-cursor-text"
+                  class="text-slate-200 uppercase tracking-tighter"
+                ></span>
+                <span class="gradient-cursor"></span>
               </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Main Name Display -->
-            <div class="space-y-4">
-              <h1
-                class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none tracking-tighter"
-              >
-                <span class="block text-white">ASHUTOSH</span>
-                <span
-                  class="block text-gold-primary relative"
-                  style="text-shadow: 0 0 30px rgba(244, 208, 63, 0.4);"
-                >
-                  KARN
-                </span>
-              </h1>
-
-              <!-- Subtitle -->
-              <p
-                class="text-sm sm:text-base md:text-lg lg:text-xl text-gold-secondary font-light tracking-[0.25em] sm:tracking-[0.3em] uppercase"
-              >
-                SENIOR FRONTEND ENGINEER
-              </p>
-            </div>
-
-            <!-- Description -->
-            <div class="max-w-2xl mx-auto">
-              <p
-                class="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed"
-              >
-                Frontend Engineer • Cloud & AI Enthusiast<br />
-                Building intelligent, scalable systems with precision
-                engineering
-              </p>
-            </div>
-
-            <!-- CTA Buttons -->
+        <!-- Mobile HUD Scanner (Hidden on PC) -->
+        <div class="lg:hidden w-full flex justify-center mb-6 opacity-80">
+          <div
+            class="flex items-center gap-4 px-6 py-2 rounded-full border border-red-500/20 bg-red-500/5 backdrop-blur-md"
+          >
             <div
-              class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+              class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse"
+            ></div>
+            <span
+              class="text-[10px] font-mono text-red-500 uppercase tracking-widest"
+              >Sys_Override: Active</span
             >
-              <button
-                class="group relative px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 bg-gold-primary text-navy-950 font-bold text-xs sm:text-sm tracking-widest overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(244,208,63,0.4)] hover:scale-105"
-              >
-                <span class="relative z-10">VIEW MY WORK</span>
-                <div
-                  class="absolute inset-0 bg-gradient-to-r from-gold-secondary to-gold-primary opacity-0 group-hover:opacity-100 transition-opacity"
-                ></div>
-              </button>
-              <button
-                class="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border-2 border-gold-primary text-gold-primary font-bold text-xs sm:text-sm tracking-widest hover:bg-gold-primary/10 transition-all duration-300"
-              >
-                GET IN TOUCH
-              </button>
-            </div>
+          </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div
+          #heroContent
+          class="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left space-y-12 opacity-0 translate-y-12"
+        >
+          <div
+            class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/10 bg-gold-500/2 backdrop-blur-md"
+          >
+            <span
+              class="text-[10px] uppercase tracking-[0.5em] font-bold text-gold-500/80"
+              >State-of-the-art Engineering</span
+            >
           </div>
 
-          <!-- RIGHT: Social Links -->
-          <div #socialLinks class="hidden lg:block lg:col-span-3 opacity-0">
-            <div class="flex flex-col items-end gap-4 text-right">
-              <a
-                href="https://github.com"
-                target="_blank"
-                class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
-              >
-                <span class="text-sm font-mono uppercase tracking-wider"
-                  >GitHub</span
-                >
-                <span
-                  class="text-2xl group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
-              >
-                <span class="text-sm font-mono uppercase tracking-wider"
-                  >LinkedIn</span
-                >
-                <span
-                  class="text-2xl group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
-              >
-                <span class="text-sm font-mono uppercase tracking-wider"
-                  >Twitter</span
-                >
-                <span
-                  class="text-2xl group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
-              </a>
-              <a
-                href="mailto:contact@ashutosh.dev"
-                class="group flex items-center gap-3 text-gold-primary hover:text-white transition-all duration-300"
-              >
-                <span class="text-sm font-mono uppercase tracking-wider"
-                  >Email</span
-                >
-                <span
-                  class="text-2xl group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
-              </a>
-            </div>
+          <div class="space-y-4">
+            <h1
+              class="text-6xl md:text-8xl lg:text-9xl font-display font-bold leading-none tracking-tighter text-white"
+            >
+              <span class="block overflow-visible relative"
+                ><span class="reveal-text block" #nameLine1></span
+              ></span>
+              <span
+                class="text-gold-500 italic block overflow-visible mt-2 relative drop-shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+                ><span class="reveal-text block" #nameLine2></span
+              ></span>
+            </h1>
+            <p
+              #subtitle
+              class="text-lg md:text-xl lg:text-2xl text-slate-400 font-light tracking-[0.4em] md:tracking-[0.5em] uppercase opacity-0"
+            ></p>
+          </div>
+
+          <div class="max-w-2xl">
+            <p class="text-slate-400 leading-relaxed text-lg font-light">
+              <span #roleText class="text-white font-medium"></span><br />
+              <span #descText class="text-slate-500 mt-2 block"></span>
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-6 pt-4">
+            <a
+              href="#projects"
+              class="group relative px-12 py-5 bg-gold-500 text-navy-950 text-xs font-bold tracking-[0.3em] rounded-lg transition-all overflow-hidden uppercase"
+            >
+              <span class="relative z-10">EXPLORE_ARCHIVE</span>
+              <div
+                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"
+              ></div>
+            </a>
+            <a
+              href="mailto:karnashutosh6@gmail.com"
+              class="px-10 py-5 border border-white/10 rounded-lg text-xs font-bold tracking-[0.3em] text-white hover:bg-white/5 transition-all uppercase"
+              >GET_IN_TOUCH</a
+            >
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
+      <!-- Detail Layer (Cinematic) -->
       <div
-        #scrollIndicator
-        class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-0 hover:opacity-100 transition-opacity"
+        class="absolute bottom-16 left-16 hidden md:flex flex-col gap-1 opacity-20 drifter"
       >
-        <p
-          class="text-xs text-text-tertiary uppercase tracking-widest font-mono"
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-px bg-slate-500"></div>
+          <span
+            class="text-[8px] font-mono tracking-[0.5em] text-slate-500 uppercase"
+            >Lat: 25.4358° N</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-16 right-16 hidden md:flex flex-col items-end gap-2 opacity-40 drifter"
+      >
+        <span
+          class="text-[9px] font-mono tracking-[0.4em] text-slate-500 uppercase"
+          >Sys: Operational</span
         >
-          Scroll
-        </p>
-        <div
-          class="w-0.5 h-16 bg-gradient-to-b from-gold-primary to-transparent rounded-full"
-          style="animation: scrollPulse 2s ease-in-out infinite;"
-        ></div>
+        <div class="flex items-center gap-2">
+          <span class="w-1 h-1 rounded-full bg-gold-500 animate-pulse"></span>
+          <span
+            class="text-[9px] font-mono tracking-[0.4em] text-gold-500 uppercase"
+            >V.3.1.2-STABLE</span
+          >
+        </div>
       </div>
     </section>
   `,
   styles: [
     `
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
+      .gradient-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 14px;
+        background: linear-gradient(to bottom, #2dd4bf, #d4af37);
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
       }
 
-      @keyframes scrollPulse {
-        0%,
-        100% {
+      @keyframes blink {
+        from,
+        to {
           opacity: 1;
-          transform: translateY(0);
         }
         50% {
-          opacity: 0.3;
-          transform: translateY(8px);
+          opacity: 0;
         }
       }
 
-      :host ::ng-deep {
-        section {
-          position: relative;
+      .reveal-text {
+        transform: translateY(110%);
+      }
+
+      .shadow-glow-blue {
+        box-shadow: 0 0 40px -10px rgba(45, 212, 191, 0.1);
+      }
+
+      .glitch-fx-active {
+        text-shadow:
+          3px 0 #ff003c,
+          -3px 0 #00f0ff;
+        animation: active-glitch 0.1s infinite linear alternate-reverse;
+      }
+
+      @keyframes active-glitch {
+        0% {
+          transform: translate(0, 0) skew(0deg);
+        }
+        20% {
+          transform: translate(-3px, 2px) skew(2deg);
+          filter: hue-rotate(90deg) brightness(1.5);
+        }
+        40% {
+          transform: translate(-2px, -2px) skew(-2deg);
+        }
+        60% {
+          transform: translate(3px, 2px) skew(3deg);
+          filter: hue-rotate(-90deg) contrast(1.5);
+        }
+        80% {
+          transform: translate(2px, -2px) skew(-3deg);
+        }
+        100% {
+          transform: translate(0, 0) skew(0deg);
         }
       }
     `,
   ],
 })
 export class HeroComponent implements AfterViewInit {
-  @ViewChild("terminalPanel") terminalPanel!: ElementRef;
+  @ViewChild("terminal") terminal!: ElementRef;
   @ViewChild("heroContent") heroContent!: ElementRef;
-  @ViewChild("socialLinks") socialLinks!: ElementRef;
-  @ViewChild("scrollIndicator") scrollIndicator!: ElementRef;
+  @ViewChild("nameLine1") nameLine1!: ElementRef;
+  @ViewChild("nameLine2") nameLine2!: ElementRef;
+  @ViewChild("subtitle") subtitle!: ElementRef;
+  @ViewChild("roleText") roleText!: ElementRef;
+  @ViewChild("descText") descText!: ElementRef;
 
-  ngAfterViewInit(): void {
-    this.setupCinematicAnimations();
+  private scrollY = 0;
+
+  @HostListener("window:scroll")
+  onScroll() {
+    this.scrollY = window.scrollY;
+    this.updateParallax();
   }
 
-  private setupCinematicAnimations(): void {
-    gsap.registerPlugin(ScrollTrigger);
+  ngAfterViewInit() {
+    this.animateHero();
+  }
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  private animateHero() {
+    const expoCustom = "cubic-bezier(0.19, 1, 0.22, 1)";
+    const tl = gsap.timeline({ defaults: { ease: expoCustom, duration: 2 } });
 
-    // Terminal panel slides and fades in
+    // Terminal Entry
     tl.to(
-      this.terminalPanel.nativeElement,
+      this.terminal.nativeElement,
       {
         opacity: 1,
         x: 0,
-        duration: 1,
-        delay: 0.3,
+        delay: 0.8,
       },
       0,
     );
 
-    // Hero content fades in
+    // Terminal Lines
+    tl.to(
+      ".terminal-line",
+      {
+        opacity: 1,
+        y: -4,
+        stagger: 0.2,
+        duration: 0.8,
+      },
+      1.2,
+    );
+
+    // Hero Content Fade
     tl.to(
       this.heroContent.nativeElement,
       {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        delay: 0.5,
       },
-      0,
+      0.5,
     );
 
-    // Social links slide in
+    // Hacker Reveal for Name
+    this.hackerReveal(this.nameLine1.nativeElement, "ASHUTOSH", 0.8);
+    this.hackerReveal(this.nameLine2.nativeElement, "KARN", 1.2);
+
+    // Character Reveal Animation
     tl.to(
-      this.socialLinks.nativeElement,
+      [this.nameLine1.nativeElement, this.nameLine2.nativeElement],
+      {
+        y: 0,
+        stagger: 0.2,
+        duration: 1.8,
+      },
+      0.8,
+    );
+
+    // Subtitle Reveal & Glitch
+    tl.to(
+      this.subtitle.nativeElement,
       {
         opacity: 1,
-        x: 0,
-        duration: 1,
-        delay: 0.7,
+        letterSpacing: "0.5em",
+        duration: 2.5,
       },
-      0,
+      1.5,
+    );
+    this.hackerReveal(
+      this.subtitle.nativeElement,
+      "Architecting Digital Experiences",
+      1.8,
     );
 
-    // Scroll indicator fades in
-    tl.to(
-      this.scrollIndicator.nativeElement,
-      {
-        opacity: 0.5,
-        duration: 0.8,
-        delay: 1.2,
-      },
-      0,
+    // Role and Desc Reveal
+    this.hackerReveal(
+      this.roleText.nativeElement,
+      "Frontend Architect • Cloud Engineer • AI Developer",
+      2.2,
+    );
+    this.hackerReveal(
+      this.descText.nativeElement,
+      "Building high-density distributed systems with aesthetic precision.",
+      2.8,
     );
 
-    // Parallax scroll effect
-    gsap.to(".absolute.inset-0.z-0.opacity-30", {
-      scrollTrigger: {
-        trigger: "section",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-      y: 150,
-      opacity: 0.1,
+    // Terminal Cursor Typing
+    gsap.to("#terminal-cursor-text", {
+      duration: 3,
+      text: "deploy_profile --elite --cinematic",
+      ease: "none",
+      delay: 2.5,
     });
 
-    // Fade out scroll indicator
-    gsap.to(this.scrollIndicator.nativeElement, {
-      scrollTrigger: {
-        trigger: "section",
-        start: "top top",
-        end: "center top",
-        scrub: 0.5,
-      },
-      opacity: 0,
+    // Drift Animation for Micro-details
+    gsap.to(".drifter", {
+      y: -10,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+  }
+
+  private hackerReveal(element: HTMLElement, finalText: string, delay: number) {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':,./<>?";
+    let iteration = 0;
+
+    // Add glitch class temporarily for visual distortion
+    element.classList.add("glitch-fx-active");
+
+    gsap.delayedCall(delay, () => {
+      const interval = setInterval(() => {
+        element.innerText = finalText
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return finalText[index]; // Resolved character
+            }
+            if (index < iteration + 4) {
+              return chars[Math.floor(Math.random() * chars.length)]; // Glitched trailing characters
+            }
+            return ""; // Hidden characters
+          })
+          .join("");
+
+        if (iteration >= finalText.length) {
+          clearInterval(interval);
+          element.innerText = finalText;
+          element.classList.remove("glitch-fx-active");
+        }
+
+        iteration += 1 / 3;
+      }, 30);
+    });
+  }
+
+  private updateParallax() {
+    const terminal = this.terminal.nativeElement;
+    const heroContent = this.heroContent.nativeElement;
+
+    gsap.to(terminal, {
+      y: this.scrollY * 0.1,
+      duration: 0.5,
+      ease: "power1.out",
+    });
+
+    gsap.to(heroContent, {
+      y: this.scrollY * -0.05,
+      duration: 0.5,
+      ease: "power1.out",
     });
   }
 }

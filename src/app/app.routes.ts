@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 export const routes: Routes = [
   {
     path: "",
+    data: { animation: "HomePage" },
     loadComponent: () =>
       import("./features/home/home-redesigned.component").then(
         (m) => m.HomeRedesignedComponent,
@@ -10,6 +11,7 @@ export const routes: Routes = [
   },
   {
     path: "projects",
+    data: { animation: "ProjectsPage" },
     loadComponent: () =>
       import("./features/projects/projects.component").then(
         (m) => m.ProjectsComponent,
@@ -17,6 +19,7 @@ export const routes: Routes = [
   },
   {
     path: "systems",
+    data: { animation: "SystemsPage" },
     loadComponent: () =>
       import("./features/systems/systems.component").then(
         (m) => m.SystemsComponent,
@@ -24,6 +27,7 @@ export const routes: Routes = [
   },
   {
     path: "experience",
+    data: { animation: "ExperiencePage" },
     loadComponent: () =>
       import("./features/experience/experience.component").then(
         (m) => m.ExperienceComponent,

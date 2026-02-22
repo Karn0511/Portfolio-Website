@@ -1,75 +1,69 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SectionComponent } from "../../shared/components/section/section.component";
-import { ContainerComponent } from "../../shared/components/container/container.component";
 import { ProjectCardPremiumComponent } from "../../shared/components/project-card-premium/project-card-premium.component";
 import { ProjectsData, type ProjectItem } from "../../core/data/projects.data";
-
-/**
- * PROJECTS COMPONENT
- * Professional project portfolio showcase
- *
- * Design:
- * - Clean cards with subtle hover elevation
- * - Clear descriptions and impacts
- * - Tech stack display
- * - Status indicators
- * - No exaggerated animations
- */
 
 @Component({
   selector: "app-projects",
   standalone: true,
-  imports: [
-    CommonModule,
-    SectionComponent,
-    ContainerComponent,
-    ProjectCardPremiumComponent,
-  ],
+  imports: [CommonModule, ProjectCardPremiumComponent],
   template: `
-    <!-- Projects Section -->
-    <app-section [spacingVariant]="'lg'">
-      <app-container [maxWidth]="'xl'">
-        <div class="space-y-16">
-          <!-- Section Header -->
-          <div class="space-y-6">
-            <div class="space-y-2">
-              <span
-                class="font-mono text-xs text-teal-primary uppercase tracking-widest"
-              >
-                Portfolio
-              </span>
-              <h2
-                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight"
-              >
-                Featured
-                <span
-                  class="bg-gradient-to-r from-gold-primary to-teal-primary bg-clip-text text-transparent"
-                >
-                  Projects
-                </span>
-              </h2>
-            </div>
-            <p
-              class="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl leading-relaxed border-l-2 border-teal-primary/40 pl-6"
+    <section class="relative w-full py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Header Signal -->
+        <div class="mb-24 space-y-6">
+          <div
+            class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gold-500/20 bg-gold-500/5"
+          >
+            <div
+              class="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse"
+            ></div>
+            <span
+              class="text-[10px] uppercase tracking-[0.3em] font-medium text-gold-500"
+              >Project Archive</span
             >
-              A selection of significant projects where I've led architecture
-              decisions, solved complex technical challenges, and delivered
-              measurable impact. Each project demonstrates expertise in
-              full-stack development, cloud infrastructure, and system design.
-            </p>
           </div>
 
-          <!-- Projects Grid -->
-          <div class="space-y-8">
-            <app-project-card-premium
-              *ngFor="let project of projects"
-              [project]="project"
-            ></app-project-card-premium>
+          <h1
+            class="text-4xl md:text-6xl lg:text-8xl font-display font-bold text-glow text-white tracking-tighter uppercase"
+          >
+            SELECTED <span class="text-gold-500 italic">WORKS</span>
+          </h1>
+
+          <p class="text-slate-500 max-w-2xl font-light leading-relaxed">
+            A selection of architectural implementations and high-frequency
+            systems built with precision and scale in mind.
+          </p>
+        </div>
+
+        <!-- Project Deck -->
+        <div class="space-y-12">
+          <app-project-card-premium
+            *ngFor="let project of projects"
+            [project]="project"
+          ></app-project-card-premium>
+        </div>
+
+        <!-- System Footer -->
+        <div
+          class="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8"
+        >
+          <div
+            class="text-[10px] font-mono text-slate-500 uppercase tracking-widest"
+          >
+            Detailed case studies available upon request
+          </div>
+          <div class="flex gap-8">
+            <a
+              href="https://github.com/Karn0511"
+              target="_blank"
+              class="text-[10px] font-mono text-gold-500 hover:text-white transition-colors tracking-widest uppercase"
+              >Full Repository</a
+            >
           </div>
         </div>
-      </app-container>
-    </app-section>
+      </div>
+    </section>
   `,
 })
 export class ProjectsComponent {

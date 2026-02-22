@@ -1,393 +1,152 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HeroComponent } from "./hero.component";
 import { TechStack3dComponent } from "./tech-stack-3d.component";
-import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
-
-/**
- * Home Page - CINEMATIC ARCHITECT REDESIGN
- * Complete page layout with all sections
- */
+import { ProjectCardPremiumComponent } from "../../shared/components/project-card-premium/project-card-premium.component";
+import { ProjectsData, type ProjectItem } from "../../core/data/projects.data";
 
 @Component({
   selector: "app-home-redesigned",
   standalone: true,
-  imports: [CommonModule, HeroComponent, TechStack3dComponent, NavbarComponent],
+  imports: [
+    CommonModule,
+    HeroComponent,
+    TechStack3dComponent,
+    ProjectCardPremiumComponent,
+  ],
   template: `
-    <div
-      class="relative w-full min-h-screen overflow-x-hidden"
-      style="background: #0a0e1a;"
-    >
-      <!-- Navigation -->
-      <app-navbar></app-navbar>
+    <div class="relative w-full overflow-hidden">
+      <!-- Global Scanline Texture -->
+      <div
+        class="fixed inset-0 pointer-events-none z-[999] opacity-[0.03] scanlines"
+      ></div>
 
       <!-- Hero Section -->
       <app-hero></app-hero>
 
-      <!-- Golden Divider -->
-      <div
-        class="h-px bg-gradient-to-r from-transparent via-gold-primary/30 to-transparent"
-      ></div>
-
-      <!-- Tech Stack Section -->
+      <!-- Tech Systems Module -->
       <app-tech-stack-3d></app-tech-stack-3d>
 
-      <!-- Core Architecture Section -->
-      <section
-        class="relative w-full py-24 md:py-32 px-6 md:px-12"
-        style="background: linear-gradient(180deg, #0f1420 0%, #0a0e1a 100%);"
-      >
+      <!-- Featured Architecture (Projects) -->
+      <section id="projects" class="relative w-full py-48 px-6">
+        <!-- Corner Metadata (Antigravity Style) -->
+        <div
+          class="absolute top-12 left-12 opacity-10 font-mono text-[8px] tracking-[0.6em] text-slate-500 uppercase vertical-text"
+        >
+          SYS_ARCH_MOD_LOADED // AUTH_OK
+        </div>
+
         <div class="max-w-7xl mx-auto">
-          <!-- Header -->
-          <div class="mb-16 text-center">
-            <div class="inline-flex items-center gap-2 mb-4">
+          <div class="mb-24 space-y-6">
+            <div
+              class="inline-flex items-center gap-3 px-4 py-1.5 rounded-sm border border-gold-500/10 bg-gold-500/2 backdrop-blur-md"
+            >
               <div
-                class="w-2 h-2 bg-teal-primary rounded-full animate-pulse"
+                class="w-1.5 h-1.5 rounded-full bg-gold-500 shadow-glow-gold"
               ></div>
               <span
-                class="text-sm text-teal-primary font-mono uppercase tracking-wider"
+                class="text-[10px] font-mono text-gold-500 uppercase tracking-[0.5em] font-bold"
+                >Selected Archives</span
               >
-                > SYSTEM OVERVIEW
-              </span>
             </div>
             <h2
-              class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6"
+              class="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-white tracking-tighter uppercase leading-[0.8]"
             >
-              CORE ARCHITECTURE
+              FEATURED <br />
+              <span class="text-gold-500 italic">ARCHITECTURE</span>
             </h2>
-            <p
-              class="text-sm sm:text-base md:text-lg text-text-secondary max-w-3xl mx-auto"
-            >
-              Navigating the digital void with high-performance reactive
-              interfaces and robust backend infrastructure. Scroll to explore
-              the stack.
-            </p>
           </div>
 
-          <!-- Architecture Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- React Ecosystem Card -->
-            <div
-              class="group relative backdrop-blur-md border border-white/10 rounded-xl p-8 overflow-hidden hover:border-teal-primary/40 transition-all duration-500"
-              style="background: linear-gradient(135deg, rgba(15, 20, 32, 0.8) 0%, rgba(26, 37, 64, 0.6) 100%);"
+          <div class="grid grid-cols-1 gap-12 md:gap-20">
+            <app-project-card-premium
+              *ngFor="let project of projects"
+              [project]="project"
             >
-              <!-- Icon -->
-              <div class="mb-6">
-                <div
-                  class="w-16 h-16 rounded-lg flex items-center justify-center"
-                  style="background: rgba(97, 218, 251, 0.1);"
-                >
-                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none">
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="3"
-                      stroke="#61dafb"
-                      stroke-width="1.5"
-                    />
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="10"
-                      ry="4"
-                      stroke="#61dafb"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="10"
-                      ry="4"
-                      stroke="#61dafb"
-                      stroke-width="1.5"
-                      fill="none"
-                      transform="rotate(60 12 12)"
-                    />
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="10"
-                      ry="4"
-                      stroke="#61dafb"
-                      stroke-width="1.5"
-                      fill="none"
-                      transform="rotate(120 12 12)"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Content -->
-              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
-                React Ecosystem
-              </h3>
-              <p class="text-sm sm:text-base text-text-secondary mb-6">
-                Advanced state management with Redux Toolkit and server-side
-                rendering using Next.js.
-              </p>
-
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="text-xs px-3 py-1 bg-teal-primary/10 text-teal-primary border border-teal-primary/30 rounded-full"
-                >
-                  Redux
-                </span>
-                <span
-                  class="text-xs px-3 py-1 bg-teal-primary/10 text-teal-primary border border-teal-primary/30 rounded-full"
-                >
-                  Next.js
-                </span>
-                <span
-                  class="text-xs px-3 py-1 bg-teal-primary/10 text-teal-primary border border-teal-primary/30 rounded-full"
-                >
-                  React Query
-                </span>
-              </div>
-
-              <!-- Glow Effect -->
-              <div
-                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style="background: radial-gradient(circle at center, rgba(97, 218, 251, 0.1) 0%, transparent 70%);"
-              ></div>
-            </div>
-
-            <!-- Node Runtime Card -->
-            <div
-              class="group relative backdrop-blur-md border border-white/10 rounded-xl p-8 overflow-hidden hover:border-green-400/40 transition-all duration-500"
-              style="background: linear-gradient(135deg, rgba(15, 20, 32, 0.8) 0%, rgba(26, 37, 64, 0.6) 100%);"
-            >
-              <!-- Icon -->
-              <div class="mb-6">
-                <div
-                  class="w-16 h-16 rounded-lg flex items-center justify-center"
-                  style="background: rgba(104, 160, 99, 0.1);"
-                >
-                  <svg class="w-10 h-10" viewBox="0 0 256 289" fill="none">
-                    <path
-                      d="M128 288.464l-63.37-36.63v-73.26l63.37 36.63 63.37-36.63v73.26L128 288.464z"
-                      fill="#68A063"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Content -->
-              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
-                Node Runtime
-              </h3>
-              <p class="text-sm sm:text-base text-text-secondary mb-6">
-                Scalable microservices architecture with NestJS and
-                high-throughput event streams using WS.
-              </p>
-
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="text-xs px-3 py-1 bg-green-400/10 text-green-400 border border-green-400/30 rounded-full"
-                >
-                  Express
-                </span>
-                <span
-                  class="text-xs px-3 py-1 bg-green-400/10 text-green-400 border border-green-400/30 rounded-full"
-                >
-                  Socket.io
-                </span>
-              </div>
-
-              <!-- Glow Effect -->
-              <div
-                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style="background: radial-gradient(circle at center, rgba(104, 160, 99, 0.1) 0%, transparent 70%);"
-              ></div>
-            </div>
-
-            <!-- Cloud Native Card -->
-            <div
-              class="group relative backdrop-blur-md border border-white/10 rounded-xl p-8 overflow-hidden hover:border-gold-primary/40 transition-all duration-500"
-              style="background: linear-gradient(135deg, rgba(15, 20, 32, 0.8) 0%, rgba(26, 37, 64, 0.6) 100%);"
-            >
-              <!-- Icon -->
-              <div class="mb-6">
-                <div
-                  class="w-16 h-16 rounded-lg flex items-center justify-center"
-                  style="background: rgba(244, 208, 63, 0.1);"
-                >
-                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M12 2L2 7L12 12L22 7L12 2Z"
-                      stroke="#f4d03f"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <path
-                      d="M2 17L12 22L22 17"
-                      stroke="#f4d03f"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <path
-                      d="M2 12L12 17L22 12"
-                      stroke="#f4d03f"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Content -->
-              <h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
-                Cloud Native
-              </h3>
-              <p class="text-sm sm:text-base text-text-secondary mb-6">
-                AWS architected solutions via ECS, AWS Lambda for serverless
-                compute, and serverless compute.
-              </p>
-
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="text-xs px-3 py-1 bg-gold-primary/10 text-gold-primary border border-gold-primary/30 rounded-full"
-                >
-                  AWS
-                </span>
-                <span
-                  class="text-xs px-3 py-1 bg-gold-primary/10 text-gold-primary border border-gold-primary/30 rounded-full"
-                >
-                  Docker
-                </span>
-                <span
-                  class="text-xs px-3 py-1 bg-gold-primary/10 text-gold-primary border border-gold-primary/30 rounded-full"
-                >
-                  Terraform
-                </span>
-              </div>
-
-              <!-- Glow Effect -->
-              <div
-                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style="background: radial-gradient(circle at center, rgba(244, 208, 63, 0.1) 0%, transparent 70%);"
-              ></div>
-            </div>
+            </app-project-card-premium>
           </div>
         </div>
       </section>
 
-      <!-- Project Stats Section -->
-      <section class="relative w-full py-16 md:py-24 px-6 md:px-12">
-        <div class="max-w-7xl mx-auto">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Stat 1 -->
-            <div class="text-center">
-              <div
-                class="text-3xl sm:text-4xl md:text-5xl font-black text-gold-primary mb-2"
-              >
-                42
-              </div>
-              <div
-                class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-gold-primary to-transparent mb-3"
-              ></div>
-              <div
-                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
-              >
-                Completed Projects
-              </div>
-            </div>
+      <!-- Terminal Bridge (Contact Close) -->
+      <section class="py-48 px-6 relative">
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-transparent via-gold-500/2 to-transparent opacity-50"
+        ></div>
 
-            <!-- Stat 2 -->
-            <div class="text-center">
-              <div
-                class="text-3xl sm:text-4xl md:text-5xl font-black text-teal-primary mb-2"
-              >
-                08
-              </div>
-              <div
-                class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-teal-primary to-transparent mb-3"
-              ></div>
-              <div
-                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
-              >
-                Years Experience
-              </div>
-            </div>
+        <div
+          class="max-w-4xl mx-auto glass-panel p-20 text-center space-y-12 border-gold-500/10 bg-navy-950/40 backdrop-blur-3xl relative overflow-hidden group"
+        >
+          <!-- Hover Blur Detail -->
+          <div
+            class="absolute -bottom-32 -right-32 w-64 h-64 bg-cyan-500/5 rounded-full blur-[100px] group-hover:opacity-100 transition-opacity"
+          ></div>
 
-            <!-- Stat 3 -->
-            <div class="text-center">
-              <div
-                class="text-3xl sm:text-4xl md:text-5xl font-black text-gold-primary mb-2"
-              >
-                2.5k
-              </div>
-              <div
-                class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-gold-primary to-transparent mb-3"
-              ></div>
-              <div
-                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
-              >
-                GitHub Stars
-              </div>
-            </div>
+          <div class="space-y-6">
+            <span
+              class="text-[10px] font-mono text-gold-500 uppercase tracking-[0.6em] font-bold"
+              >Network.Establish_Connection()</span
+            >
+            <h2
+              class="text-5xl md:text-7xl font-display font-bold text-white uppercase tracking-tighter leading-tight"
+            >
+              INITIATE <span class="italic text-gold-500">SESSION</span>
+            </h2>
+          </div>
 
-            <!-- Stat 4 -->
-            <div class="text-center">
+          <p
+            class="text-slate-400 text-xl font-light max-w-2xl mx-auto leading-relaxed"
+          >
+            Architecting the future of distributed systems and high-fidelity
+            user experiences. Available for elite engineering engagements.
+          </p>
+
+          <div class="flex flex-col items-center gap-8 pt-6">
+            <a
+              href="mailto:karnashutosh6@gmail.com"
+              class="group relative px-16 py-6 bg-gold-500 text-navy-950 text-xs font-bold tracking-[0.4em] rounded-lg transition-all overflow-hidden uppercase shadow-glow-gold"
+            >
+              <span class="relative z-10">REACH_OUT&#64;SYSTEM</span>
               <div
-                class="text-3xl sm:text-4xl md:text-5xl font-black text-teal-primary mb-2"
-              >
-                99
-              </div>
-              <div
-                class="h-0.5 w-20 mx-auto bg-gradient-to-r from-transparent via-teal-primary to-transparent mb-3"
+                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"
               ></div>
-              <div
-                class="text-xs sm:text-sm text-text-tertiary font-mono uppercase tracking-wider"
+            </a>
+
+            <div class="flex gap-4 items-center opacity-40">
+              <span
+                class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-glow-emerald"
+              ></span>
+              <span
+                class="text-[10px] font-mono text-slate-500 tracking-[0.4em] uppercase"
+                >Status: Available for deployment</span
               >
-                Client Reviews
-              </div>
             </div>
           </div>
         </div>
       </section>
-
-      <!-- Footer -->
-      <footer
-        class="relative w-full py-12 px-6 md:px-12 border-t border-white/5"
-      >
-        <div class="max-w-7xl mx-auto">
-          <div class="flex items-center justify-between">
-            <div class="text-text-muted text-sm font-mono">
-              © 2026 Ashutosh Karn. Crafted with precision.
-            </div>
-            <div class="flex items-center gap-6">
-              <a
-                href="#"
-                class="text-gold-primary hover:text-white transition-colors text-sm font-mono"
-                >GitHub</a
-              >
-              <a
-                href="#"
-                class="text-gold-primary hover:text-white transition-colors text-sm font-mono"
-                >LinkedIn</a
-              >
-              <a
-                href="#"
-                class="text-gold-primary hover:text-white transition-colors text-sm font-mono"
-                >Twitter</a
-              >
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(0, 0, 0, 0.5) 51%,
+          transparent 52%
+        );
+        background-size: 100% 4px;
+      }
+
+      .vertical-text {
+        writing-mode: vertical-rl;
+      }
+
+      .shadow-glow-emerald {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+      }
+    `,
+  ],
 })
-export class HomeRedesignedComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    // Smooth scroll behavior
-    if (globalThis.window !== undefined) {
-      globalThis.document.documentElement.style.scrollBehavior = "smooth";
-    }
-  }
+export class HomeRedesignedComponent {
+  projects: ProjectItem[] = ProjectsData.getAll();
 }

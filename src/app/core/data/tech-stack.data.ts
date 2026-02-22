@@ -1,200 +1,151 @@
 /**
- * TECH STACK DATA SERVICE
- * Provides official technology logos and metadata
+ * TECH STACK DATA
+ * Professional arsenal of languages, frameworks, and tools
  */
 
 export interface TechStackItem {
+  id: string;
   name: string;
-  logoPath: string;
-  category:
-    | "Language"
-    | "Frontend"
-    | "Backend"
-    | "DevOps"
-    | "Cloud"
-    | "Database"
-    | "AI/ML"
-    | "Tools";
-  proficiency: number;
-  description?: string;
+  logo: string;
+  color: string;
+  category: "language" | "frontend" | "backend" | "cloud" | "tool";
+  description: string;
 }
 
 export class TechStackData {
   static readonly TECHNOLOGIES: TechStackItem[] = [
     // Languages
     {
-      name: "Python",
-      category: "Language",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      proficiency: 95,
-      description: "ML, backend, automation",
-    },
-    {
+      id: "ts",
       name: "TypeScript",
-      category: "Language",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      proficiency: 95,
-      description: "Strong typing, frontend/backend",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      color: "#3178C6",
+      category: "language",
+      description: "Static typing and advanced object-oriented patterns.",
     },
     {
-      name: "Java",
-      category: "Language",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-      proficiency: 88,
-      description: "Enterprise backends",
-    },
-    {
+      id: "js",
       name: "JavaScript",
-      category: "Language",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      proficiency: 92,
-      description: "Full-stack development",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      color: "#F7DF1E",
+      category: "language",
+      description: "Modern ES6+ development and asynchronous programming.",
+    },
+    {
+      id: "py",
+      name: "Python",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      color: "#3776AB",
+      category: "language",
+      description: "AI, machine learning, and automation scripting.",
+    },
+    {
+      id: "java",
+      name: "Java",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+      color: "#007396",
+      category: "language",
+      description: "Enterprise backend logic and robust systems.",
     },
 
     // Frontend
     {
-      name: "Angular",
-      category: "Frontend",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-      proficiency: 94,
-      description: "Enterprise SPAs",
+      id: "ang",
+      name: "Angular 18",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+      color: "#DD0031",
+      category: "frontend",
+      description: "Enterprise-scale reactive architecture and signals.",
     },
     {
+      id: "react",
       name: "React",
-      category: "Frontend",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      proficiency: 88,
-      description: "Component architecture",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+      color: "#61DAFB",
+      category: "frontend",
+      description: "Component-based UI and high-performance states.",
     },
     {
+      id: "tw",
       name: "Tailwind CSS",
-      category: "Frontend",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-      proficiency: 92,
-      description: "Utility-first CSS",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+      color: "#06B6D4",
+      category: "frontend",
+      description: "Utility-first CSS and modern responsive design.",
     },
 
     // Backend
     {
+      id: "node",
       name: "Node.js",
-      category: "Backend",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      proficiency: 92,
-      description: "JavaScript runtime",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+      color: "#339933",
+      category: "backend",
+      description: "Scalable server-side runtimes and microservices.",
     },
     {
-      name: "FastAPI",
-      category: "Backend",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
-      proficiency: 88,
-      description: "Modern Python APIs",
-    },
-    {
-      name: "PostgreSQL",
-      category: "Database",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      proficiency: 90,
-      description: "Relational database",
+      id: "ex",
+      name: "Express.js",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+      color: "#000000",
+      category: "backend",
+      description: "Minimalist web framework for Node.js APIs.",
     },
 
-    // DevOps & Cloud
+    // Cloud & DevOps
     {
-      name: "Docker",
-      category: "DevOps",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-      proficiency: 92,
-      description: "Containerization",
-    },
-    {
-      name: "Kubernetes",
-      category: "DevOps",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg",
-      proficiency: 88,
-      description: "Orchestration",
-    },
-    {
+      id: "aws",
       name: "AWS",
-      category: "Cloud",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
-      proficiency: 90,
-      description: "Cloud infrastructure",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+      color: "#FF9900",
+      category: "cloud",
+      description: "Cloud-native infrastructure and architectural solutions.",
     },
     {
+      id: "k8s",
+      name: "Kubernetes",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+      color: "#326CE5",
+      category: "cloud",
+      description: "Orchestration and management of containerized apps.",
+    },
+    {
+      id: "docker",
+      name: "Docker",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      color: "#2496ED",
+      category: "cloud",
+      description: "Containerization and immutable environment layers.",
+    },
+    {
+      id: "azure",
       name: "Azure",
-      category: "Cloud",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-      proficiency: 85,
-      description: "Microsoft cloud",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+      color: "#0078D4",
+      category: "cloud",
+      description: "Alternative cloud ecosystem and enterprise scale.",
     },
 
-    // Tools & Other
+    // Tools
     {
-      name: "Git",
-      category: "Tools",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-      proficiency: 95,
-      description: "Version control",
+      id: "cicd",
+      name: "CI/CD",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+      color: "#6e5494",
+      category: "tool",
+      description: "Automated pipelines via GitHub Actions and workflows.",
     },
     {
-      name: "GitHub Actions",
-      category: "DevOps",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-      proficiency: 88,
-      description: "CI/CD pipeline",
-    },
-    {
-      name: "TensorFlow",
-      category: "AI/ML",
-      logoPath:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
-      proficiency: 85,
-      description: "Machine learning",
+      id: "figma",
+      name: "Figma",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+      color: "#F24E1E",
+      category: "tool",
+      description: "Systems-UI design and collaborative prototyping.",
     },
   ];
 
-  /**
-   * Group technologies by category
-   */
-  static groupByCategory(): Record<string, TechStackItem[]> {
-    const grouped: Record<string, TechStackItem[]> = {};
-
-    this.TECHNOLOGIES.forEach((tech) => {
-      if (!grouped[tech.category]) {
-        grouped[tech.category] = [];
-      }
-      grouped[tech.category].push(tech);
-    });
-
-    return grouped;
-  }
-
-  /**
-   * Get technologies by category
-   */
   static getByCategory(category: string): TechStackItem[] {
-    return this.TECHNOLOGIES.filter((tech) => tech.category === category);
-  }
-
-  /**
-   * Get unique categories
-   */
-  static getCategories(): string[] {
-    return [...new Set(this.TECHNOLOGIES.map((tech) => tech.category))];
+    return this.TECHNOLOGIES.filter((t) => t.category === category);
   }
 }

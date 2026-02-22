@@ -5,26 +5,9 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  NgZone,
   HostListener,
 } from "@angular/core";
-
-/**
- * AMBIENT PARTICLE SYSTEM - ENHANCED
- *
- * A sophisticated force-field effect where particles respond to cursor proximity.
- * Inspired by antigravity.google but adapted for premium hacker aesthetic.
- *
- * Physics model:
- * - Idle drift (continuous Perlin-like noise)
- * - Cursor attraction (distance-based soft gravitational well)
- * - Orbital influence (weak orbital attractor around cursor)
- * - Spring return force (particles return to origin when cursor leaves)
- * - Scroll coupling (particles respond to scroll velocity)
- * - Wind forces (constant directional drift for organic feel)
- * - Damping (prevents oscillation chaos)
- *
- * Effect intent: "Data points reacting to a magnetic field"
- */
 
 interface Particle {
   x: number;
@@ -33,43 +16,27 @@ interface Particle {
   vy: number;
   originX: number;
   originY: number;
-  mass: number;
-  noisePhase: number;
   size: number;
-  trail: Array<{ x: number; y: number }>;
-  colorVariant: number; // 0-1 blend between gold and teal
+  type: "dot" | "pill";
+  rotation: number;
+  hue: number;
+  brightness: number;
 }
 
 @Component({
   selector: "app-ambience-particles",
   standalone: true,
-  template: `
-    <canvas
-      #particleCanvas
-      class="particle-canvas"
-      [style.width.%]="100"
-      [style.height.%]="100"
-    ></canvas>
-  `,
+  template: `<canvas
+    #canvas
+    class="fixed inset-0 pointer-events-none z-[1]"
+  ></canvas>`,
   styles: [
     `
       :host {
+        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         pointer-events: none;
-        z-index: 1;
-      }
-
-      .particle-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.95;
-        mix-blend-mode: screen;
-        filter: drop-shadow(0 0 16px rgba(244, 208, 63, 0.25));
       }
     `,
   ],
@@ -77,313 +44,193 @@ interface Particle {
 export class AmbienceParticlesComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild("particleCanvas", { static: false })
-  canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild("canvas") canvasRef!: ElementRef<HTMLCanvasElement>;
 
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
-  private animationFrameId?: number;
-  private time: number = 0;
+  private frameId?: number;
+  private mouse = { x: -1000, y: -1000 };
+  private scrollY = 0;
 
-  // Configuration (tuned for premium feel)
   private readonly config = {
-    particleCount: 90, // Higher density for a visible field
-    minSize: 1.2,
-    maxSize: 4.2,
-    minMass: 0.7,
-    maxMass: 1.1,
-    idleDriftSpeed: 0.45, // Stronger ambient motion
-    cursorAttractRange: 320, // Larger interaction radius
-    cursorAttractStrength: 0.25, // Stronger, but still smooth
-    cursorOrbitStrength: 0.14, // More visible orbital flow
-    returnForceStrength: 0.08, // Faster spring return
-    damping: 0.9, // Slightly less damping for visible motion
-    maxVelocity: 4.5, // Higher velocity ceiling
-    scrollInfluence: 0.08, // Scroll velocity effect multiplier
-    windStrength: 0.06, // Stronger directional wind force
-    trailAlpha: 0.06, // Stronger trail persistence
+    count: 200,
+    connectionDist: 100,
+    forceFieldRadius: 180,
+    cursorForce: 0.1,
+    springStrength: 0.02,
+    damping: 0.9,
+    glowIntensity: 1.5,
+    defaultBrightness: 0.3,
   };
 
-  // Cursor tracking
-  private cursorX: number = 0;
-  private cursorY: number = 0;
-  private cursorActive: boolean = false;
-  private cursorFadeStart: number = 0;
-  private readonly cursorFadeDuration: number = 800; // ms
+  constructor(private ngZone: NgZone) {}
 
-  // Scroll tracking
-  private lastScrollY: number = 0;
-  private scrollVelocity: number = 0;
-
-  ngOnInit() {
-    // Track scroll for particle effects
-    window.addEventListener("scroll", this.onScroll.bind(this), {
-      passive: true,
-    });
+  @HostListener("window:scroll")
+  onWindowScroll() {
+    this.scrollY = window.scrollY;
   }
+
+  ngOnInit() {}
 
   ngAfterViewInit() {
-    const ctx = this.canvasRef.nativeElement.getContext("2d");
-
-    if (!ctx) {
-      console.warn("Canvas context not available");
-      return;
-    }
-
-    this.ctx = ctx;
+    this.ctx = this.canvasRef.nativeElement.getContext("2d")!;
     this.resize();
-    window.addEventListener("resize", this.resize.bind(this));
-
-    // Initialize particles
-    this.initializeParticles();
-
-    // Start animation loop
+    this.initParticles();
     this.animate();
+
+    window.addEventListener("mousemove", this.onMouseMove.bind(this));
+    window.addEventListener("resize", this.resize.bind(this));
   }
 
-  private resize = () => {
+  private resize() {
     const canvas = this.canvasRef.nativeElement;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = `${window.innerWidth}px`;
+    canvas.style.height = `${window.innerHeight}px`;
+    this.ctx.scale(dpr, dpr);
+    this.initParticles();
+  }
 
-  private initializeParticles() {
+  private initParticles() {
     this.particles = [];
-    const canvas = this.canvasRef.nativeElement;
-
-    for (let i = 0; i < this.config.particleCount; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
+    for (let i = 0; i < this.config.count; i++) {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const type = Math.random() > 0.7 ? "pill" : "dot";
 
       this.particles.push({
         x,
         y,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: 0,
+        vy: 0,
         originX: x,
         originY: y,
-        mass:
-          this.config.minMass +
-          Math.random() * (this.config.maxMass - this.config.minMass),
-        noisePhase: Math.random() * Math.PI * 2,
-        size:
-          this.config.minSize +
-          Math.random() * (this.config.maxSize - this.config.minSize),
-        trail: [],
-        colorVariant: Math.random(), // Blend between gold and teal
+        size: type === "pill" ? 1.2 : Math.random() * 0.6 + 0.4,
+        type,
+        rotation: Math.random() * Math.PI,
+        hue: 200, // Midnight blue base
+        brightness: this.config.defaultBrightness,
       });
     }
   }
 
-  private animate = () => {
-    const canvas = this.canvasRef.nativeElement;
-
-    // Clear canvas with fade instead of erase
-    this.ctx.globalCompositeOperation = "source-over";
-    this.ctx.fillStyle = `rgba(10, 15, 26, ${this.config.trailAlpha})`;
-    this.ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Use additive blending for stronger glow
-    this.ctx.globalCompositeOperation = "lighter";
-
-    // Update particles
-    this.particles.forEach((particle) => {
-      this.updateParticle(particle);
-      this.renderParticle(particle);
+  private animate() {
+    this.ngZone.runOutsideAngular(() => {
+      const loop = (time: number) => {
+        this.update();
+        this.draw();
+        this.frameId = requestAnimationFrame(loop);
+      };
+      this.frameId = requestAnimationFrame(loop);
     });
+  }
 
-    this.time++;
-    this.animationFrameId = requestAnimationFrame(this.animate);
-  };
+  private update() {
+    this.particles.forEach((p) => {
+      // 1. Parallax on Scroll
+      const scrollSpeed = p.type === "pill" ? 0.06 : 0.03;
+      const targetY = p.originY - this.scrollY * scrollSpeed;
 
-  private updateParticle(p: Particle) {
-    // Layer 0: Wind forces (constant directional drift)
-    const windTime = this.time * 0.0003;
-    const windX = Math.sin(windTime) * this.config.windStrength;
-    const windY = Math.cos(windTime * 0.7) * this.config.windStrength * 0.5;
-    let ax = windX;
-    let ay = windY;
+      // 2. Cursor interaction
+      const dx = this.mouse.x - p.x;
+      const dy = this.mouse.y - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
 
-    // Layer 1: Idle drift (continuous Perlin-like noise)
-    const noiseScale = 0.02;
-    const idleDriftX =
-      Math.sin(p.noisePhase + this.time * noiseScale) *
-      this.config.idleDriftSpeed;
-    const idleDriftY =
-      Math.cos(p.noisePhase * 0.7 + this.time * noiseScale * 0.8) *
-      this.config.idleDriftSpeed;
+      if (dist < this.config.forceFieldRadius) {
+        const force = 1 - dist / this.config.forceFieldRadius;
+        // Brighten & Color Shift
+        p.brightness =
+          this.config.defaultBrightness + force * this.config.glowIntensity;
+        p.hue = 200 - force * 20; // Towards Cyan
 
-    ax += idleDriftX;
-    ay += idleDriftY;
+        // Repulsion/Attraction mix
+        p.vx -= (dx / dist) * force * 0.5;
+        p.vy -= (dy / dist) * force * 0.5;
+      } else {
+        p.brightness += (this.config.defaultBrightness - p.brightness) * 0.05;
+        p.hue += (200 - p.hue) * 0.05;
+      }
 
-    // Layer 2: Scroll coupling (particles respond to page scroll)
-    if (this.scrollVelocity !== 0) {
-      ax += this.scrollVelocity * this.config.scrollInfluence;
-    }
+      // 3. Spring return
+      p.vx += (p.originX - p.x) * this.config.springStrength;
+      p.vy += (targetY - p.y) * this.config.springStrength;
 
-    // Layer 3: Cursor interaction (soft force field)
-    if (this.cursorActive) {
-      const dx = this.cursorX - p.x;
-      const dy = this.cursorY - p.y;
-      const dist = Math.hypot(dx, dy); // Use hypot for better precision
+      // 4. Physics
+      p.vx *= this.config.damping;
+      p.vy *= this.config.damping;
 
-      // Attraction force (weak gravitational well)
-      if (dist < this.config.cursorAttractRange && dist > 0) {
-        // Smooth falloff: 1 at center, 0 at range edge
-        const attractForce =
-          this.config.cursorAttractStrength *
-          (1 - dist / this.config.cursorAttractRange);
+      p.x += p.vx;
+      p.y += p.vy;
+    });
+  }
 
-        // Apply attraction
-        ax += ((dx / dist) * attractForce) / p.mass;
-        ay += ((dy / dist) * attractForce) / p.mass;
+  private draw() {
+    this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-        // Orbital influence (perpendicular to attract direction)
-        // Creates a swirling motion around the cursor
-        const perpX = -dy / dist;
-        const perpY = dx / dist;
+    // Draw connection lines
+    this.ctx.lineWidth = 0.5;
+    for (let i = 0; i < this.particles.length; i++) {
+      // Optimization: only test some
+      if (i % 2 !== 0) continue;
+      for (let j = i + 1; j < this.particles.length; j++) {
+        const p1 = this.particles[i];
+        const p2 = this.particles[j];
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const distSq = dx * dx + dy * dy;
 
-        const orbitForce =
-          this.config.cursorOrbitStrength *
-          (1 - dist / this.config.cursorAttractRange);
-        ax += (perpX * orbitForce) / p.mass;
-        ay += (perpY * orbitForce) / p.mass;
+        if (distSq < this.config.connectionDist * this.config.connectionDist) {
+          const dist = Math.sqrt(distSq);
+          const alpha = (1 - dist / this.config.connectionDist) * 0.06;
+          this.ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+          this.ctx.beginPath();
+          this.ctx.moveTo(p1.x, p1.y);
+          this.ctx.lineTo(p2.x, p2.y);
+          this.ctx.stroke();
+        }
       }
     }
 
-    // Layer 4: Return force (spring back to origin)
-    const returnDx = p.originX - p.x;
-    const returnDy = p.originY - p.y;
-    ax += (returnDx * this.config.returnForceStrength) / p.mass;
-    ay += (returnDy * this.config.returnForceStrength) / p.mass;
+    // Draw particles
+    this.particles.forEach((p) => {
+      this.ctx.fillStyle = `hsla(${p.hue}, 70%, 80%, ${p.brightness})`;
 
-    // Apply acceleration to velocity
-    p.vx += ax;
-    p.vy += ay;
+      if (p.type === "pill") {
+        this.ctx.save();
+        this.ctx.translate(p.x, p.y);
+        this.ctx.rotate(p.rotation);
 
-    // Layer 5: Damping (prevents chaos, keeps things smooth)
-    p.vx *= this.config.damping;
-    p.vy *= this.config.damping;
+        this.ctx.beginPath();
+        // Pill as 1x3 rounded rect
+        const w = 1.2;
+        const h = 3.5;
+        this.ctx.roundRect(-w / 2, -h / 2, w, h, w / 2);
+        this.ctx.fill();
 
-    // Velocity capping (use hypot for magnitude)
-    const speed = Math.hypot(p.vx, p.vy);
-    if (speed > this.config.maxVelocity) {
-      const factor = this.config.maxVelocity / speed;
-      p.vx *= factor;
-      p.vy *= factor;
-    }
-
-    // Update position
-    p.x += p.vx;
-    p.y += p.vy;
-
-    // Wrap around edges
-    const canvas = this.canvasRef.nativeElement;
-    const margin = 100;
-    if (p.x < -margin) p.x = canvas.width + margin;
-    if (p.x > canvas.width + margin) p.x = -margin;
-    if (p.y < -margin) p.y = canvas.height + margin;
-    if (p.y > canvas.height + margin) p.y = -margin;
-
-    // Update noise phase for next frame
-    p.noisePhase += 0.01;
-  }
-
-  private renderParticle(p: Particle) {
-    // Calculate opacity based on distance from cursor
-    let opacity = 0.55;
-    if (this.cursorActive) {
-      const dx = this.cursorX - p.x;
-      const dy = this.cursorY - p.y;
-      const dist = Math.hypot(dx, dy);
-
-      // Particles glow slightly when near cursor
-      if (dist < this.config.cursorAttractRange) {
-        const proximity = 1 - dist / this.config.cursorAttractRange;
-        opacity = 0.55 + proximity * 0.35; // 0.55 - 0.9
+        if (p.brightness > 0.8) {
+          this.ctx.shadowBlur = 4;
+          this.ctx.shadowColor = `hsla(${p.hue}, 70%, 80%, 0.3)`;
+          this.ctx.fill();
+        }
+        this.ctx.restore();
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        this.ctx.fill();
       }
-    }
-
-    // Base colors (gold and teal with color variation per particle)
-    const goldR = 212,
-      goldG = 175,
-      goldB = 55;
-    const tealR = 56,
-      tealG = 182,
-      tealB = 212;
-
-    // Blend colors based on particle variant
-    const blend = p.colorVariant;
-    const centerR = Math.round(
-      goldR * (1 - blend * 0.3) + tealR * (blend * 0.2),
-    );
-    const centerG = Math.round(
-      goldG * (1 - blend * 0.3) + tealG * (blend * 0.2),
-    );
-    const centerB = Math.round(
-      goldB * (1 - blend * 0.3) + tealB * (blend * 0.2),
-    );
-
-    // Render particle with glow
-    const gradient = this.ctx.createRadialGradient(
-      p.x,
-      p.y,
-      0,
-      p.x,
-      p.y,
-      p.size * 3,
-    );
-    gradient.addColorStop(
-      0,
-      `rgba(${centerR}, ${centerG}, ${centerB}, ${opacity})`,
-    );
-    gradient.addColorStop(
-      0.5,
-      `rgba(${tealR}, ${tealG}, ${tealB}, ${opacity * 0.5})`,
-    );
-    gradient.addColorStop(1, `rgba(${centerR}, ${centerG}, ${centerB}, 0)`);
-
-    this.ctx.fillStyle = gradient;
-    this.ctx.beginPath();
-    this.ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
-    this.ctx.fill();
-
-    // Optional: subtle core glow
-    this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.6})`;
-    this.ctx.beginPath();
-    this.ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
-    this.ctx.fill();
+    });
   }
 
-  @HostListener("document:mousemove", ["$event"])
-  onMouseMove(event: MouseEvent) {
-    this.cursorX = event.clientX;
-    this.cursorY = event.clientY;
-    this.cursorActive = true;
-    this.cursorFadeStart = Date.now();
+  private onMouseMove(e: MouseEvent) {
+    this.mouse.x = e.clientX;
+    this.mouse.y = e.clientY;
   }
-
-  @HostListener("document:mouseenter")
-  onMouseEnter() {
-    this.cursorActive = true;
-  }
-
-  @HostListener("document:mouseleave")
-  onMouseLeave() {
-    this.cursorActive = false;
-  }
-
-  private onScroll = () => {
-    const currentScrollY = window.scrollY;
-    this.scrollVelocity = (currentScrollY - this.lastScrollY) * 0.1; // Smooth velocity
-    this.lastScrollY = currentScrollY;
-  };
 
   ngOnDestroy() {
-    if (this.animationFrameId) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-    window.removeEventListener("scroll", this.onScroll.bind(this));
-    window.removeEventListener("resize", this.resize.bind(this));
+    if (this.frameId) cancelAnimationFrame(this.frameId);
+    window.removeEventListener("mousemove", this.onMouseMove);
+    window.removeEventListener("resize", this.resize);
   }
 }

@@ -1,4 +1,10 @@
-import { Component, Input, HostListener, ElementRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  HostListener,
+  ElementRef,
+  AfterViewInit,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { gsap } from "gsap";
 import { ANIMATION_TIMINGS, EASING } from "../../../core/constants/animations";
@@ -17,7 +23,7 @@ import { ANIMATION_TIMINGS, EASING } from "../../../core/constants/animations";
 
 interface TechBadgeData {
   name: string;
-  logoPath: string;
+  logo: string;
   category: string;
   glowColor?: "gold" | "teal" | "both"; // Control glow color
 }
@@ -52,9 +58,9 @@ interface TechBadgeData {
       >
         <!-- Logo Image -->
         <img
-          [src]="tech.logoPath"
+          [src]="tech.logo"
           [alt]="tech.name"
-          class="w-1/2 h-1/2 object-contain filter drop-shadow-lg transition-all duration-300 group-hover:drop-shadow-[0_0_15px_rgba(6,214,208,0.3)]"
+          class="w-1/2 h-1/2 object-contain filter drop-shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_25px_rgba(255,0,60,0.5)]"
           loading="lazy"
         />
       </div>
@@ -68,7 +74,10 @@ interface TechBadgeData {
         >
           {{ tech.name }}
         </p>
-        <p class="text-[10px] text-teal-glow/80 font-mono">
+        <p
+          class="text-[10px] text-teal-glow/80 font-mono"
+          style="color: #06b6d4"
+        >
           {{ tech.category }}
         </p>
       </div>
@@ -85,16 +94,17 @@ interface TechBadgeData {
     `
       :host {
         display: block;
-        perspective: 1000px;
+        perspective: 1200px;
       }
 
       .tech-badge-container {
         transform-style: preserve-3d;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
       }
 
       .tech-badge-container:hover {
-        transform: translateZ(8px);
+        transform: translateZ(25px) scale(1.05);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
       }
 
       .perspective {
@@ -103,10 +113,25 @@ interface TechBadgeData {
     `,
   ],
 })
-export class TechBadge3dComponent {
+export class TechBadge3dComponent implements AfterViewInit {
   @Input() tech!: TechBadgeData;
 
   constructor(private readonly elementRef: ElementRef) {}
+
+  ngAfterViewInit() {
+    const floatTarget =
+      this.elementRef.nativeElement.querySelector(".perspective");
+    if (floatTarget) {
+      gsap.to(floatTarget, {
+        y: -6,
+        rotationZ: Math.random() > 0.5 ? 1 : -1,
+        duration: 1.5 + Math.random() * 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    }
+  }
 
   getGlassClass(): string {
     const baseClasses =

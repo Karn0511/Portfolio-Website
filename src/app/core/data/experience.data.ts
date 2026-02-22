@@ -9,86 +9,83 @@ export interface ExperienceItem {
   role: string;
   startYear: number;
   endYear?: number;
+  startMonth?: string;
+  endMonth?: string;
   isCurrent: boolean;
   description: string;
   achievements: string[];
   technologies: string[];
-  type: "full-time" | "contract" | "freelance";
+  type: "full-time" | "contract" | "freelance" | "internship";
 }
 
 export class ExperienceData {
   static readonly EXPERIENCES: ExperienceItem[] = [
     {
       id: 1,
-      company: "Tech Corporation",
-      role: "Senior Software Engineer",
-      startYear: 2023,
-      isCurrent: true,
+      company: "Internshala Trainings",
+      role: "Web Development Intern",
+      startYear: 2024,
+      endYear: 2025,
+      startMonth: "Dec",
+      endMonth: "Feb",
+      isCurrent: false,
       description:
-        "Leading full-stack development and cloud architecture initiatives for enterprise systems.",
+        "Comprehensive training and implementation of advanced web technologies.",
       achievements: [
-        "Designed and deployed microservices architecture serving 10M+ users",
-        "Led team of 5 engineers, mentored junior developers",
-        "Reduced system latency by 65% through optimization",
-        "Implemented CI/CD pipeline reducing deployment time from 4h to 15m",
+        "Completed 8-week intensive training in HTML, CSS, Bootstrap, PHP, and JavaScript",
+        "Mastered React.js and AI web integration modules",
+        "Built responsive and user-friendly web applications with complex front-end and back-end integration",
       ],
       technologies: [
-        "TypeScript",
-        "Kubernetes",
-        "AWS",
         "React",
-        "Node.js",
-        "PostgreSQL",
+        "JavaScript",
+        "PHP",
+        "Bootstrap",
+        "AI Integration",
       ],
-      type: "full-time",
+      type: "internship",
     },
     {
       id: 2,
-      company: "AI Venture Studio",
-      role: "ML Infrastructure Engineer",
-      startYear: 2021,
-      endYear: 2023,
+      company: "SmartED (Collaborators: Microsoft, Roadpil)",
+      role: "Artificial Intelligence Intern",
+      startYear: 2024,
+      endYear: 2024,
+      startMonth: "May",
+      endMonth: "July",
       isCurrent: false,
       description:
-        "Built machine learning infrastructure and data pipelines for multiple AI products.",
+        "Working on real-world AI implementation and data analytics.",
       achievements: [
-        "Created ML training pipeline supporting 50+ concurrent experiments",
-        "Optimized model serving reducing inference latency by 55%",
-        "Built monitoring and alerting system for 99.95% uptime",
+        "Collaborated on real-world AI projects involving machine learning and data analysis",
+        "Managed model deployment pipelines and performance monitoring",
+        "Strengthened problem-solving skills through hands-on neural network implementations",
       ],
       technologies: [
         "Python",
-        "TensorFlow",
-        "Docker",
-        "GCP",
-        "Apache Airflow",
-        "GPU Computing",
+        "Machine Learning",
+        "Data Analysis",
+        "Model Deployment",
       ],
-      type: "full-time",
+      type: "internship",
     },
     {
       id: 3,
-      company: "Cloud Startup",
-      role: "Full-Stack Engineer",
-      startYear: 2019,
-      endYear: 2021,
+      company: "Internshala Trainings",
+      role: "Cloud Computing Intern (AWS)",
+      startYear: 2024,
+      endYear: 2024,
+      startMonth: "April",
+      endMonth: "July",
       isCurrent: false,
-      description:
-        "Developed full-stack features from concept through production deployment.",
+      description: "Architecture and optimization of cloud-native solutions.",
       achievements: [
-        "Built real-time collaboration features serving 50K+ users",
-        "Improved frontend performance, FCP reduced by 70%",
-        "Mentored 2 junior engineers",
+        "Completed AWS Cloud Computing course with 90% score; recognized as a top performer",
+        "Gained expertise in designing secure, scalable, and cost-effective cloud solutions",
+        "Implemented high-availability infrastructure patterns using AWS core services",
       ],
-      technologies: [
-        "Angular",
-        "Node.js",
-        "MongoDB",
-        "React",
-        "AWS",
-        "GraphQL",
-      ],
-      type: "full-time",
+      technologies: ["AWS", "Cloud Architecture", "Security", "Scalability"],
+      type: "internship",
     },
   ];
 
@@ -105,8 +102,6 @@ export class ExperienceData {
   }
 
   static getYearsOfExperience(): number {
-    const current = new Date().getFullYear();
-    const oldest = Math.min(...this.EXPERIENCES.map((e) => e.startYear));
-    return current - oldest;
+    return 1; // Based on the internship durations in 2024-2025
   }
 }
