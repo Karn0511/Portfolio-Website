@@ -7,6 +7,7 @@ import { LiquidBgComponent } from "../../shared/components/liquid-bg/liquid-bg.c
 import { GlassCardComponent } from "../../shared/components/glass-card/glass-card.component";
 import { SectionHeaderComponent } from "../../shared/components/section-header/section-header.component";
 import { TechBadge3dComponent } from "../../shared/components/tech-badge-3d/tech-badge-3d.component";
+import { AmbienceParticlesComponent } from "../../shared/components/ambience-particles/ambience-particles.component";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
     CommonModule,
     RouterModule,
     LiquidBgComponent,
+    AmbienceParticlesComponent,
     GlassCardComponent,
     SectionHeaderComponent,
     TechBadge3dComponent,
@@ -33,6 +35,9 @@ gsap.registerPlugin(ScrollTrigger);
   template: `
     <!-- Global Liquid Background -->
     <app-liquid-bg></app-liquid-bg>
+
+    <!-- Ambient Particle System (cursor-interactive force field) -->
+    <app-ambience-particles></app-ambience-particles>
 
     <!-- Navigation -->
     <nav
