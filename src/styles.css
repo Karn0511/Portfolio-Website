@@ -83,19 +83,19 @@
 
   body {
     @apply min-h-screen overflow-x-hidden;
+  }
 
-    &::selection {
-      background-color: var(--color-gold-primary);
-      color: var(--color-navy-900);
-    }
+  body::selection {
+    background-color: var(--color-gold-primary);
+    color: var(--color-navy-900);
+  }
 
-    /* Respect user's motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 
@@ -142,10 +142,10 @@
   a {
     @apply transition-colors duration-200;
     color: var(--color-gold-primary);
+  }
 
-    &:hover {
-      color: var(--color-gold-light);
-    }
+  a:hover {
+    color: var(--color-gold-light);
   }
 
   code {
@@ -169,10 +169,10 @@
   ::-webkit-scrollbar-thumb {
     background: var(--color-gold-muted);
     border-radius: 4px;
+  }
 
-    &:hover {
-      background: var(--color-gold-primary);
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-primary);
   }
 }
 
@@ -182,42 +182,42 @@
     @apply relative rounded-lg border border-white/10 bg-white/5 backdrop-blur-md;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-    &:hover {
-      @apply border-white/20 bg-white/8;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
-    }
+  .glass-card:hover {
+    @apply border-white/20 bg-white/8;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
   }
 
   /* Professional Button System */
   .btn-primary {
     @apply px-6 py-3 bg-gold-primary text-navy-900 font-semibold rounded-lg transition-all duration-300;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  }
 
-    &:hover {
-      @apply scale-105;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-    }
+  .btn-primary:hover {
+    @apply scale-105;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  }
 
-    &:active {
-      @apply scale-95;
-    }
+  .btn-primary:active {
+    @apply scale-95;
   }
 
   .btn-secondary {
     @apply px-6 py-3 border border-white/20 text-white hover:bg-white/5 rounded-lg transition-all duration-300;
+  }
 
-    &:hover {
-      @apply border-white/40;
-    }
+  .btn-secondary:hover {
+    @apply border-white/40;
   }
 
   .btn-outline {
     @apply px-6 py-3 border border-gold-primary text-gold-primary hover:bg-gold-primary/10 rounded-lg transition-all duration-300;
+  }
 
-    &:hover {
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-    }
+  .btn-outline:hover {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
   }
 
   /* Section Container */
