@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 
 /**
- * AMBIENT PARTICLE SYSTEM
+ * AMBIENT PARTICLE SYSTEM - ENHANCED
  *
  * A sophisticated force-field effect where particles respond to cursor proximity.
  * Inspired by antigravity.google but adapted for premium hacker aesthetic.
@@ -19,6 +19,8 @@ import {
  * - Cursor attraction (distance-based soft gravitational well)
  * - Orbital influence (weak orbital attractor around cursor)
  * - Spring return force (particles return to origin when cursor leaves)
+ * - Scroll coupling (particles respond to scroll velocity)
+ * - Wind forces (constant directional drift for organic feel)
  * - Damping (prevents oscillation chaos)
  *
  * Effect intent: "Data points reacting to a magnetic field"
@@ -35,6 +37,7 @@ interface Particle {
   noisePhase: number;
   size: number;
   trail: Array<{ x: number; y: number }>;
+  colorVariant: number; // 0-1 blend between gold and teal
 }
 
 @Component({
@@ -81,7 +84,7 @@ export class AmbienceParticlesComponent
 
   // Configuration (tuned for premium feel)
   private readonly config = {
-    particleCount: 40,
+    particleCount: 50, // Increased from 40 for richer effect
     minSize: 0.5,
     maxSize: 2.5,
     minMass: 0.8,
@@ -93,6 +96,8 @@ export class AmbienceParticlesComponent
     returnForceStrength: 0.05, // Spring force back to origin
     damping: 0.92, // 0.9 = high damping (smooth), 0.95 = less damping
     maxVelocity: 3, // Velocity ceiling
+    scrollInfluence: 0.03, // Scroll velocity effect multiplier
+    windStrength: 0.02, // Constant directional wind force
   };
 
   // Cursor tracking
@@ -102,16 +107,19 @@ export class AmbienceParticlesComponent
   private cursorFadeStart: number = 0;
   private readonly cursorFadeDuration: number = 800; // ms
 
+  // Scroll tracking
+  private lastScrollY: number = 0;
+  private scrollVelocity: number = 0;
+
   ngOnInit() {
-    // Track cursor position
-    document.addEventListener("mousemove", this.onMouseMove.bind(this));
-    document.addEventListener("mouseenter", this.onMouseEnter.bind(this));
-    document.addEventListener("mouseleave", this.onMouseLeave.bind(this));
+    // Track scroll for particle effects
+    window.addEventListener("scroll", this.onScroll.bind(this), {
+      passive: true,
+    });
   }
 
   ngAfterViewInit() {
-    const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext("2d");
+    const ctx = this.canvasRef.nativeElement.getContext("2d");
 
     if (!ctx) {
       console.warn("Canvas context not available");
@@ -158,6 +166,7 @@ export class AmbienceParticlesComponent
           this.config.minSize +
           Math.random() * (this.config.maxSize - this.config.minSize),
         trail: [],
+        colorVariant: Math.random(), // Blend between gold and teal
       });
     }
   }
@@ -180,6 +189,13 @@ export class AmbienceParticlesComponent
   };
 
   private updateParticle(p: Particle) {
+    // Layer 0: Wind forces (constant directional drift)
+    const windTime = this.time * 0.0003;
+    const windX = Math.sin(windTime) * this.config.windStrength;
+    const windY = Math.cos(windTime * 0.7) * this.config.windStrength * 0.5;
+    let ax = windX;
+    let ay = windY;
+
     // Layer 1: Idle drift (continuous Perlin-like noise)
     const noiseScale = 0.02;
     const idleDriftX =
@@ -189,15 +205,19 @@ export class AmbienceParticlesComponent
       Math.cos(p.noisePhase * 0.7 + this.time * noiseScale * 0.8) *
       this.config.idleDriftSpeed;
 
-    let ax = idleDriftX; // Acceleration X
-    let ay = idleDriftY; // Acceleration Y
+    ax += idleDriftX;
+    ay += idleDriftY;
 
-    // Layer 2: Cursor interaction (soft force field)
+    // Layer 2: Scroll coupling (particles respond to page scroll)
+    if (this.scrollVelocity !== 0) {
+      ax += this.scrollVelocity * this.config.scrollInfluence;
+    }
+
+    // Layer 3: Cursor interaction (soft force field)
     if (this.cursorActive) {
       const dx = this.cursorX - p.x;
       const dy = this.cursorY - p.y;
-      const distSq = dx * dx + dy * dy;
-      const dist = Math.sqrt(distSq);
+      const dist = Math.hypot(dx, dy); // Use hypot for better precision
 
       // Attraction force (weak gravitational well)
       if (dist < this.config.cursorAttractRange && dist > 0) {
@@ -212,7 +232,7 @@ export class AmbienceParticlesComponent
 
         // Orbital influence (perpendicular to attract direction)
         // Creates a swirling motion around the cursor
-        const perpX = -dy / dist; // Perpendicular vector
+        const perpX = -dy / dist;
         const perpY = dx / dist;
 
         const orbitForce =
@@ -223,7 +243,7 @@ export class AmbienceParticlesComponent
       }
     }
 
-    // Layer 3: Return force (spring back to origin)
+    // Layer 4: Return force (spring back to origin)
     const returnDx = p.originX - p.x;
     const returnDy = p.originY - p.y;
     ax += (returnDx * this.config.returnForceStrength) / p.mass;
@@ -233,15 +253,14 @@ export class AmbienceParticlesComponent
     p.vx += ax;
     p.vy += ay;
 
-    // Layer 4: Damping (prevents chaos, keeps things smooth)
+    // Layer 5: Damping (prevents chaos, keeps things smooth)
     p.vx *= this.config.damping;
     p.vy *= this.config.damping;
 
-    // Velocity capping
-    const speedSq = p.vx * p.vx + p.vy * p.vy;
-    const maxSpeedSq = this.config.maxVelocity * this.config.maxVelocity;
-    if (speedSq > maxSpeedSq) {
-      const factor = this.config.maxVelocity / Math.sqrt(speedSq);
+    // Velocity capping (use hypot for magnitude)
+    const speed = Math.hypot(p.vx, p.vy);
+    if (speed > this.config.maxVelocity) {
+      const factor = this.config.maxVelocity / speed;
       p.vx *= factor;
       p.vy *= factor;
     }
@@ -263,14 +282,12 @@ export class AmbienceParticlesComponent
   }
 
   private renderParticle(p: Particle) {
-    const canvas = this.canvasRef.nativeElement;
-
     // Calculate opacity based on distance from cursor
     let opacity = 0.3;
     if (this.cursorActive) {
       const dx = this.cursorX - p.x;
       const dy = this.cursorY - p.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.hypot(dx, dy);
 
       // Particles glow slightly when near cursor
       if (dist < this.config.cursorAttractRange) {
@@ -278,6 +295,22 @@ export class AmbienceParticlesComponent
         opacity = 0.3 + proximity * 0.4; // 0.3 - 0.7
       }
     }
+
+    // Base colors (gold and teal with color variation per particle)
+    const goldR = 212,
+      goldG = 175,
+      goldB = 55;
+    const tealR = 56,
+      tealG = 182,
+      tealB = 212;
+
+    // Blend colors based on particle variant
+    const blend = p.colorVariant;
+    const centerR = Math.round(goldR * (1 - blend * 0.3) + tealR * (blend * 0.2));
+    const centerG = Math.round(goldG * (1 - blend * 0.3) + tealG * (blend * 0.2));
+    const centerB = Math.round(
+      goldB * (1 - blend * 0.3) + tealB * (blend * 0.2),
+    );
 
     // Render particle with glow
     const gradient = this.ctx.createRadialGradient(
@@ -288,24 +321,30 @@ export class AmbienceParticlesComponent
       p.y,
       p.size * 3,
     );
-    gradient.addColorStop(0, `rgba(212, 175, 55, ${opacity})`); // Gold center
-    gradient.addColorStop(0.5, `rgba(56, 182, 212, ${opacity * 0.5})`); // Teal middle
-    gradient.addColorStop(1, `rgba(212, 175, 55, 0)`); // Fade to transparent
+    gradient.addColorStop(
+      0,
+      `rgba(${centerR}, ${centerG}, ${centerB}, ${opacity})`,
+    );
+    gradient.addColorStop(
+      0.5,
+      `rgba(${tealR}, ${tealG}, ${tealB}, ${opacity * 0.5})`,
+    );
+    gradient.addColorStop(1, `rgba(${centerR}, ${centerG}, ${centerB}, 0)`);
 
     this.ctx.fillStyle = gradient;
     this.ctx.beginPath();
     this.ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
     this.ctx.fill();
 
-    // Optional: subtle core
-    this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.8})`;
+    // Optional: subtle core glow
+    this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.6})`;
     this.ctx.beginPath();
     this.ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
     this.ctx.fill();
   }
 
   @HostListener("document:mousemove", ["$event"])
-  private onMouseMove(event: MouseEvent) {
+  onMouseMove(event: MouseEvent) {
     this.cursorX = event.clientX;
     this.cursorY = event.clientY;
     this.cursorActive = true;
@@ -313,22 +352,26 @@ export class AmbienceParticlesComponent
   }
 
   @HostListener("document:mouseenter")
-  private onMouseEnter() {
+  onMouseEnter() {
     this.cursorActive = true;
   }
 
   @HostListener("document:mouseleave")
-  private onMouseLeave() {
+  onMouseLeave() {
     this.cursorActive = false;
   }
+
+  private onScroll = () => {
+    const currentScrollY = window.scrollY;
+    this.scrollVelocity = (currentScrollY - this.lastScrollY) * 0.1; // Smooth velocity
+    this.lastScrollY = currentScrollY;
+  };
 
   ngOnDestroy() {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    document.removeEventListener("mousemove", this.onMouseMove.bind(this));
-    document.removeEventListener("mouseenter", this.onMouseEnter.bind(this));
-    document.removeEventListener("mouseleave", this.onMouseLeave.bind(this));
+    window.removeEventListener("scroll", this.onScroll.bind(this));
     window.removeEventListener("resize", this.resize.bind(this));
   }
 }
