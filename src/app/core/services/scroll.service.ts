@@ -100,7 +100,9 @@ export class ScrollService {
   ): void {
     if (this.lenis) {
       const target =
-        typeof element === "string" ? document.querySelector(element) : element;
+        typeof element === "string"
+          ? (document.querySelector(element) as HTMLElement)
+          : element;
 
       if (target) {
         this.lenis.scrollTo(target, {

@@ -1,5 +1,4 @@
-import { Injectable, Renderer2, RendererFactory2, NgZone } from "@angular/core";
-import { ANIMATION_TIMINGS } from "../constants/animations";
+import { Injectable, NgZone } from "@angular/core";
 
 /**
  * Liquid Background Canvas Service
@@ -22,17 +21,11 @@ export class LiquidBackgroundService {
   private mouseX = 0;
   private mouseY = 0;
   private isInitialized = false;
-  private rendererFactory: Renderer2;
 
   // Shader uniforms
   private uniforms: any;
 
-  constructor(
-    private rendererFactory2: RendererFactory2,
-    private ngZone: NgZone,
-  ) {
-    this.rendererFactory = this.rendererFactory2.createRenderer(null, null);
-  }
+  constructor(private readonly ngZone: NgZone) {}
 
   /**
    * Initialize the liquid background canvas
@@ -91,7 +84,7 @@ export class LiquidBackgroundService {
     });
 
     this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(globalThis.devicePixelRatio || 1);
     this.renderer.setClearColor(0x0f1419, 1);
 
     // Handle resize
@@ -106,8 +99,8 @@ export class LiquidBackgroundService {
 
     // Create geometry with subdivisions for smooth morphing
     const geometry = new THREE.PlaneGeometry(
-      window.innerWidth * 2,
-      window.innerHeight * 2,
+      globalThis.innerWidth * 2,
+      globalThis.innerHeight * 2,
       100, // width segments
       100, // height segments
     );

@@ -83,7 +83,8 @@
 
   body {
     @apply min-h-screen overflow-x-hidden;
-    selection: {
+
+    &::selection {
       background-color: var(--color-gold-primary);
       color: var(--color-navy-900);
     }

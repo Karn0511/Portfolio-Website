@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { GlassCardComponent } from "../../shared/components/glass-card/glass-card.component";
+import { GlassCardComponent } from "../glass-card/glass-card.component";
 
 export interface ProjectInfo {
   title: string;
