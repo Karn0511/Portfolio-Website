@@ -26,7 +26,7 @@ export class ExperienceData {
       role: "Web Development Intern",
       startYear: 2024,
       endYear: 2025,
-      startMonth: "Dec",
+      startMonth: "Oct",
       endMonth: "Feb",
       isCurrent: false,
       description:
